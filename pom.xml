@@ -23,6 +23,7 @@
         <joda-time.joda-time.version>2.3</joda-time.joda-time.version>
         <joda-time.joda-time-jsptags.version>1.0.2</joda-time.joda-time-jsptags.version>
         <commons-fileupload.commons-fileupload>1.3</commons-fileupload.commons-fileupload>
+        <org.hibernate.hibernate-entitymanager.version>4.1.9.Final</org.hibernate.hibernate-entitymanager.version>
     </properties>
 
     <dependencies>
@@ -62,6 +63,31 @@
             <artifactId>spring-security-taglibs</artifactId>
             <version>${org.springframework.security.version}</version>
         </dependency>
+
+        <dependency>
+            <!-- will come with all needed Spring dependencies such as spring-core and spring-beans-->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${org.springframework.spring.version}</version>
+        </dependency>
+        <dependency>
+            <!-- will come with Hibernate core-->
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${org.hibernate.hibernate-entitymanager.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901.jdbc4</version>
+        </dependency>
+            
 
         <dependency>
             <groupId>taglibs</groupId>
