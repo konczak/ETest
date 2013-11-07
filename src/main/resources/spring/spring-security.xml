@@ -8,6 +8,7 @@
                 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
                 
     <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/user/register" access="permitAll"/>
         <intercept-url pattern="/loginfailed" access="permitAll"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll" />
@@ -20,10 +21,13 @@
     </http>
 
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="admin" authorities="ROLE_USER" />
-            </user-service>
-        </authentication-provider>
+        <authentication-provider ref="authProvider"/>
     </authentication-manager>
+    
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <beans:bean id="authProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="userDetailsService" />
+        <beans:property name="passwordEncoder" ref="encoder" />
+    </beans:bean>
 </beans:beans>
