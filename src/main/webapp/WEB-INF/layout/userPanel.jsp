@@ -4,19 +4,28 @@
 
 <c:url var="loginUrl" value="/login" />
 <c:url var="logoutUrl" value="/j_spring_security_logout" />
+<c:url var="settingsUrl" value="/user/settings" />
+
 <sec:authorize var="loggedIn" access="isAuthenticated()" />
 
-<li>
-    <c:choose>
-        <c:when test="${loggedIn}">
+<c:choose>
+    <c:when test="${loggedIn}">
+        <li>
+            <a href="${settingsUrl}" >
+                <span class="glyphicon glyphicon-wrench"></span>
+            </a>
+        </li>
+        <li>
             <a href="${logoutUrl}" >
                 <span class="glyphicon glyphicon-log-out"></span>
             </a>
-        </c:when>
-        <c:otherwise>
+        </li>
+    </c:when>
+    <c:otherwise>
+        <li>
             <a href="${loginUrl}" >
                 <span class="glyphicon glyphicon-log-in"></span>
             </a>
-        </c:otherwise>
-    </c:choose>
-</li>
+        </li>
+    </c:otherwise>
+</c:choose>
