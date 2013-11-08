@@ -10,11 +10,13 @@
     <c:choose>
         <c:when test="${loggedIn}">
             <a href="${logoutUrl}" >
-                <spring:message code="security_logout"/>&nbsp;<sec:authentication property="principal.username" />
+                <span class="glyphicon glyphicon-log-out"></span>
             </a>
         </c:when>
         <c:otherwise>
-            <a href="${loginUrl}" ><spring:message code="security_login"/></a>
+            <a href="${loginUrl}" >
+                <span class="glyphicon glyphicon-log-in"></span>
+            </a>
         </c:otherwise>
     </c:choose>
 </li>

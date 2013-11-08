@@ -27,15 +27,12 @@ public class AppUserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        System.out.println("sprawdzam <" + username + ">");
         User user = userRepository.findByEmail(username);
 
         if (user == null) {
-            System.out.println("usern not found");
             throw new UsernameNotFoundException("User not found");
         }
 
-        System.out.println("user found!");
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 username, user.getPassword(),
                 true, true, true, true,

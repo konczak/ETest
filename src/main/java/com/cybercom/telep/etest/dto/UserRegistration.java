@@ -1,15 +1,20 @@
 package com.cybercom.telep.etest.dto;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class UserRegistration {
 
     @Email
     private String email;
-    @NotNull
+    @NotBlank
     private String password;
+    @NotBlank
+    private String passwordConfirm;
+    @NotBlank
+    private String firstname;
+    @NotBlank
+    private String lastname;
 
     public String getEmail() {
         return email;
@@ -25,5 +30,29 @@ public class UserRegistration {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }

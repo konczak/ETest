@@ -1,5 +1,6 @@
 package com.cybercom.telep.etest.repository.impl;
 
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,11 +21,18 @@ public class UserRepository
     private EntityManager entityManager;
 
     @Override
-    public User findByEmail(String email) {
-        System.out.println("szukam email <" + email + ">");
+    public User getByEmail(String email) {
         Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
         query.setParameter("email", email);
         return (User) query.getSingleResult();
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
+        query.setParameter("email", email);
+        List<User> list = query.getResultList();
+        return list.isEmpty() ? null : list.get(0);
     }
 
     @Override

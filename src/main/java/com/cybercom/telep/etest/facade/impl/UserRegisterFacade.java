@@ -34,9 +34,9 @@ public class UserRegisterFacade
 
         userRepository.save(user);
         String password = user.getPassword();
-//        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(passwordEncoder.encode(password));
 
-//        userRepository.save(user);
+        userRepository.save(user);
         return user;
     }
 }

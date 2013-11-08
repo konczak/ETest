@@ -1,4 +1,4 @@
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:url var="credentialsCheckUrl" value="j_spring_security_check" />
@@ -11,9 +11,6 @@
         <link type="text/css" href="${signinCssUrl}" rel="stylesheet">
     </head>
     <body onload="document.f.j_username.focus();">
-        <div class="alert alert-info">
-            <spring:message code="security_login_message"/>
-        </div>
         <form name="f" action="${credentialsCheckUrl}" method="POST" class="form-signin">
             <h2 class="form-signin-heading"><spring:message code="security_login_title"/></h2>
             <input type="text" name="j_username" placeholder="<spring:message code="security_login_username"/>" class="form-control">

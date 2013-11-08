@@ -11,6 +11,7 @@
         <intercept-url pattern="/user/register" access="permitAll"/>
         <intercept-url pattern="/loginfailed" access="permitAll"/>
         <intercept-url pattern="/login/**" access="permitAll"/>
+        <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/resources/**" access="permitAll" />
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <form-login login-page="/login"
