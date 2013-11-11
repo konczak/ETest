@@ -44,6 +44,13 @@ public class CategoryOfQuestion {
                     updatable = false)})
     private Set<ClosedQuestion> closedQuestions;
 
+    public CategoryOfQuestion() {
+    }
+
+    public CategoryOfQuestion(String title) {
+        this.title = title;
+    }
+
     public Integer getId() {
         return id;
     }
