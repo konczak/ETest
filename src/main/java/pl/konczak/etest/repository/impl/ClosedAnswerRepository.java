@@ -1,10 +1,12 @@
 package pl.konczak.etest.repository.impl;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import pl.konczak.etest.entity.CategoryOfQuestion;
 import pl.konczak.etest.entity.ClosedAnswer;
 import pl.konczak.etest.repository.IClosedAnswerRepository;
 
@@ -18,10 +20,20 @@ public class ClosedAnswerRepository
 
     @Override
     public ClosedAnswer getById(Integer id) {
-        Query query = entityManager.createQuery(
-                "SELECT ca FROM ClosedAnswer AS ca WHERE ca.closedAnswerId = :id");
-        query.setParameter("id", id);
-        return (ClosedAnswer) query.getSingleResult();
+        return entityManager.find(ClosedAnswer.class, id);
+    }
+
+    @Override
+    public List<ClosedAnswer> findAll() {
+        Query query = entityManager.createQuery("SELECT ca FROM ClosedAnswer AS ca");
+        return (List<ClosedAnswer>) query.getResultList();
+    }
+
+    @Override
+    public List<ClosedAnswer> findAllWithMatchingAnswer(String partOfAnswer) {
+        Query query = entityManager.createQuery("SELECT ca FROM ClosedAnswer AS ca WHERE ca.answer LIKE :partOfAnswer");
+        query.setParameter("partOfAnswer", "%" + partOfAnswer + "%");
+        return (List<ClosedAnswer>) query.getResultList();
     }
 
     @Override

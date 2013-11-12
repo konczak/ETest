@@ -5,9 +5,11 @@ import pl.konczak.etest.entity.ClosedQuestion;
 
 public interface IClosedQuestionRepository {
 
+    ClosedQuestion getById(Integer id);
+
     List<ClosedQuestion> findAll();
 
-    ClosedQuestion getById(Integer id);
+    List<ClosedQuestion> findAllWithMatchingQuestion(String partOfQuestion);
 
     void save(ClosedQuestion closedQuestion);
 

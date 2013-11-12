@@ -18,18 +18,21 @@ public class ClosedQuestionRepository
     private EntityManager entityManager;
 
     @Override
-    public List<ClosedQuestion> findAll() {
-        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestion AS cq");
-        List<ClosedQuestion> resultList = query.getResultList();
-        return resultList;
+    public ClosedQuestion getById(Integer id) {
+        return entityManager.find(ClosedQuestion.class, id);
     }
 
     @Override
-    public ClosedQuestion getById(Integer id) {
-        Query query = entityManager.createQuery(
-                "SELECT cq FROM ClosedQuestion AS cq WHERE cq.closedQuestionId = :id");
-        query.setParameter("id", id);
-        return (ClosedQuestion) query.getSingleResult();
+    public List<ClosedQuestion> findAll() {
+        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestion AS cq");
+        return (List<ClosedQuestion>) query.getResultList();
+    }
+
+    @Override
+    public List<ClosedQuestion> findAllWithMatchingQuestion(String partOfQuestion) {
+        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestion AS cq WHERE cq.question LIKE :partOfQuestion");
+        query.setParameter("partOfQuestion", "%" + partOfQuestion + "%");
+        return (List<ClosedQuestion>) query.getResultList();
     }
 
     @Override
