@@ -1,27 +1,28 @@
 package pl.konczak.etest.repository.impl;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.konczak.etest.entity.CategoryOfQuestion;
 
+import pl.konczak.etest.entity.CategoryOfQuestion;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 
 @Transactional
 @Repository
-public class CategoryOfQuestionRepository implements ICategoryOfQuestionRepository {
+public class CategoryOfQuestionRepository
+        implements ICategoryOfQuestionRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public CategoryOfQuestion getById(Integer id) {
-        Query query = entityManager.createQuery("SELECT coq FROM CategoryOfQuestion AS coq WHERE coq.categoryOfQuestionId = :id");
-        query.setParameter("id", id);
-        return (CategoryOfQuestion) query.getSingleResult();
+        return entityManager.find(CategoryOfQuestion.class, id);
     }
 
     @Override
@@ -33,7 +34,8 @@ public class CategoryOfQuestionRepository implements ICategoryOfQuestionReposito
 
     @Override
     public CategoryOfQuestion findByTitle(String title) {
-        Query query = entityManager.createQuery("SELECT coq FROM CategoryOfQuestion AS coq WHERE coq.title = :title");
+        Query query = entityManager.createQuery(
+                "SELECT coq FROM CategoryOfQuestion AS coq WHERE coq.title = :title");
         query.setParameter("title", title);
         List<CategoryOfQuestion> list = query.getResultList();
         return list.isEmpty() ? null : list.get(0);

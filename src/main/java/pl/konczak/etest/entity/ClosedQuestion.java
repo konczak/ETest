@@ -1,6 +1,8 @@
 package pl.konczak.etest.entity;
 
+import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +15,20 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "closedQuestions")
-public class ClosedQuestion {
+public class ClosedQuestion
+        implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    @NotBlank
+    private String question;
+    private Set<CategoryOfQuestion> categories;
+    private Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +36,24 @@ public class ClosedQuestion {
             unique = true,
             nullable = false,
             updatable = false)
-    private Integer id;
-    @NotBlank
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Column(nullable = false,
             length = 1000)
-    private String question;
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.EAGER)
     @JoinTable(name = "closedQuestions_categoryOfQuestions",
@@ -41,25 +65,23 @@ public class ClosedQuestion {
         @JoinColumn(name = "categoryOfQuestionsId",
                     nullable = false,
                     updatable = false)})
-    private Set<CategoryOfQuestion> categories;
-    @OneToMany(cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER,
-               mappedBy = "closedQuestion")
-    private Set<ClosedAnswer> answers;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
     public Set<CategoryOfQuestion> getCategories() {
         return categories;
     }
 
-    public Set<ClosedAnswer> getAnswers() {
-        return answers;
+    public void setCategories(
+            Set<CategoryOfQuestion> categories) {
+        this.categories = categories;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "pk.closedQuestion")
+    public Set<ClosedQuestionClosedAnswer> getClosedQuestionClosedAnswers() {
+        return closedQuestionClosedAnswers;
+    }
+
+    public void setClosedQuestionClosedAnswers(
+            Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers) {
+        this.closedQuestionClosedAnswers = closedQuestionClosedAnswers;
     }
 }

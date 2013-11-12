@@ -1,5 +1,6 @@
 package pl.konczak.etest.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -22,39 +24,16 @@ import org.hibernate.validator.constraints.NotBlank;
        uniqueConstraints =
         @UniqueConstraint(name = "users_email_unique",
                           columnNames = {"email"}))
-public class User {
+public class User
+        implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usersId",
-            unique = true,
-            nullable = false,
-            updatable = false)
+    private static final long serialVersionUID = 1L;
     private Integer id;
     @Email
-    @Column(unique = true,
-            nullable = false,
-            length = 50)
     private String email;
     @NotBlank
-    @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
     private boolean locked;
-    @ManyToMany(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
-    @JoinTable(name = "users_roles",
-               uniqueConstraints = {
-        @UniqueConstraint(name = "users_roles_unique",
-                          columnNames = {"usersId", "rolesId"})},
-               joinColumns = {
-        @JoinColumn(name = "usersId",
-                    nullable = false,
-                    updatable = false)},
-               inverseJoinColumns = {
-        @JoinColumn(name = "rolesId",
-                    nullable = false,
-                    updatable = false)})
     private Set<Role> roles;
 
     public User() {
@@ -66,14 +45,32 @@ public class User {
         this.roles = roles;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "usersId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Column(unique = true,
+            nullable = false,
+            length = 50)
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }
@@ -82,11 +79,38 @@ public class User {
         this.password = password;
     }
 
+    @Column(nullable = false)
     public boolean isLocked() {
         return locked;
     }
 
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
+    @JoinTable(name = "users_roles",
+               uniqueConstraints = {
+        @UniqueConstraint(name = "users_roles_unique",
+                          columnNames = {"usersId", "rolesId"})
+    },
+               joinColumns = {
+        @JoinColumn(name = "usersId",
+                    nullable = false,
+                    updatable = false)
+    },
+               inverseJoinColumns = {
+        @JoinColumn(name = "rolesId",
+                    nullable = false,
+                    updatable = false)
+    })
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(
+            Set<Role> roles) {
+        this.roles = roles;
     }
 }

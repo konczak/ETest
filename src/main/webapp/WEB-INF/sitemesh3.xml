@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-    <mapping path="/user/settings*" decorator="/WEB-INF/decorator/settings.jsp"/>
     <mapping path="/*" decorator="/WEB-INF/decorator/standard.jsp"/>
+    
+    <mapping>
+        <path>/user/settings*</path>
+        <decorator>/WEB-INF/decorator/settings.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
+    
+    <mapping>
+        <path>/question*</path>
+        <decorator>/WEB-INF/decorator/question.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
+        
 </sitemesh>

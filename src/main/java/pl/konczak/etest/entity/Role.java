@@ -1,5 +1,6 @@
 package pl.konczak.etest.entity;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
@@ -20,7 +22,14 @@ import org.hibernate.validator.constraints.NotBlank;
        uniqueConstraints =
         @UniqueConstraint(name = "roles_name_unique",
                           columnNames = {"name"}))
-public class Role {
+public class Role
+        implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    @NotBlank
+    private String name;
+    private Set<User> userRoles;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +37,24 @@ public class Role {
             unique = true,
             nullable = false,
             updatable = false)
-    private Integer id;
-    @NotBlank
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Column(unique = true,
             nullable = false)
-    private String name;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
                uniqueConstraints = {
@@ -46,17 +68,12 @@ public class Role {
         @JoinColumn(name = "usersId",
                     nullable = false,
                     updatable = false)})
-    private Set<User> userRoles;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public Set<User> getUserRoles() {
         return userRoles;
+    }
+
+    public void setUserRoles(
+            Set<User> userRoles) {
+        this.userRoles = userRoles;
     }
 }

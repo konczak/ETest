@@ -21,7 +21,7 @@ public class SomeDTO {
     public SomeDTO() {
         this.uuid = UUID.randomUUID();
         this.string = "example string data";
-        this.integer = new Random(19580427 ).nextInt();
+        this.integer = new Random(19580427).nextInt();
         this.currency = Currency.getInstance("SEK");
         this.dateTime = DateTime.now();
         this.bool = true;

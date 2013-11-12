@@ -7,20 +7,37 @@
         <title><spring:message code="questionCategory.list.title"/></title>
     </head>
     <body>
-        <h1><spring:message code="questionCategory.list.header"/></h1>
+        <div class="page-header">
+            <h1><spring:message code="questionCategory.list.header"/></h1>
+        </div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
+                    <th><spring:message code="entity_id"/></th>
                     <th><spring:message code="questionCategory.title.label"/></th>
-                    <th><spring:message code="SquestionCategory.remove.label"/></th>
+                    <th><spring:message code="questionCategory.remove.label"/></th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${categories}" var="category">
+                    <c:url var="editCategoryUrl" value="/question/category/edit">
+                        <c:param name="id" value="${category.id}"/>
+                    </c:url>
+                    <c:url var="removeCategoryUrl" value="/question/category/delete">
+                        <c:param name="id" value="${category.id}"/>
+                    </c:url>
                     <tr>
+                        <td>${category.id}</td>
                         <td>${category.title}</td>
                         <td>
-                            <span class="glyphicon glyphicon-trash"></span>
+                            <div class="btn-group">
+                                <a href="${editCategoryUrl}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a href="${removeCategoryUrl}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

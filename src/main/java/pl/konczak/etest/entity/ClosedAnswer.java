@@ -1,23 +1,38 @@
 package pl.konczak.etest.entity;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "closedAnswers")
-public class ClosedAnswer {
+public class ClosedAnswer
+        implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    @NotBlank
+    private String answer;
+    private Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers =
+            new HashSet<ClosedQuestionClosedAnswer>();
+
+    public ClosedAnswer() {
+    }
+
+    public ClosedAnswer(String answer) {
+        this.answer = answer;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,31 +40,33 @@ public class ClosedAnswer {
             unique = true,
             nullable = false,
             updatable = false)
-    private Integer id;
-    @NotBlank
-    @Column(nullable = false,
-            length = 1000)
-    private String answer;
-    @Column(nullable = false)
-    private boolean correct;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "closedQuestionsId",
-                nullable = false)
-    private ClosedQuestion closedQuestion;
-
     public Integer getId() {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Column(unique = true,
+            nullable = false,
+            length = 1000)
     public String getAnswer() {
         return answer;
     }
 
-    public boolean isCorrect() {
-        return correct;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
-    public ClosedQuestion getClosedQuestion() {
-        return closedQuestion;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "pk.closedAnswer")
+    public Set<ClosedQuestionClosedAnswer> getClosedQuestionClosedAnswers() {
+        return closedQuestionClosedAnswers;
+    }
+
+    public void setClosedQuestionClosedAnswers(
+            Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers) {
+        this.closedQuestionClosedAnswers = closedQuestionClosedAnswers;
     }
 }

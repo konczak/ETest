@@ -6,14 +6,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.konczak.etest.entity.CategoryOfQuestion;
 import pl.konczak.etest.entity.ClosedQuestion;
-import pl.konczak.etest.entity.Role;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 
 @Transactional
 @Repository
-public class ClosedQuestionRepository implements IClosedQuestionRepository {
+public class ClosedQuestionRepository
+        implements IClosedQuestionRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -27,7 +26,8 @@ public class ClosedQuestionRepository implements IClosedQuestionRepository {
 
     @Override
     public ClosedQuestion getById(Integer id) {
-        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestion AS cq WHERE cq.closedQuestionId = :id");
+        Query query = entityManager.createQuery(
+                "SELECT cq FROM ClosedQuestion AS cq WHERE cq.closedQuestionId = :id");
         query.setParameter("id", id);
         return (ClosedQuestion) query.getSingleResult();
     }

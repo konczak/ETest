@@ -5,18 +5,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><spring:message code="questionCategory.new.title"/></title>
+        <title><spring:message code="categoryOfQuestion.edit.title"/></title>
     </head>
     <body>
         <div class="page-header">
-            <h1><spring:message code="questionCategory.new.header"/></h1>
+            <h1><spring:message code="categoryOfQuestion.edit.header"/></h1>
         </div>
         <div class="project-template">
-            <form:form method="POST" commandName="questionCategory" role="form">
+            <form:form method="POST" commandName="categoryOfQuestion" role="form">
                 <form:errors path="*" cssClass="info-danger" element="div" />
 
-                <myForm:input object="questionCategory" fieldName="title" required="true"/>
-                <button type="submit" class="btn btn-primary" name="add" value="add">
+                <form:hidden path="id"/>
+                <myForm:input object="categoryOfQuestion" fieldName="title" required="true"/>
+                <button type="submit" class="btn btn-primary" name="edit" value="edit">
                     <spring:message code="button_submit"/>
                 </button>
                 <button type="submit" class="btn btn-default" name="cancel" value="cancel">

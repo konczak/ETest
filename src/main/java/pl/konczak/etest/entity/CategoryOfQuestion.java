@@ -1,6 +1,8 @@
 package pl.konczak.etest.entity;
 
+import java.io.Serializable;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,11 +14,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name = "categoryOfQuestions")
-public class CategoryOfQuestion {
+public class CategoryOfQuestion
+        implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private Integer id;
+    @NotBlank
+    private String title;
+    private Set<ClosedQuestion> closedQuestions;
+
+    public CategoryOfQuestion() {
+    }
+
+    public CategoryOfQuestion(String title) {
+        this.title = title;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +41,25 @@ public class CategoryOfQuestion {
             unique = true,
             nullable = false,
             updatable = false)
-    private Integer id;
-    @NotBlank
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Column(unique = true,
             nullable = false,
             length = 25)
-    private String title;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "categoryOfQuestions_closedQuestions",
@@ -42,24 +72,12 @@ public class CategoryOfQuestion {
         @JoinColumn(name = "closedQuestionsId",
                     nullable = false,
                     updatable = false)})
-    private Set<ClosedQuestion> closedQuestions;
-
-    public CategoryOfQuestion() {
-    }
-
-    public CategoryOfQuestion(String title) {
-        this.title = title;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
     public Set<ClosedQuestion> getClosedQuestions() {
         return closedQuestions;
+    }
+
+    public void setClosedQuestions(
+            Set<ClosedQuestion> closedQuestions) {
+        this.closedQuestions = closedQuestions;
     }
 }
