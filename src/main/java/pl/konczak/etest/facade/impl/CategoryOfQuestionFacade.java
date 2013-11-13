@@ -2,13 +2,11 @@ package pl.konczak.etest.facade.impl;
 
 import java.util.List;
 
-
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.dto.QuestionCategory;
 import pl.konczak.etest.entity.CategoryOfQuestion;
 import pl.konczak.etest.facade.ICategoryOfQuestionFacade;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
@@ -34,10 +32,11 @@ public class CategoryOfQuestionFacade
 
     @Transactional
     @Override
-    public CategoryOfQuestion add(QuestionCategory questionCategory) {
-        String title = questionCategory.getTitle();
+    public CategoryOfQuestion add(CategoryOfQuestion categoryOfQuestion) {
+        Validate.isTrue(categoryOfQuestion.getId() == null);
+        //String title = questionCategory.getTitle();
 
-        CategoryOfQuestion categoryOfQuestion = new CategoryOfQuestion(title);
+        //CategoryOfQuestion categoryOfQuestion = new CategoryOfQuestion(title);
         categoryOfQuestionRepository.save(categoryOfQuestion);
 
         return categoryOfQuestion;

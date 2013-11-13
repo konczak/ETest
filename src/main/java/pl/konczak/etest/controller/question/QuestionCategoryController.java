@@ -17,28 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
-import pl.konczak.etest.dto.QuestionCategory;
 import pl.konczak.etest.entity.CategoryOfQuestion;
 import pl.konczak.etest.facade.ICategoryOfQuestionFacade;
 import pl.konczak.etest.validator.impl.CategoryOfQuestionValidator;
-import pl.konczak.etest.validator.impl.QuestionCategoryValidator;
 
 @Controller
 public class QuestionCategoryController {
 
     @Autowired
-    @Qualifier("questionCategoryValidator")
-    private QuestionCategoryValidator questionCategoryValidator;
-    @Autowired
     @Qualifier("categoryOfQuestionValidator")
     private CategoryOfQuestionValidator categoryOfQuestionValidator;
     @Autowired
     private ICategoryOfQuestionFacade categoryOfQuestionFacade;
-
-    @InitBinder("questionCategory")
-    protected void initBind(WebDataBinder webDataBinder) {
-        webDataBinder.setValidator(questionCategoryValidator);
-    }
 
     @InitBinder("categoryOfQuestion")
     protected void initBindSecond(WebDataBinder webDataBinder) {
@@ -48,10 +38,10 @@ public class QuestionCategoryController {
     @RequestMapping(value = "question/category/new",
                     method = RequestMethod.GET)
     public String initForm(ModelMap model) {
-        QuestionCategory questionCategory = new QuestionCategory();
+        CategoryOfQuestion categoryOfQuestion = new CategoryOfQuestion();
 
         //command object
-        model.addAttribute("questionCategory", questionCategory);
+        model.addAttribute("categoryOfQuestion", categoryOfQuestion);
 
         //return form view
         return "question/category/new";
@@ -61,14 +51,14 @@ public class QuestionCategoryController {
                     method = RequestMethod.POST,
                     params = "add")
     public String processSubmit(
-            @Valid @ModelAttribute("questionCategory") QuestionCategory questionCategory,
+            @Valid @ModelAttribute("categoryOfQuestion") CategoryOfQuestion categoryOfQuestion,
             BindingResult result, SessionStatus status) {
         String view = "redirect:/question/category/";
         if (result.hasErrors()) {
             //if validator failed
             view = "question/category/new";
         } else {
-            categoryOfQuestionFacade.add(questionCategory);
+            categoryOfQuestionFacade.add(categoryOfQuestion);
             status.setComplete();
             //form success
         }
@@ -78,9 +68,7 @@ public class QuestionCategoryController {
     @RequestMapping(value = "question/category/new",
                     method = RequestMethod.POST,
                     params = "cancel")
-    public String processCancel(
-            @Valid @ModelAttribute("questionCategory") QuestionCategory questionCategory,
-            BindingResult result, SessionStatus status) {
+    public String processCancel() {
         return "redirect:/question/category/";
     }
 

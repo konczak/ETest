@@ -4,18 +4,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><spring:message code="questionCategory.list.title"/></title>
+        <title><spring:message code="categoryOfQuestion.list.title"/></title>
     </head>
     <body>
         <div class="page-header">
-            <h1><spring:message code="questionCategory.list.header"/></h1>
+            <h1><spring:message code="categoryOfQuestion.list.header"/></h1>
         </div>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th><spring:message code="entity_id"/></th>
-                    <th><spring:message code="questionCategory.title.label"/></th>
-                    <th><spring:message code="questionCategory.remove.label"/></th>
+                    <th><spring:message code="categoryOfQuestion.title.label"/></th>
+                    <th><spring:message code="categoryOfQuestion.remove.label"/></th>
                 </tr>
             </thead>
             <tbody>

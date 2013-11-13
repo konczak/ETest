@@ -2,7 +2,6 @@ package pl.konczak.etest.facade;
 
 import java.util.List;
 
-import pl.konczak.etest.dto.QuestionCategory;
 import pl.konczak.etest.entity.CategoryOfQuestion;
 
 public interface ICategoryOfQuestionFacade {
@@ -11,7 +10,7 @@ public interface ICategoryOfQuestionFacade {
 
     CategoryOfQuestion find(Integer id);
 
-    CategoryOfQuestion add(QuestionCategory questionCategory);
+    CategoryOfQuestion add(CategoryOfQuestion categoryOfQuestion);
 
     void modify(CategoryOfQuestion categoryOfQuestion);
 

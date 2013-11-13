@@ -30,7 +30,8 @@ public class CategoryOfQuestionValidator
         CategoryOfQuestion categoryOfQuestionOther = categoryOfQuestionRepository.findByTitle(title);
 
         if (categoryOfQuestionOther != null) {
-            if (categoryOfQuestionOther.getId().equals(id)) {
+            if (id != null
+                    && categoryOfQuestionOther.getId().equals(id)) {
                 errors.rejectValue("title", "categoryOfQuestion.title.doesNotChanged");
             } else {
                 errors.rejectValue("title", "categoryOfQuestion.title.alreadyTaken");
