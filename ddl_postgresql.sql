@@ -5,6 +5,9 @@
     alter table categoryOfQuestions_closedQuestions 
         drop constraint FK29A5745AE11E4C0D;
 
+    alter table closedQuestions 
+        drop constraint FK212A594110EA5159;
+
     alter table closedQuestions_categoryOfQuestions 
         drop constraint FK11E8315AE11E4C0D;
 
@@ -62,6 +65,7 @@
     create table closedQuestions (
         closedQuestionsId  serial not null unique,
         question varchar(1000) not null,
+        author_usersId int4 not null,
         primary key (closedQuestionsId)
     );
 
@@ -109,6 +113,11 @@
         add constraint FK29A5745AE11E4C0D 
         foreign key (categoryOfQuestionsId) 
         references categoryOfQuestions;
+
+    alter table closedQuestions 
+        add constraint FK212A594110EA5159 
+        foreign key (author_usersId) 
+        references users;
 
     alter table closedQuestions_categoryOfQuestions 
         add constraint FK11E8315AE11E4C0D 

@@ -13,8 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -27,6 +29,8 @@ public class ClosedQuestion
     private Integer id;
     @NotBlank
     private String question;
+    @NotNull
+    private User author;
     private Set<CategoryOfQuestion> categories;
     private Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers;
 
@@ -52,6 +56,17 @@ public class ClosedQuestion
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_usersId",
+                nullable = false)
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     @ManyToMany(cascade = CascadeType.ALL,

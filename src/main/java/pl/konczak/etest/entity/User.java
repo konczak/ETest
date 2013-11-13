@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -35,6 +36,7 @@ public class User
     private String password;
     private boolean locked;
     private Set<Role> roles;
+    private Set<ClosedQuestion> closedQuestions;
 
     public User() {
     }
@@ -112,5 +114,16 @@ public class User
     public void setRoles(
             Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "author")
+    public Set<ClosedQuestion> getClosedQuestions() {
+        return closedQuestions;
+    }
+
+    public void setClosedQuestions(
+            Set<ClosedQuestion> closedQuestions) {
+        this.closedQuestions = closedQuestions;
     }
 }
