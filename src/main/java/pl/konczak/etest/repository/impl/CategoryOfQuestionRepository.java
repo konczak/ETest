@@ -20,11 +20,13 @@ public class CategoryOfQuestionRepository
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional(readOnly = true)
     @Override
     public CategoryOfQuestion getById(Integer id) {
         return entityManager.find(CategoryOfQuestion.class, id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<CategoryOfQuestion> findAll() {
         Query query = entityManager.createQuery("SELECT coq FROM CategoryOfQuestion AS coq");
@@ -32,6 +34,7 @@ public class CategoryOfQuestionRepository
         return resultList;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CategoryOfQuestion findByTitle(String title) {
         Query query = entityManager.createQuery(

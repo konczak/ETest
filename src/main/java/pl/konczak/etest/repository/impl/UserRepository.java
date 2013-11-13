@@ -20,6 +20,7 @@ public class UserRepository
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional(readOnly = true)
     @Override
     public User getByEmail(String email) {
         Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
@@ -27,6 +28,7 @@ public class UserRepository
         return (User) query.getSingleResult();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User findByEmail(String email) {
         Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
