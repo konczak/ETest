@@ -1,6 +1,7 @@
 package pl.konczak.etest.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,7 +30,14 @@ public class Role
     private Integer id;
     @NotBlank
     private String name;
-    private Set<User> userRoles;
+    private Set<User> userRoles = new HashSet<User>();
+
+    public Role() {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,10 +20,15 @@ public class RoleRepository
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional(readOnly = true)
     @Override
     public List<Role> findAll() {
         Query query = entityManager.createQuery("SELECT r FROM Role AS r");
-        List<Role> resultList = query.getResultList();
-        return resultList;
+        return query.getResultList();
+    }
+
+    @Override
+    public void save(Role role) {
+        entityManager.persist(role);
     }
 }
