@@ -4,6 +4,7 @@
 <c:url var="projectCssUrl" value="/resources/css/standard.css" />
 <c:url var="flagsCssUrl" value="/resources/css/flags.css" />
 <c:url var="faviconUrl" value="/resources/images/telep.png" />
+<c:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2.min.js" />
 <c:url var="bootstrapJsUrl" value="/resources/js/bootstrap.min.js" />
 <c:set var="language" value="${pageContext.response.locale.language}"/>
 
@@ -12,7 +13,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="description" content="">
-        <meta name="author" content="">
+        <meta name="author" content="Konczak Piotr">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <title><sitemesh:write property="title"/></title>
@@ -30,6 +31,11 @@
         <link type="text/css" href="${projectCssUrl}" rel="stylesheet">
         <link type="text/css" href="${flagsCssUrl}" rel="stylesheet">
         <link type="image/x-icon" href="${faviconUrl}" rel="shortcut icon">
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="${jqueryJsUrl}"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="${bootstrapJsUrl}"></script>
     </head>
 
 <body>
@@ -51,13 +57,7 @@
         <sitemesh:write property="body"/>
     </main>
 
-    <footer>
-        <jsp:include page="../layout/footer.jsp"/>
-    </footer>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="//code.jquery.com/jquery.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="${bootstrapJsUrl}"></script>
+    <jsp:include page="../layout/footer.jsp"/>
 </body>
 
 </html>

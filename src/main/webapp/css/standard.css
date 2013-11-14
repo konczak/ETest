@@ -1,8 +1,8 @@
 body {
-    padding-top: 50px;
+    padding-top: 55px;
 }
 .project-template {
-    padding: 40px 15px;
+    padding:  40px 15px;
 }
 
 .info-danger {
@@ -24,4 +24,13 @@ sup.required {
 .navbar-brand {
     font-size: 12px;
     font-weight: bold;
+}
+
+footer {
+    padding-top: 40px;
+    padding-bottom: 30px;
+    margin-top: 100px;
+    color: rgb(119, 119, 119);
+    text-align: center;
+    border-top: 1px solid rgb(229, 229, 229);
 }

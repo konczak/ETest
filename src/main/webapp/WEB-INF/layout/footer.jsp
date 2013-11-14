@@ -1,7 +1,7 @@
-<div id="footer">
+<footer>
     <div class="container">
-        <p class="text-muted credit">
-            Copyright &copy; 2013 Cybercom Poland - Tele P - author Konczak Piotr
+        <p>
+            Copyright &copy; 2013 Konczak Piotr
         </p>
     </div>
-</div>
+</footer>

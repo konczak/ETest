@@ -1,0 +1,1 @@
+$("li#categoryOfQuestion").addClass("active");

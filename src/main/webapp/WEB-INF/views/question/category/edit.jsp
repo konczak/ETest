@@ -1,6 +1,9 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
+
+<c:url var="activeCategoryOfQuestionJsUrl" value="/resources/js/activeLink/categoryOfQuestion.js" />
 
 <!DOCTYPE html>
 <html>
@@ -25,5 +28,7 @@
                 </button>
             </form:form>
         </div>
+        
+        <script src="${activeCategoryOfQuestionJsUrl}"></script>
     </body>
 </html>

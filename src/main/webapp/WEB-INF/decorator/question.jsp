@@ -12,24 +12,13 @@
         <sitemesh:write property="head"/>
     </head>
 <body>
-    <ul class="nav nav-pills">
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Kategorie <span class="caret"></span>
+    <ul class="nav nav-tabs nav-justified">
+        <li id="categoryOfQuestion">
+            <a href="${questionCategoryListLink}">
+                <spring:message code="categoryOfQuestion.list.title"/>
             </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="${questionCategoryListLink}">
-                        <spring:message code="entity_list"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="${questionCategoryNewLink}">
-                        <spring:message code="entity_add"/>
-                    </a>
-                </li>
-            </ul>
         </li>
+
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 Pytania <span class="caret"></span>
