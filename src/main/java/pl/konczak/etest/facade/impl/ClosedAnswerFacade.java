@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.konczak.etest.entity.ClosedAnswer;
+import pl.konczak.etest.entity.ClosedQuestion;
+import pl.konczak.etest.entity.ClosedQuestionClosedAnswer;
 import pl.konczak.etest.facade.IClosedAnswerFacade;
 import pl.konczak.etest.repository.IClosedAnswerRepository;
 
@@ -24,21 +26,36 @@ public class ClosedAnswerFacade implements IClosedAnswerFacade {
 
     @Transactional
     @Override
-    public ClosedAnswer find(Integer id) {
-        return closedAnswerRepository.getById(id);
-    }
-
-    @Transactional
-    @Override
     public List<ClosedAnswer> searchAllWithAnswerLike(String answer) {
         return closedAnswerRepository.findAllWithMatchingAnswer(answer);
     }
 
     @Transactional
     @Override
+    public ClosedAnswer find(Integer id) {
+        return closedAnswerRepository.getById(id);
+    }
+
+    @Transactional
+    @Override
+    public ClosedAnswer add(ClosedAnswer closedAnswer) {
+        Validate.notNull(closedAnswer);
+        Validate.isTrue(closedAnswer.getId() == null);
+
+        closedAnswerRepository.save(closedAnswer);
+
+        return closedAnswer;
+    }
+
+    @Transactional
+    @Override
     public void modify(ClosedAnswer closedAnswer) {
         Validate.notNull(closedAnswer.getId());
-        closedAnswerRepository.save(closedAnswer);
+
+        ClosedAnswer entity = closedAnswerRepository.getById(closedAnswer.getId());
+        entity.setAnswer(closedAnswer.getAnswer());
+
+        closedAnswerRepository.save(entity);
     }
 
     @Transactional

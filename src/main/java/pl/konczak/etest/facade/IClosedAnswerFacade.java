@@ -10,6 +10,8 @@ public interface IClosedAnswerFacade {
     List<ClosedAnswer> searchAllWithAnswerLike(String answer);
 
     ClosedAnswer find(Integer id);
+    
+    ClosedAnswer add(ClosedAnswer closedAnswer) ;
 
     void modify(ClosedAnswer closedAnswer);
 

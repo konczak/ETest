@@ -3,7 +3,7 @@
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
 <c:url var="questionCategoryListLink" value="/question/category/"/>
-<c:url var="questionCategoryNewLink" value="/question/category/new"/>
+<c:url var="questionClosedAnswerListLink" value="/question/closedAnswer/"/>
 
 <!DOCTYPE html>
 <html lang="${language}">
@@ -16,6 +16,11 @@
         <li id="categoryOfQuestion">
             <a href="${questionCategoryListLink}">
                 <spring:message code="categoryOfQuestion.list.title"/>
+            </a>
+        </li>
+        <li id="closedAnswer">
+            <a href="${questionClosedAnswerListLink}">
+                <spring:message code="closedAnswer.list.title"/>
             </a>
         </li>
 

@@ -54,7 +54,8 @@
             <list>
                 <value>i18n/webmessages</value>
                 <value>i18n/webmessages_userRegistration</value>
-                <value>i18n/webmessages_categoryOfQuestion</value>
+                <value>i18n/question/webmessages_categoryOfQuestion</value>
+                <value>i18n/question/webmessages_closedAnswer</value>
                 <value>i18n/webmessages_SomeDTO</value>
                 <value>i18n/webmessages_customer</value>
                 <value>i18n/application</value>
