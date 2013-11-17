@@ -4,15 +4,19 @@
 
 <html>
     <head>
-        <title>Welcome</title>
+        <title><spring:message code="welcome_titlepane" arguments="ETest"/></title>
         <meta name='description' content='A simple page'>
     </head>
     <body>
-        <div class="project-template">
-            <p>Welcome logged user!</p>
-            <spring:message code="welcome_text"/><br/>
-            <h3>Message : ${message}</h3>
-            <h3>Username : ${username}</h3>
+        <div class="page-header">
+            <h1>
+                <spring:message code="welcome_h3" arguments="ETest"/>
+            </h1>
         </div>
+        <div class="jumbotron">
+            <spring:message code="welcome_text"/>
+        </div>
+<!--        <p>Message : ${message}</p>
+        <p>Username : ${username}</p>-->
     </body>
 </html>
