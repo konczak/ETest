@@ -1,14 +1,19 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:url var="registerLink" value="/user/register" />
 
+<sec:authorize var="loggedIn" access="isAuthenticated()" />
+
 <ul class="nav navbar-nav">
-    <li>
-        <a href="${registerLink}">
-            <spring:message code="userRegistration.link.label"/>
-        </a>
-    </li>
+    <c:if test="${not loggedIn}">
+        <li>
+            <a href="${registerLink}">
+                <spring:message code="userRegistration.link.label"/>
+            </a>
+        </li>
+    </c:if>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
     <li class="dropdown">

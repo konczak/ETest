@@ -18,7 +18,7 @@
                     default-target-url="/welcome"
                     authentication-failure-url="/loginfailed" />
         <logout invalidate-session="true"
-                logout-success-url="/logout" />
+                logout-success-url="/" />
     </http>
 
     <authentication-manager>
