@@ -1,6 +1,7 @@
 package pl.konczak.etest.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,8 +32,8 @@ public class ClosedQuestion
     private String question;
     @NotNull
     private User author;
-    private Set<CategoryOfQuestion> categories;
-    private Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers;
+    private Set<CategoryOfQuestion> categories = new HashSet<CategoryOfQuestion>();
+    private Set<ClosedQuestionClosedAnswer> closedQuestionClosedAnswers = new HashSet<ClosedQuestionClosedAnswer>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

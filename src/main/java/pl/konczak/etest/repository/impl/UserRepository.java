@@ -22,6 +22,12 @@ public class UserRepository
 
     @Transactional(readOnly = true)
     @Override
+    public User getById(Integer id) {
+        return entityManager.find(User.class, id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public User getByEmail(String email) {
         Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
         query.setParameter("email", email);

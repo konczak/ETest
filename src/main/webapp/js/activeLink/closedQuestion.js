@@ -1,0 +1,1 @@
+$("li#closedQuestion").addClass("active");

@@ -2,8 +2,9 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="questionCategoryListLink" value="/question/category/"/>
-<c:url var="questionClosedAnswerListLink" value="/question/closedAnswer/"/>
+<c:url var="categoryListLink" value="/question/category/"/>
+<c:url var="closedAnswerListLink" value="/question/closedAnswer/"/>
+<c:url var="closedQuestionListLink" value="/question/closedQuestion/"/>
 
 <!DOCTYPE html>
 <html lang="${language}">
@@ -14,13 +15,18 @@
 <body>
     <ul class="nav nav-tabs nav-justified">
         <li id="categoryOfQuestion">
-            <a href="${questionCategoryListLink}">
+            <a href="${categoryListLink}">
                 <spring:message code="categoryOfQuestion.list.title"/>
             </a>
         </li>
         <li id="closedAnswer">
-            <a href="${questionClosedAnswerListLink}">
+            <a href="${closedAnswerListLink}">
                 <spring:message code="closedAnswer.list.title"/>
+            </a>
+        </li>
+        <li id="closedQuestion">
+            <a href="${closedQuestionListLink}">
+                <spring:message code="closedQuestion.list.title"/>
             </a>
         </li>
 

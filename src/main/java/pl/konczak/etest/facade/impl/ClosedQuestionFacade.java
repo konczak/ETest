@@ -1,17 +1,20 @@
 package pl.konczak.etest.facade.impl;
 
 import java.util.List;
-import javax.validation.Valid;
+
 import org.apache.commons.lang.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import pl.konczak.etest.entity.ClosedQuestion;
+import pl.konczak.etest.entity.User;
 import pl.konczak.etest.facade.IClosedQuestionFacade;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 
 @Service
-public class ClosedQuestionFacade implements IClosedQuestionFacade {
+public class ClosedQuestionFacade
+        implements IClosedQuestionFacade {
 
     @Autowired
     private IClosedQuestionRepository closedQuestionRepository;
@@ -19,7 +22,12 @@ public class ClosedQuestionFacade implements IClosedQuestionFacade {
     @Transactional
     @Override
     public List<ClosedQuestion> searchAll() {
-        return closedQuestionRepository.findAll();
+        List<ClosedQuestion> closedQuestions = closedQuestionRepository.findAll();
+        for (ClosedQuestion closedQuestion : closedQuestions) {
+            User user = closedQuestion.getAuthor();
+            System.out.println(user.getId());
+        }
+        return closedQuestions;
     }
 
     @Transactional
@@ -36,9 +44,25 @@ public class ClosedQuestionFacade implements IClosedQuestionFacade {
 
     @Transactional
     @Override
+    public ClosedQuestion add(ClosedQuestion closedQuestion) {
+        Validate.notNull(closedQuestion);
+        Validate.isTrue(closedQuestion.getId() == null);
+
+        closedQuestionRepository.save(closedQuestion);
+
+        return closedQuestion;
+    }
+
+    @Transactional
+    @Override
     public void modify(ClosedQuestion closedQuestion) {
         Validate.notNull(closedQuestion.getId());
         closedQuestionRepository.save(closedQuestion);
+
+        ClosedQuestion entity = closedQuestionRepository.getById(closedQuestion.getId());
+        entity.setQuestion(closedQuestion.getQuestion());
+
+        closedQuestionRepository.save(entity);
     }
 
     @Transactional
