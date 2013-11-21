@@ -15,12 +15,17 @@
             <h1><spring:message code="closedQuestion.new.header"/></h1>
         </div>
         <div class="project-template">
-            <form:form method="POST" commandName="closedQuestion" role="form">
+            <form:form method="POST" commandName="closedQuestion" role="form" enctype="multipart/form-data">
                 <form:errors path="*" cssClass="info-danger" element="div" />
 
-                <form:hidden path="author"/>
                 <myForm:input object="closedQuestion" fieldName="question" required="true"/>
-                <button type="submit" class="btn btn-primary" name="add" value="add">
+                <div class="form-group">
+                    <label for="closedQuestion.multipartFile">File input</label>
+                    <input type="file" name="closedQuestion.multipartFile">
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" name="save" value="save">
                     <spring:message code="button_submit"/>
                 </button>
                 <button type="submit" class="btn btn-default" name="cancel" value="cancel">

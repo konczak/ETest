@@ -1,17 +1,18 @@
 package pl.konczak.etest.repository;
 
 import java.util.List;
-import pl.konczak.etest.entity.CategoryOfQuestion;
+
+import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 
 public interface ICategoryOfQuestionRepository {
 
-    CategoryOfQuestion getById(Integer id);
+    CategoryOfQuestionEntity getById(Integer id);
 
-    List<CategoryOfQuestion> findAll();
+    List<CategoryOfQuestionEntity> findAll();
 
-    CategoryOfQuestion findByTitle(String title);
+    CategoryOfQuestionEntity findByTitle(String title);
 
-    void save(CategoryOfQuestion categoryOfQuestion);
+    void save(CategoryOfQuestionEntity categoryOfQuestion);
 
-    void delete(CategoryOfQuestion categoryOfQuestion);
+    void delete(CategoryOfQuestionEntity categoryOfQuestion);
 }

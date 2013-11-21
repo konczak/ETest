@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<c:url var="registerLink" value="/user/register" />
+<c:url var="registerLink" value="/user/new" />
 
 <sec:authorize var="loggedIn" access="isAuthenticated()" />
 
@@ -10,7 +10,7 @@
     <c:if test="${not loggedIn}">
         <li>
             <a href="${registerLink}">
-                <spring:message code="userRegistration.link.label"/>
+                <spring:message code="user.new.label"/>
             </a>
         </li>
     </c:if>

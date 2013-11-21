@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.Role;
-import pl.konczak.etest.entity.User;
+import pl.konczak.etest.entity.RoleEntity;
+import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.repository.IUserRepository;
 
 @Service("userDetailsService")
@@ -27,7 +27,7 @@ public class AppUserDetailsService
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
+        UserEntity user = userRepository.findByEmail(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -41,9 +41,9 @@ public class AppUserDetailsService
         return userDetails;
     }
 
-    private List<GrantedAuthority> grantAuthorities(User user) {
+    private List<GrantedAuthority> grantAuthorities(UserEntity user) {
         List<GrantedAuthority> grantedAuthoritys = new ArrayList<GrantedAuthority>();
-        for (Role role : user.getRoles()) {
+        for (RoleEntity role : user.getRoles()) {
             grantedAuthoritys.add(new SimpleGrantedAuthority(role.getName()));
         }
 

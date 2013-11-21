@@ -19,50 +19,10 @@
                 <spring:message code="categoryOfQuestion.list.title"/>
             </a>
         </li>
-        <li id="closedAnswer">
-            <a href="${closedAnswerListLink}">
-                <spring:message code="closedAnswer.list.title"/>
-            </a>
-        </li>
         <li id="closedQuestion">
             <a href="${closedQuestionListLink}">
                 <spring:message code="closedQuestion.list.title"/>
             </a>
-        </li>
-
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Pytania <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="#">
-                        <spring:message code="entity_list"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <spring:message code="entity_add"/>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                Odpowiedzi <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="#">
-                        <spring:message code="entity_list"/>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <spring:message code="entity_add"/>
-                    </a>
-                </li>
-            </ul>
         </li>
     </ul>
 

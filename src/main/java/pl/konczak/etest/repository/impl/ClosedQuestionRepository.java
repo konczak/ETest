@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.ClosedQuestion;
+import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 
 @Transactional
@@ -22,33 +22,33 @@ public class ClosedQuestionRepository
 
     @Transactional(readOnly = true)
     @Override
-    public ClosedQuestion getById(Integer id) {
-        return entityManager.find(ClosedQuestion.class, id);
+    public ClosedQuestionEntity getById(Integer id) {
+        return entityManager.find(ClosedQuestionEntity.class, id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<ClosedQuestion> findAll() {
-        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestion AS cq");
-        return (List<ClosedQuestion>) query.getResultList();
+    public List<ClosedQuestionEntity> findAll() {
+        Query query = entityManager.createQuery("SELECT cq FROM ClosedQuestionEntity AS cq");
+        return (List<ClosedQuestionEntity>) query.getResultList();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<ClosedQuestion> findAllWithMatchingQuestion(String partOfQuestion) {
+    public List<ClosedQuestionEntity> findAllWithMatchingQuestion(String partOfQuestion) {
         Query query = entityManager.createQuery(
-                "SELECT cq FROM ClosedQuestion AS cq WHERE cq.question LIKE :partOfQuestion");
+                "SELECT cq FROM ClosedQuestionEntity AS cq WHERE cq.question LIKE :partOfQuestion");
         query.setParameter("partOfQuestion", "%" + partOfQuestion + "%");
-        return (List<ClosedQuestion>) query.getResultList();
+        return (List<ClosedQuestionEntity>) query.getResultList();
     }
 
     @Override
-    public void save(ClosedQuestion closedQuestion) {
+    public void save(ClosedQuestionEntity closedQuestion) {
         entityManager.persist(closedQuestion);
     }
 
     @Override
-    public void delete(ClosedQuestion closedQuestion) {
+    public void delete(ClosedQuestionEntity closedQuestion) {
         entityManager.remove(closedQuestion);
     }
 }

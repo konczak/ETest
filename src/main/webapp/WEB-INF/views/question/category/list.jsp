@@ -6,7 +6,7 @@
 <c:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables.min.js" />
 <c:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging.js" />
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="questionCategoryNewLink" value="/question/category/new"/>
+<c:url var="categoryOfQuestionNewUrl" value="/question/category/new"/>
 
 <!DOCTYPE html>
 <html>
@@ -18,36 +18,36 @@
         <div class="page-header">
             <h1>
                 <spring:message code="categoryOfQuestion.list.header"/>
-                <a href="${questionCategoryNewLink}" class="btn btn-default">
+                <a href="${categoryOfQuestionNewUrl}" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </a>
             </h1>
         </div>
-        <table id="categories" class="table table-striped table-hover">
+        <table id="categoriesOfQuestion" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th><spring:message code="entity_id"/></th>
                     <th><spring:message code="categoryOfQuestion.title.label"/></th>
-                    <th><spring:message code="categoryOfQuestion.remove.label"/></th>
+                    <th><spring:message code="categoryOfQuestion.manage.label"/></th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${categories}" var="category">
-                    <c:url var="editCategoryUrl" value="/question/category/edit">
-                        <c:param name="id" value="${category.id}"/>
-                    </c:url>
-                    <c:url var="removeCategoryUrl" value="/question/category/delete">
-                        <c:param name="id" value="${category.id}"/>
-                    </c:url>
+                <c:forEach items="${categoriesOfQuestion}" var="categoryOfQuestion">
+                    <spring:url var="editUrl" value="/question/category/edit/{id}">
+                        <spring:param name="id" value="${categoryOfQuestion.id}"/>
+                    </spring:url>
+                    <spring:url var="deleteUrl" value="/question/category/delete/{id}">
+                        <spring:param name="id" value="${categoryOfQuestion.id}"/>
+                    </spring:url>
                     <tr>
-                        <td>${category.id}</td>
-                        <td>${category.title}</td>
+                        <td>${categoryOfQuestion.id}</td>
+                        <td>${categoryOfQuestion.title}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="${editCategoryUrl}" class="btn btn-default">
+                                <a href="${editUrl}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>
-                                <a href="${removeCategoryUrl}" class="btn btn-default">
+                                <a href="${deleteUrl}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
@@ -62,7 +62,7 @@
         <script src="${dataTablesBootstrapPagingJsUrl}"></script>
 
         <script type="text/javascript">
-            $('#categories').dataTable({
+            $('#categoriesOfQuestion').dataTable({
                 "oLanguage": {
                     "sSearch": "<spring:message code="global_search"/>",
                     "sZeroRecords": "<spring:message code="dataTables.sZeroRecords"/>",

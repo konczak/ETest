@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.Role;
+import pl.konczak.etest.entity.RoleEntity;
 import pl.konczak.etest.repository.IRoleRepository;
 
 @Transactional
@@ -22,13 +22,13 @@ public class RoleRepository
 
     @Transactional(readOnly = true)
     @Override
-    public List<Role> findAll() {
-        Query query = entityManager.createQuery("SELECT r FROM Role AS r");
+    public List<RoleEntity> findAll() {
+        Query query = entityManager.createQuery("SELECT r FROM RoleEntity AS r");
         return query.getResultList();
     }
 
     @Override
-    public void save(Role role) {
+    public void save(RoleEntity role) {
         entityManager.persist(role);
     }
 }

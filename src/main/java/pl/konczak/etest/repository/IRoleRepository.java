@@ -2,11 +2,11 @@ package pl.konczak.etest.repository;
 
 import java.util.List;
 
-import pl.konczak.etest.entity.Role;
+import pl.konczak.etest.entity.RoleEntity;
 
 public interface IRoleRepository {
 
-    List<Role> findAll();
+    List<RoleEntity> findAll();
 
-    void save(Role role);
+    void save(RoleEntity role);
 }

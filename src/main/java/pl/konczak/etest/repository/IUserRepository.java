@@ -1,14 +1,14 @@
 package pl.konczak.etest.repository;
 
-import pl.konczak.etest.entity.User;
+import pl.konczak.etest.entity.UserEntity;
 
 public interface IUserRepository {
 
-    User getById(Integer id);
+    UserEntity getById(Integer id);
 
-    User getByEmail(String email);
+    UserEntity getByEmail(String email);
 
-    User findByEmail(String email);
+    UserEntity findByEmail(String email);
 
-    void save(User user);
+    void save(UserEntity user);
 }

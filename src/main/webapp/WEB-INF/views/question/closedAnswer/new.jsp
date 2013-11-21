@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/closedAnswer.js" />
+<c:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
 <!DOCTYPE html>
 <html>
@@ -12,13 +12,34 @@
     </head>
     <body>
         <div class="page-header">
+            <h1><spring:message code="closedQuestion.preview.header"/></h1>
+        </div>
+
+        <dl class="dl-horizontal">
+            <dt><spring:message code="entity_id"/></dt>
+            <dd>${closedAnswer.closedQuestionId}</dd>
+            <dt><spring:message code="closedQuestion.question.label"/></dt>
+            <dd>${closedAnswer.question}</dd>
+        </dl>
+        <div class="page-header">
             <h1><spring:message code="closedAnswer.new.header"/></h1>
         </div>
         <div class="project-template">
-            <form:form method="POST" commandName="closedAnswer" role="form">
+            <form:form method="POST" commandName="closedAnswer" role="form" enctype="multipart/form-data">
                 <form:errors path="*" cssClass="info-danger" element="div" />
 
+                <form:hidden path="closedQuestionId"/>
+                <form:hidden path="question"/>
+
                 <myForm:input object="closedAnswer" fieldName="answer" required="true"/>
+                <myForm:checkbox object="closedAnswer" fieldName="correct"/>
+
+                <div class="form-group">
+                    <label for="closedQuestion.multipartFile">File input</label>
+                    <input type="file" name="closedQuestion.multipartFile">
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <br>
                 <button type="submit" class="btn btn-primary" name="add" value="add">
                     <spring:message code="button_submit"/>
                 </button>

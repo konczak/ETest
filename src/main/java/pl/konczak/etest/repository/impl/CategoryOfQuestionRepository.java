@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.CategoryOfQuestion;
+import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 
 @Transactional
@@ -22,35 +22,35 @@ public class CategoryOfQuestionRepository
 
     @Transactional(readOnly = true)
     @Override
-    public CategoryOfQuestion getById(Integer id) {
-        return entityManager.find(CategoryOfQuestion.class, id);
+    public CategoryOfQuestionEntity getById(Integer id) {
+        return entityManager.find(CategoryOfQuestionEntity.class, id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<CategoryOfQuestion> findAll() {
-        Query query = entityManager.createQuery("SELECT coq FROM CategoryOfQuestion AS coq");
-        List<CategoryOfQuestion> resultList = query.getResultList();
+    public List<CategoryOfQuestionEntity> findAll() {
+        Query query = entityManager.createQuery("SELECT coq FROM CategoryOfQuestionEntity AS coq");
+        List<CategoryOfQuestionEntity> resultList = query.getResultList();
         return resultList;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public CategoryOfQuestion findByTitle(String title) {
+    public CategoryOfQuestionEntity findByTitle(String title) {
         Query query = entityManager.createQuery(
-                "SELECT coq FROM CategoryOfQuestion AS coq WHERE coq.title = :title");
+                "SELECT coq FROM CategoryOfQuestionEntity AS coq WHERE coq.title = :title");
         query.setParameter("title", title);
-        List<CategoryOfQuestion> list = query.getResultList();
+        List<CategoryOfQuestionEntity> list = query.getResultList();
         return list.isEmpty() ? null : list.get(0);
     }
 
     @Override
-    public void save(CategoryOfQuestion categoryOfQuestion) {
+    public void save(CategoryOfQuestionEntity categoryOfQuestion) {
         entityManager.persist(categoryOfQuestion);
     }
 
     @Override
-    public void delete(CategoryOfQuestion categoryOfQuestion) {
+    public void delete(CategoryOfQuestionEntity categoryOfQuestion) {
         entityManager.remove(categoryOfQuestion);
     }
 }

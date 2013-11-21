@@ -28,28 +28,28 @@
                 <tr>
                     <th><spring:message code="entity_id"/></th>
                     <th><spring:message code="closedQuestion.question.label"/></th>
-                    <th>autor be</th>
-                    <th><spring:message code="closedQuestion.remove.label"/></th>
+                    <th><spring:message code="closedQuestion.author.label"/></th>
+                    <th><spring:message code="closedQuestion.manage.label"/></th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${closedQuestions}" var="closedQuestion">
-                    <c:url var="editUrl" value="/question/closedQuestion/edit">
-                        <c:param name="id" value="${closedQuestion.id}"/>
-                    </c:url>
-                    <c:url var="removeUrl" value="/question/closedQuestion/delete">
-                        <c:param name="id" value="${closedQuestion.id}"/>
-                    </c:url>
+                    <spring:url var="previewUrl" value="/question/closedQuestion/{id}">
+                        <spring:param name="id" value="${closedQuestion.id}"/>
+                    </spring:url>
+                    <spring:url var="deleteUrl" value="/question/closedQuestion/delete/{id}">
+                        <spring:param name="id" value="${closedQuestion.id}"/>
+                    </spring:url>
                     <tr>
                         <td>${closedQuestion.id}</td>
                         <td>${closedQuestion.question}</td>
-                        <td>${closedQuestion.author.email}</td>
+                        <td id="${closedQuestion.authorId}">${closedQuestion.authorLastname} ${closedQuestion.authorFirstname}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="${editUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-edit"></span>
+                                <a href="${previewUrl}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
                                 </a>
-                                <a href="${removeUrl}" class="btn btn-default">
+                                <a href="${deleteUrl}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
@@ -82,7 +82,7 @@
                         "sLast": "<spring:message code="list_last"/>"
                     }
                 }
-            });            
+            });
         </script>
     </body>
 </html>

@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.User;
+import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.repository.IUserRepository;
 
 @Transactional
@@ -22,29 +22,29 @@ public class UserRepository
 
     @Transactional(readOnly = true)
     @Override
-    public User getById(Integer id) {
-        return entityManager.find(User.class, id);
+    public UserEntity getById(Integer id) {
+        return entityManager.find(UserEntity.class, id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public User getByEmail(String email) {
-        Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
+    public UserEntity getByEmail(String email) {
+        Query query = entityManager.createQuery("SELECT u FROM UserEntity AS u WHERE u.email = :email");
         query.setParameter("email", email);
-        return (User) query.getSingleResult();
+        return (UserEntity) query.getSingleResult();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public User findByEmail(String email) {
-        Query query = entityManager.createQuery("SELECT u FROM User AS u WHERE u.email = :email");
+    public UserEntity findByEmail(String email) {
+        Query query = entityManager.createQuery("SELECT u FROM UserEntity AS u WHERE u.email = :email");
         query.setParameter("email", email);
-        List<User> list = query.getResultList();
+        List<UserEntity> list = query.getResultList();
         return list.isEmpty() ? null : list.get(0);
     }
 
     @Override
-    public void save(User user) {
+    public void save(UserEntity user) {
         entityManager.persist(user);
     }
 }

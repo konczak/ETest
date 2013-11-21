@@ -1,19 +1,20 @@
 package pl.konczak.etest.facade;
 
 import java.util.List;
-import pl.konczak.etest.entity.ClosedAnswer;
+
+import pl.konczak.etest.entity.ClosedAnswerEntity;
 
 public interface IClosedAnswerFacade {
 
-    List<ClosedAnswer> searchAll();
+    List<ClosedAnswerEntity> searchAll();
 
-    List<ClosedAnswer> searchAllWithAnswerLike(String answer);
+    List<ClosedAnswerEntity> searchAllWithAnswerLike(String answer);
 
-    ClosedAnswer find(Integer id);
+    ClosedAnswerEntity find(Integer id);
     
-    ClosedAnswer add(ClosedAnswer closedAnswer) ;
+    ClosedAnswerEntity add(ClosedAnswerEntity closedAnswer);
 
-    void modify(ClosedAnswer closedAnswer);
+    void modify(ClosedAnswerEntity closedAnswer);
 
     void remove(Integer id);
 }

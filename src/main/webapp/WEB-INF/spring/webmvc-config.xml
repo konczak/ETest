@@ -53,10 +53,10 @@
         <property name="basenames">
             <list>
                 <value>i18n/webmessages</value>
-                <value>i18n/webmessages_userRegistration</value>
-                <value>i18n/question/webmessages_categoryOfQuestion</value>
-                <value>i18n/question/webmessages_closedAnswer</value>
-                <value>i18n/question/webmessages_closedQuestion</value>
+                <value>i18n/user/webmessages_user</value>
+                <value>i18n/question/category/webmessages_categoryOfQuestion</value>
+                <value>i18n/question/closedAnswer/webmessages_closedAnswer</value>
+                <value>i18n/question/closedQuestion/webmessages_closedQuestion</value>
                 <value>i18n/webmessages_SomeDTO</value>
                 <value>i18n/webmessages_customer</value>
                 <value>i18n/application</value>

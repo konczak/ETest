@@ -1,34 +1,29 @@
 
-    alter table categoryOfQuestions_closedQuestions 
-        drop constraint FK29A5745A160ACC0D;
+    alter table closedAnswers 
+        drop constraint FKB703D69845D3B50;
 
-    alter table categoryOfQuestions_closedQuestions 
-        drop constraint FK29A5745AE11E4C0D;
+    alter table closedAnswers 
+        drop constraint FKB703D69B0250AB2;
 
     alter table closedQuestions 
-        drop constraint FK212A594110EA5159;
+        drop constraint FK212A5941DD6FC9DC;
+
+    alter table closedQuestions 
+        drop constraint FK212A5941B0250AB2;
 
     alter table closedQuestions_categoryOfQuestions 
-        drop constraint FK11E8315AE11E4C0D;
+        drop constraint FK11E8315A83C4B090;
 
     alter table closedQuestions_categoryOfQuestions 
-        drop constraint FK11E8315A160ACC0D;
-
-    alter table closedQuestions_closedAnswers 
-        drop constraint FKC50EA2EB160ACC0D;
-
-    alter table closedQuestions_closedAnswers 
-        drop constraint FKC50EA2EBA89C50CD;
+        drop constraint FK11E8315A845D3B50;
 
     alter table users_roles 
-        drop constraint FKF6CCD9C61B6440D;
+        drop constraint FKF6CCD9C6CE3BBC90;
 
     alter table users_roles 
-        drop constraint FKF6CCD9C65C8B802D;
+        drop constraint FKF6CCD9C6229B8C70;
 
     drop table if exists categoryOfQuestions cascade;
-
-    drop table if exists categoryOfQuestions_closedQuestions cascade;
 
     drop table if exists closedAnswers cascade;
 
@@ -36,9 +31,11 @@
 
     drop table if exists closedQuestions_categoryOfQuestions cascade;
 
-    drop table if exists closedQuestions_closedAnswers cascade;
+    drop table if exists images cascade;
 
     drop table if exists roles cascade;
+
+    drop table if exists userPersonalData cascade;
 
     drop table if exists users cascade;
 
@@ -50,15 +47,12 @@
         primary key (categoryOfQuestionsId)
     );
 
-    create table categoryOfQuestions_closedQuestions (
-        categoryOfQuestionsId int4 not null,
-        closedQuestionsId int4 not null,
-        primary key (categoryOfQuestionsId, closedQuestionsId)
-    );
-
     create table closedAnswers (
         closedAnswersId  serial not null unique,
-        answer varchar(1000) not null unique,
+        answer varchar(1000) not null,
+        correct boolean not null,
+        closedQuestionsId int4 not null,
+        imagesId int4 unique,
         primary key (closedAnswersId)
     );
 
@@ -66,20 +60,20 @@
         closedQuestionsId  serial not null unique,
         question varchar(1000) not null,
         author_usersId int4 not null,
+        imagesId int4 unique,
         primary key (closedQuestionsId)
     );
 
     create table closedQuestions_categoryOfQuestions (
         closedQuestionsId int4 not null,
         categoryOfQuestionsId int4 not null,
-        primary key (closedQuestionsId, categoryOfQuestionsId)
+        primary key (categoryOfQuestionsId, closedQuestionsId)
     );
 
-    create table closedQuestions_closedAnswers (
-        correct boolean not null,
-        closedQuestionsId int4,
-        closedAnswersId int4,
-        primary key (closedAnswersId, closedQuestionsId)
+    create table images (
+        imagesId  serial not null unique,
+        image oid not null,
+        primary key (imagesId)
     );
 
     create table roles (
@@ -87,6 +81,13 @@
         name varchar(255) not null unique,
         primary key (rolesId),
         unique (name)
+    );
+
+    create table userPersonalData (
+        usersId int4 not null unique,
+        firstname varchar(50) not null,
+        lastname varchar(50) not null,
+        primary key (usersId)
     );
 
     create table users (
@@ -104,47 +105,42 @@
         primary key (usersId, rolesId)
     );
 
-    alter table categoryOfQuestions_closedQuestions 
-        add constraint FK29A5745A160ACC0D 
+    alter table closedAnswers 
+        add constraint FKB703D69845D3B50 
         foreign key (closedQuestionsId) 
         references closedQuestions;
 
-    alter table categoryOfQuestions_closedQuestions 
-        add constraint FK29A5745AE11E4C0D 
-        foreign key (categoryOfQuestionsId) 
-        references categoryOfQuestions;
+    alter table closedAnswers 
+        add constraint FKB703D69B0250AB2 
+        foreign key (imagesId) 
+        references images;
 
     alter table closedQuestions 
-        add constraint FK212A594110EA5159 
+        add constraint FK212A5941DD6FC9DC 
         foreign key (author_usersId) 
         references users;
 
+    alter table closedQuestions 
+        add constraint FK212A5941B0250AB2 
+        foreign key (imagesId) 
+        references images;
+
     alter table closedQuestions_categoryOfQuestions 
-        add constraint FK11E8315AE11E4C0D 
+        add constraint FK11E8315A83C4B090 
         foreign key (categoryOfQuestionsId) 
         references categoryOfQuestions;
 
     alter table closedQuestions_categoryOfQuestions 
-        add constraint FK11E8315A160ACC0D 
+        add constraint FK11E8315A845D3B50 
         foreign key (closedQuestionsId) 
         references closedQuestions;
-
-    alter table closedQuestions_closedAnswers 
-        add constraint FKC50EA2EB160ACC0D 
-        foreign key (closedQuestionsId) 
-        references closedQuestions;
-
-    alter table closedQuestions_closedAnswers 
-        add constraint FKC50EA2EBA89C50CD 
-        foreign key (closedAnswersId) 
-        references closedAnswers;
 
     alter table users_roles 
-        add constraint FKF6CCD9C61B6440D 
+        add constraint FKF6CCD9C6CE3BBC90 
         foreign key (usersId) 
         references users;
 
     alter table users_roles 
-        add constraint FKF6CCD9C65C8B802D 
+        add constraint FKF6CCD9C6229B8C70 
         foreign key (rolesId) 
         references roles;

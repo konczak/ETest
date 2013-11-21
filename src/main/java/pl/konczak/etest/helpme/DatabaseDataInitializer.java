@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.dto.UserRegistration;
-import pl.konczak.etest.entity.CategoryOfQuestion;
-import pl.konczak.etest.entity.Role;
-import pl.konczak.etest.facade.ICategoryOfQuestionFacade;
-import pl.konczak.etest.facade.IUserRegisterFacade;
+import pl.konczak.etest.bo.ICategoryOfQuestionBO;
+import pl.konczak.etest.bo.IClosedAnswerBO;
+import pl.konczak.etest.bo.IClosedQuestionBO;
+import pl.konczak.etest.bo.IUserBO;
+import pl.konczak.etest.entity.CategoryOfQuestionEntity;
+import pl.konczak.etest.entity.ClosedQuestionEntity;
+import pl.konczak.etest.entity.RoleEntity;
+import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
+import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IRoleRepository;
 import pl.konczak.etest.repository.IUserRepository;
 
@@ -22,9 +26,17 @@ public class DatabaseDataInitializer {
     @Autowired
     private IUserRepository userRepository;
     @Autowired
-    private IUserRegisterFacade userRegisterFacade;
+    private IUserBO userBO;
     @Autowired
-    private ICategoryOfQuestionFacade categoryOfQuestionFacade;
+    private ICategoryOfQuestionRepository categoryOfQuestionRepository;
+    @Autowired
+    private ICategoryOfQuestionBO categoryOfQuestionBO;
+    @Autowired
+    private IClosedQuestionRepository closedQuestionRepository;
+    @Autowired
+    private IClosedQuestionBO closedQuestionBO;
+    @Autowired
+    private IClosedAnswerBO closedAnswerBO;
 
     @Transactional
     @PostConstruct
@@ -36,8 +48,11 @@ public class DatabaseDataInitializer {
         if (userRepository.findByEmail("konczak.piotrek@gmail.com") == null) {
             prepareUsers();
         }
-        if (categoryOfQuestionFacade.searchAll().isEmpty()) {
+        if (categoryOfQuestionRepository.findAll().isEmpty()) {
             prepareCategoriesOfQuestion();
+        }
+        if (closedQuestionRepository.findAll().isEmpty()) {
+            prepareClosedQuestions();
         }
     }
 
@@ -48,34 +63,62 @@ public class DatabaseDataInitializer {
     }
 
     private void addRole(String name) {
-        Role role = new Role(name);
+        RoleEntity role = new RoleEntity(name);
         roleRepository.save(role);
     }
 
     private void prepareUsers() {
-        UserRegistration userRegistration = new UserRegistration();
-        userRegistration.setEmail("konczak.piotrek@gmail.com");
-        userRegistration.setPassword("haslo");
-        userRegistration.setFirstname("Piotr");
-        userRegistration.setLastname("Konczak");
-        userRegisterFacade.register(userRegistration);
+        userBO.register("konczak.piotrek@gmail.com", "haslo", "Piotr", "Konczak");
     }
 
     private void prepareCategoriesOfQuestion() {
-        addCategoryOfQuestion("Fizyka");
-        addCategoryOfQuestion("Matematyka");
-        addCategoryOfQuestion("Optyka");
-        addCategoryOfQuestion("Magnetyzm");
-        addCategoryOfQuestion("Siły");
-        addCategoryOfQuestion("Grawitacje");
-        addCategoryOfQuestion("Opór");
-        addCategoryOfQuestion("Pęd");
-        addCategoryOfQuestion("Moc");
-        addCategoryOfQuestion("Prąd");
+        categoryOfQuestionBO.add("Fizyka");
+        categoryOfQuestionBO.add("Matematyka");
+        categoryOfQuestionBO.add("Optyka");
+        categoryOfQuestionBO.add("Magnetyzm");
+        categoryOfQuestionBO.add("Siły");
+        categoryOfQuestionBO.add("Grawitacja");
+        categoryOfQuestionBO.add("Opór");
+        categoryOfQuestionBO.add("Pęd");
+        categoryOfQuestionBO.add("Moc");
+        categoryOfQuestionBO.add("Prąd");
+        categoryOfQuestionBO.add("Technika");
+        categoryOfQuestionBO.add("Przyciąganie");
+        categoryOfQuestionBO.add("Ciśnienie");
     }
 
-    private void addCategoryOfQuestion(String title) {
-        CategoryOfQuestion categoryOfQuestion = new CategoryOfQuestion(title);
-        categoryOfQuestionFacade.add(categoryOfQuestion);
+    private void prepareClosedQuestions() {
+        CategoryOfQuestionEntity fizyka = categoryOfQuestionRepository.findByTitle("Fizyka");
+        CategoryOfQuestionEntity grawitacja = categoryOfQuestionRepository.findByTitle("Grawitacja");
+        ClosedQuestionEntity entity;
+
+        entity = closedQuestionBO.add("I zasada dynamiki Newtona brzmi:", 1);
+        closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
+        closedAnswerBO.add(entity.getId(), "Jesli cialo A dziala na cialo B z sila, to cialo B dziala na cialo A z sila o takiej samej wartosci i kierunku, lecz o przeciwnym zwrocie.", false);
+        closedAnswerBO.add(entity.getId(), "Kazde cialo trwa w swym stanie spoczynku lub ruchu prostoliniowego jednostajnego, jezeli sily przylozone nie zmusza ciala do zmiany tego stanu.", true);
+        closedAnswerBO.add(entity.getId(), "Zmiana ruchu jest proporcjonalna do przylozonej sily poruszajacej i odbywa sie w kierunku prostej, wzdluz ktorej sila jest przylozona.", false);
+        closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
+
+        entity = closedQuestionBO.add("II zasada dynamiki Newtona brzmi:", 1);
+        closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
+        closedAnswerBO.add(entity.getId(), "Jesli cialo A dziala na cialo B z sila, to cialo B dziala na cialo A z sila o takiej samej wartosci i kierunku, lecz o przeciwnym zwrocie.", false);
+        closedAnswerBO.add(entity.getId(), "Kazde cialo trwa w swym stanie spoczynku lub ruchu prostoliniowego jednostajnego, jezeli sily przylozone nie zmusza ciala do zmiany tego stanu.", false);
+        closedAnswerBO.add(entity.getId(), "Zmiana ruchu jest proporcjonalna do przylozonej sily poruszajacej i odbywa sie w kierunku prostej, wzdluz ktorej sila jest przylozona.", true);
+        closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
+
+        entity = closedQuestionBO.add("III zasada dynamiki Newtona brzmi:", 1);
+        closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
+        closedAnswerBO.add(entity.getId(), "Jesli cialo A dziala na cialo B z sila, to cialo B dziala na cialo A z sila o takiej samej wartosci i kierunku, lecz o przeciwnym zwrocie.", true);
+        closedAnswerBO.add(entity.getId(), "Kazde cialo trwa w swym stanie spoczynku lub ruchu prostoliniowego jednostajnego, jezeli sily przylozone nie zmusza ciala do zmiany tego stanu.", false);
+        closedAnswerBO.add(entity.getId(), "Zmiana ruchu jest proporcjonalna do przylozonej sily poruszajacej i odbywa sie w kierunku prostej, wzdluz ktorej sila jest przylozona.", false);
+        closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
+
+        entity = closedQuestionBO.add("Ile wynosi stala G przyciagania ziemskiego:", 1);
+        closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
+        closedQuestionBO.addCategoryOfQuestion(entity.getId(), grawitacja.getId());
+        closedAnswerBO.add(entity.getId(), "ok 9.81 m/s<sup>2</sup>", true);
+        closedAnswerBO.add(entity.getId(), "ok 9.91 m/s<sup>2</sup>", false);
+        closedAnswerBO.add(entity.getId(), "ok 9.81 cm/s<sup>2</sup>", false);
+        closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
     }
 }

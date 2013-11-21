@@ -14,7 +14,7 @@
                 <table>
                     <tr>
                         <td>UserName :</td>
-                        <td>${userRegistration.email}</td>
+                        <td>${user.email}</td>
                     </tr>
                 </table>
             </div>

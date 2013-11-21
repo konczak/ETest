@@ -9,7 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.entity.ClosedAnswer;
+import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.repository.IClosedAnswerRepository;
 
 @Transactional
@@ -22,33 +22,33 @@ public class ClosedAnswerRepository
 
     @Transactional(readOnly = true)
     @Override
-    public ClosedAnswer getById(Integer id) {
-        return entityManager.find(ClosedAnswer.class, id);
+    public ClosedAnswerEntity getById(Integer id) {
+        return entityManager.find(ClosedAnswerEntity.class, id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<ClosedAnswer> findAll() {
-        Query query = entityManager.createQuery("SELECT ca FROM ClosedAnswer AS ca");
-        return (List<ClosedAnswer>) query.getResultList();
+    public List<ClosedAnswerEntity> findAll() {
+        Query query = entityManager.createQuery("SELECT ca FROM ClosedAnswerEntity AS ca");
+        return (List<ClosedAnswerEntity>) query.getResultList();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<ClosedAnswer> findAllWithMatchingAnswer(String partOfAnswer) {
+    public List<ClosedAnswerEntity> findAllWithMatchingAnswer(String partOfAnswer) {
         Query query = entityManager.createQuery(
-                "SELECT ca FROM ClosedAnswer AS ca WHERE ca.answer LIKE :partOfAnswer");
+                "SELECT ca FROM ClosedAnswerEntity AS ca WHERE ca.answer LIKE :partOfAnswer");
         query.setParameter("partOfAnswer", "%" + partOfAnswer + "%");
-        return (List<ClosedAnswer>) query.getResultList();
+        return (List<ClosedAnswerEntity>) query.getResultList();
     }
 
     @Override
-    public void save(ClosedAnswer closedAnswer) {
+    public void save(ClosedAnswerEntity closedAnswer) {
         entityManager.persist(closedAnswer);
     }
 
     @Override
-    public void delete(ClosedAnswer closedAnswer) {
+    public void delete(ClosedAnswerEntity closedAnswer) {
         entityManager.remove(closedAnswer);
     }
 }

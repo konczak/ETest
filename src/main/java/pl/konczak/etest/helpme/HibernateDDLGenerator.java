@@ -4,25 +4,25 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 
-import pl.konczak.etest.entity.CategoryOfQuestion;
-import pl.konczak.etest.entity.ClosedAnswer;
-import pl.konczak.etest.entity.ClosedQuestion;
-import pl.konczak.etest.entity.ClosedQuestionClosedAnswer;
-import pl.konczak.etest.entity.Role;
-import pl.konczak.etest.entity.User;
-import pl.konczak.etest.entity.id.ClosedQuestionClosedAnswerId;
+import pl.konczak.etest.entity.CategoryOfQuestionEntity;
+import pl.konczak.etest.entity.ClosedAnswerEntity;
+import pl.konczak.etest.entity.ClosedQuestionEntity;
+import pl.konczak.etest.entity.ImageEntity;
+import pl.konczak.etest.entity.RoleEntity;
+import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserPersonalDataEntity;
 
 public class HibernateDDLGenerator {
 
     public static void main(String[] args) {
         new HibernateDDLGenerator().execute(Dialect.POSTGRESQL,
-                ClosedQuestionClosedAnswerId.class,
-                CategoryOfQuestion.class,
-                ClosedAnswer.class,
-                ClosedQuestion.class,
-                ClosedQuestionClosedAnswer.class,
-                User.class,
-                Role.class);
+                ImageEntity.class,
+                CategoryOfQuestionEntity.class,
+                ClosedAnswerEntity.class,
+                ClosedQuestionEntity.class,
+                UserEntity.class,
+                UserPersonalDataEntity.class,
+                RoleEntity.class);
     }
 
     private void execute(Dialect dialect, Class<?>... classes) {

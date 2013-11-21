@@ -1,17 +1,18 @@
 package pl.konczak.etest.repository;
 
 import java.util.List;
-import pl.konczak.etest.entity.ClosedQuestion;
+
+import pl.konczak.etest.entity.ClosedQuestionEntity;
 
 public interface IClosedQuestionRepository {
 
-    ClosedQuestion getById(Integer id);
+    ClosedQuestionEntity getById(Integer id);
 
-    List<ClosedQuestion> findAll();
+    List<ClosedQuestionEntity> findAll();
 
-    List<ClosedQuestion> findAllWithMatchingQuestion(String partOfQuestion);
+    List<ClosedQuestionEntity> findAllWithMatchingQuestion(String partOfQuestion);
 
-    void save(ClosedQuestion closedQuestion);
+    void save(ClosedQuestionEntity closedQuestion);
 
-    void delete(ClosedQuestion closedQuestion);
+    void delete(ClosedQuestionEntity closedQuestion);
 }

@@ -5,19 +5,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>User form</title>
+        <title><spring:message code="user.new.title"/></title>
     </head>
     <body>
-        <h1>User form!</h1>
+        <div class="page-header">
+            <h1><spring:message code="user.new.header"/></h1>
+        </div>
         <div class="project-template">
-            <form:form method="POST" commandName="userRegistration" role="form">
+            <form:form method="POST" commandName="user" role="form">
                 <form:errors path="*" cssClass="info-danger" element="div" />
 
-                <myForm:input object="userRegistration" fieldName="email" required="true"/>
-                <myForm:password object="userRegistration" fieldName="password" required="true"/>
-                <myForm:password object="userRegistration" fieldName="passwordConfirm" required="true"/>
-                <myForm:input object="userRegistration" fieldName="firstname" required="true"/>
-                <myForm:input object="userRegistration" fieldName="lastname" required="true"/>
+                <myForm:input object="user" fieldName="email" required="true"/>
+                <myForm:password object="user" fieldName="password" required="true"/>
+                <myForm:password object="user" fieldName="passwordConfirm" required="true"/>
+                <myForm:input object="user" fieldName="firstname" required="true"/>
+                <myForm:input object="user" fieldName="lastname" required="true"/>
                 <button type="submit" class="btn btn-primary" name="register" value="register">
                     <spring:message code="button_submit"/>
                 </button>
