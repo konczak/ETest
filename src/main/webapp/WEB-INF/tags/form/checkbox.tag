@@ -14,10 +14,10 @@
 <spring:message var="label" code="${object}.${fieldName}.label" htmlEscape="false"/>
 
 <div class="${opaqueDivCssClass}">
-    <form:label path="${fieldName}">
+    <form:errors path="${fieldName}" cssClass="alert alert-danger" element="div"/>
+    <label>
+        <form:checkbox path="${fieldName}"/>
         <c:out value="${label}"/>
         <util:requiredField required="${required}"/>
-    </form:label>
-    <form:errors path="${fieldName}" cssClass="alert alert-danger" element="div"/>
-    <form:checkbox path="${fieldName}"/>
+    </label>
 </div>
