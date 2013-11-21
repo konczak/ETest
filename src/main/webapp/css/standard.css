@@ -38,3 +38,11 @@ footer {
 .nav-tabs li.active a:hover{
     cursor: pointer;
 }
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
