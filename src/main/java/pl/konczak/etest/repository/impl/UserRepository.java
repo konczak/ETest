@@ -36,6 +36,13 @@ public class UserRepository
 
     @Transactional(readOnly = true)
     @Override
+    public List<UserEntity> findAll() {
+        Query query = entityManager.createQuery("SELECT u FROM UserEntity AS u");
+        return (List<UserEntity>) query.getResultList();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public UserEntity findByEmail(String email) {
         Query query = entityManager.createQuery("SELECT u FROM UserEntity AS u WHERE u.email = :email");
         query.setParameter("email", email);
