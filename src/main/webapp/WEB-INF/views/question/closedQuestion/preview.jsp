@@ -18,6 +18,13 @@
             <dd>${closedQuestion.id}</dd>
             <dt><spring:message code="closedQuestion.question.label"/></dt>
             <dd>${closedQuestion.question}</dd>
+            <c:if test="${not empty closedQuestion.imageId}">
+                <spring:url var="imageUrl" value="/image/{id}">
+                    <spring:param name="id" value="${closedQuestion.imageId}"/>
+                </spring:url>
+                <dt><button id="showClosedQuestionPicture" type="button" class="btn btn-info">Show picture</button><dt>
+                <dd><img class="closedQuestionPicture" src="${imageUrl}" alt="Image should be here"></dd>
+                </c:if>
         </dl>
 
         <spring:url var="closedAnswerNewLink" value="/question/closedAnswer/new/{closedQuestionId}">
@@ -38,6 +45,7 @@
                     <th><spring:message code="closedAnswer.correct.label"/></th>
                     <th><spring:message code="closedAnswer.answer.label"/></th>
                     <th><spring:message code="closedAnswer.manage.label"/></th>
+                    <th>obrazek</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +74,19 @@
                                 </a>
                             </div>
                         </td>
+                        <td>
+                            <c:if test="${not empty closedAnswer.imageId}">
+                                <spring:url var="imageUrl" value="/image/{id}">
+                                    <spring:param name="id" value="${closedAnswer.imageId}"/>
+                                </spring:url>
+                                <img id="closedAnswerImage_${closedAnswer.imageId}" class="closedAnswerPicture" src="${imageUrl}" alt="Image should be here">
+                                <div class="btn-group">
+                                    <button id="${closedAnswer.imageId}" class="btn btn-default closedAnswerPicture">
+                                        <span id="closedAnswerImage_${closedAnswer.imageId}" class="glyphicon glyphicon-eye-open"></span>
+                                    </button>
+                                </div>
+                            </c:if>
+                        </td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -80,5 +101,27 @@
             <span class="label label-info">${categoryOfQuestion.title}</span>
         </c:forEach>
         <script src="${activeJsUrl}"></script>
+        <c:if test="${not empty closedQuestion.imageId}">
+            <script>
+//HANDLE TOGGLING CLOSED QUESTION PICTURE
+                $("img.closedQuestionPicture").hide();
+                $("button#showClosedQuestionPicture").click(function() {
+                    $("img.closedQuestionPicture").toggle();
+                });
+//HANDLE TOGGLING CLOSED ANSWER PICTURE
+                $("img.closedAnswerPicture").hide();
+                $("button.closedAnswerPicture").click(function() {
+                    var id = this.id;
+                    $("img#closedAnswerImage_" + id).toggle();
+                    if ($("img#" + id).is(":visible")) {
+                        $("span#closedAnswerImage_" + id).removeClass("glyphicon-eye-open");
+                        $("span#closedAnswerImage_" + id).addClass("glyphicon-eye-close");
+                    } else {
+                        $("span#closedAnswerImage_" + id).removeClass("glyphicon-eye-close");
+                        $("span#closedAnswerImage_" + id).addClass("glyphicon-eye-open");
+                    }
+                });
+            </script>
+        </c:if>
     </body>
 </html>

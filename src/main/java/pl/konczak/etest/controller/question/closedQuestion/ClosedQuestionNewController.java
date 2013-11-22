@@ -1,5 +1,7 @@
 package pl.konczak.etest.controller.question.closedQuestion;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import pl.konczak.etest.bo.IClosedQuestionBO;
 import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionNew;
@@ -57,7 +60,8 @@ public class ClosedQuestionNewController {
     @RequestMapping(method = RequestMethod.POST,
                     params = "save")
     public String processSubmit(@Valid @ModelAttribute(OBJECT) ClosedQuestionNew closedQuestionNew,
-            BindingResult result, SessionStatus status) {
+            BindingResult result, SessionStatus status)
+            throws IOException {
         String action = REDIRECT_TO_PREVIEW;
 
         if (result.hasErrors()) {
@@ -66,6 +70,11 @@ public class ClosedQuestionNewController {
         } else {
             ClosedQuestionEntity closedQuestionEntity =
                     closedQuestionBO.add(closedQuestionNew.getQuestion(), getIdOfAuthenticatedUser());
+            MultipartFile multipartFile = closedQuestionNew.getMultipartFile();
+            if (multipartFile != null) {
+                closedQuestionBO.addPicture(closedQuestionEntity.getId(),
+                        multipartFile.getBytes());
+            }
             status.setComplete();
             //form success
             action = String.format(REDIRECT_TO_PREVIEW, closedQuestionEntity.getId());

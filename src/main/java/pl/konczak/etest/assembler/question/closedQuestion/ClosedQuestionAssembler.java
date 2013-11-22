@@ -8,6 +8,7 @@ import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionPreview;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
+import pl.konczak.etest.entity.ImageEntity;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 
 @Component
@@ -28,15 +29,23 @@ public class ClosedQuestionAssembler {
         closedQuestionPreview.setId(entity.getId());
         closedQuestionPreview.setQuestion(entity.getQuestion());
 
+        ImageEntity imageEntity = entity.getImage();
+
+        if (imageEntity != null) {
+            closedQuestionPreview.setImageId(imageEntity.getId());
+        }
+
         for (CategoryOfQuestionEntity categoryOfQuestionEntity : entity.getCategories()) {
             closedQuestionPreview.addCategoryOfQuestion(categoryOfQuestionEntity.getId(),
                     categoryOfQuestionEntity.getTitle());
         }
 
         for (ClosedAnswerEntity closedAnswerEntity : entity.getClosedAnswers()) {
+            imageEntity = closedAnswerEntity.getImage();
             closedQuestionPreview.addClosedAnswer(closedAnswerEntity.getId(),
                     closedAnswerEntity.getAnswer(),
-                    closedAnswerEntity.isCorrect());
+                    closedAnswerEntity.isCorrect(),
+                    imageEntity == null ? null : imageEntity.getId());
         }
 
         return closedQuestionPreview;

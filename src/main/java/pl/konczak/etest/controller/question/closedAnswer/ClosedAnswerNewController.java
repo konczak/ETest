@@ -1,21 +1,29 @@
 package pl.konczak.etest.controller.question.closedAnswer;
 
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import pl.konczak.etest.bo.IClosedAnswerBO;
 import pl.konczak.etest.dto.question.closedAnswer.ClosedAnswerNew;
+import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
+import pl.konczak.etest.validator.impl.ClosedAnswerNewValidator;
 
 @Controller
 @RequestMapping("question/closedAnswer/new/{closedQuestionId}")
@@ -25,9 +33,17 @@ public class ClosedAnswerNewController {
     private static final String VIEW_NEW = "question/closedAnswer/new";
     private static final String REDIRECT_TO_PREVIEW = "redirect:/question/closedQuestion/%s";
     @Autowired
+    @Qualifier("closedAnswerNewValidator")
+    private ClosedAnswerNewValidator closedAnswerNewValidator;
+    @Autowired
     private IClosedQuestionRepository closedQuestionRepository;
     @Autowired
     private IClosedAnswerBO closedAnswerBO;
+
+    @InitBinder(OBJECT)
+    protected void initBind(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(closedAnswerNewValidator);
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(ModelMap model,
@@ -52,15 +68,21 @@ public class ClosedAnswerNewController {
     public String processSubmit(
             @Valid @ModelAttribute(OBJECT) ClosedAnswerNew closedAnswerNew,
             @PathVariable("closedQuestionId") Integer closedQuestionId,
-            BindingResult result, SessionStatus status) {
+            BindingResult result, SessionStatus status)
+            throws IOException {
         String action = String.format(REDIRECT_TO_PREVIEW, closedQuestionId);
         if (result.hasErrors()) {
             //if validator failed
             action = VIEW_NEW;
         } else {
-            closedAnswerBO.add(closedAnswerNew.getClosedQuestionId(),
+            ClosedAnswerEntity closedAnswerEntity = closedAnswerBO.add(closedAnswerNew.getClosedQuestionId(),
                     closedAnswerNew.getAnswer(),
                     closedAnswerNew.isCorrect());
+            MultipartFile multipartFile = closedAnswerNew.getMultipartFile();
+            if (multipartFile != null) {
+                closedAnswerBO.addPicture(closedAnswerEntity.getId(),
+                        multipartFile.getBytes());
+            }
             status.setComplete();
             //form success
         }

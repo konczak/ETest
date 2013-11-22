@@ -19,11 +19,7 @@
                 <form:errors path="*" cssClass="info-danger" element="div" />
 
                 <myForm:input object="closedQuestion" fieldName="question" required="true"/>
-                <div class="form-group">
-                    <label for="closedQuestion.multipartFile">File input</label>
-                    <input type="file" name="closedQuestion.multipartFile">
-                    <p class="help-block">Example block-level help text here.</p>
-                </div>
+                <myForm:file object="closedQuestion" fieldName="multipartFile" acceptedFiles="image/*"/>
 
                 <button type="submit" class="btn btn-primary" name="save" value="save">
                     <spring:message code="button_submit"/>

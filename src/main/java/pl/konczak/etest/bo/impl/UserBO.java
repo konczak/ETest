@@ -3,6 +3,7 @@ package pl.konczak.etest.bo.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import pl.konczak.etest.repository.IUserRepository;
 public class UserBO
         implements IUserBO {
 
+    private static final Logger LOGGER = Logger.getLogger(UserBO.class);
     @Autowired
     private IUserRepository userRepository;
     @Autowired
@@ -50,6 +52,9 @@ public class UserBO
         user.setUserPersonalData(userPersonalData);
 
         userRepository.save(user);
+
+        LOGGER.info(String.format("Registered User <%s> with email <%s>",
+                user.getId(), user.getEmail()));
 
         return user;
     }

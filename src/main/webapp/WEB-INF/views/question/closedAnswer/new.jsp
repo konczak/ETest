@@ -33,13 +33,8 @@
 
                 <myForm:input object="closedAnswer" fieldName="answer" required="true"/>
                 <myForm:checkbox object="closedAnswer" fieldName="correct"/>
-
-                <div class="form-group">
-                    <label for="closedQuestion.multipartFile">File input</label>
-                    <input type="file" name="closedQuestion.multipartFile">
-                    <p class="help-block">Example block-level help text here.</p>
-                </div>
-                <br>
+                <myForm:file object="closedAnswer" fieldName="multipartFile" acceptedFiles="image/*"/>
+                
                 <button type="submit" class="btn btn-primary" name="add" value="add">
                     <spring:message code="button_submit"/>
                 </button>

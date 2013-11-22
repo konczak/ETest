@@ -7,8 +7,7 @@ public class ClosedQuestionPreview {
 
     private Integer id;
     private String question;
-    private Integer imageid;
-    private byte[] image;
+    private Integer imageId;
     private List<CategoryOfQuestionInternal> categoriesOfQuestion =
             new ArrayList<CategoryOfQuestionInternal>();
     private List<ClosedAnswerInternal> closedAnswers =
@@ -38,11 +37,13 @@ public class ClosedQuestionPreview {
         private Integer id;
         private String answer;
         private boolean correct;
+        private Integer imageId;
 
-        public ClosedAnswerInternal(Integer id, String answer, boolean correct) {
+        public ClosedAnswerInternal(Integer id, String answer, boolean correct, Integer imageId) {
             this.id = id;
             this.answer = answer;
             this.correct = correct;
+            this.imageId = imageId;
         }
 
         public Integer getId() {
@@ -55,6 +56,10 @@ public class ClosedQuestionPreview {
 
         public boolean isCorrect() {
             return correct;
+        }
+
+        public Integer getImageId() {
+            return imageId;
         }
     }
 
@@ -74,20 +79,12 @@ public class ClosedQuestionPreview {
         this.question = question;
     }
 
-    public Integer getImageid() {
-        return imageid;
+    public Integer getImageId() {
+        return imageId;
     }
 
-    public void setImageid(Integer imageid) {
-        this.imageid = imageid;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageId(Integer imageid) {
+        this.imageId = imageid;
     }
 
     public List<CategoryOfQuestionInternal> getCategoriesOfQuestion() {
@@ -102,7 +99,7 @@ public class ClosedQuestionPreview {
         return closedAnswers;
     }
 
-    public void addClosedAnswer(Integer closedAnswerId, String answer, boolean correct) {
-        closedAnswers.add(new ClosedAnswerInternal(closedAnswerId, answer, correct));
+    public void addClosedAnswer(Integer closedAnswerId, String answer, boolean correct, Integer imageId) {
+        closedAnswers.add(new ClosedAnswerInternal(closedAnswerId, answer, correct, imageId));
     }
 }

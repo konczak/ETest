@@ -1,5 +1,6 @@
 package pl.konczak.etest.bo.impl;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 public class CategoryOfQuestionBO
         implements ICategoryOfQuestionBO {
 
+    private static final Logger LOGGER = Logger.getLogger(CategoryOfQuestionBO.class);
     @Autowired
     private ICategoryOfQuestionRepository categoryOfQuestionRepository;
 
@@ -29,6 +31,8 @@ public class CategoryOfQuestionBO
         CategoryOfQuestionEntity categoryOfQuestionEntity = new CategoryOfQuestionEntity(title);
         categoryOfQuestionRepository.save(categoryOfQuestionEntity);
 
+        LOGGER.info(String.format("Add CategoryOfQuestion <%s> with title <%s>",
+                categoryOfQuestionEntity.getId(), categoryOfQuestionEntity.getTitle()));
         return categoryOfQuestionEntity;
     }
 
@@ -40,10 +44,14 @@ public class CategoryOfQuestionBO
 
         CategoryOfQuestionEntity categoryOfQuestionEntity =
                 categoryOfQuestionRepository.getById(categoryOfQuestionId);
+        String oldTitle = categoryOfQuestionEntity.getTitle();
 
         categoryOfQuestionEntity.setTitle(title);
 
         categoryOfQuestionRepository.save(categoryOfQuestionEntity);
+
+        LOGGER.info(String.format("Changed title of CategoryOfQuestion <%s> from <%s> to <%s>",
+                categoryOfQuestionEntity.getId(), oldTitle, categoryOfQuestionEntity.getTitle()));
 
         return categoryOfQuestionEntity;
     }
@@ -56,5 +64,7 @@ public class CategoryOfQuestionBO
                 categoryOfQuestionRepository.getById(categoryOfQuestionId);
 
         categoryOfQuestionRepository.delete(categoryOfQuestionEntity);
+
+        LOGGER.info(String.format("Removed CategoryOfQuestion <%s>", categoryOfQuestionEntity.getId()));
     }
 }
