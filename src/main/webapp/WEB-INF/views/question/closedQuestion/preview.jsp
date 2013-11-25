@@ -19,12 +19,18 @@
             <dt><spring:message code="closedQuestion.question.label"/></dt>
             <dd>${closedQuestion.question}</dd>
             <c:if test="${not empty closedQuestion.imageId}">
-                <spring:url var="imageUrl" value="/image/{id}">
+                <spring:url var="closedQuestionImageUrl" value="/image/{id}">
                     <spring:param name="id" value="${closedQuestion.imageId}"/>
                 </spring:url>
-                <dt><button id="showClosedQuestionPicture" type="button" class="btn btn-info">Show picture</button><dt>
-                <dd><img class="closedQuestionPicture" src="${imageUrl}" alt="Image should be here"></dd>
-                </c:if>
+                <dt>
+                    <spring:message code="closedQuestion.multipartFile.label"/>
+                </dt>
+                <dd>
+                    <a id="showClosedQuestionPicture" href="#" class="btn btn-default">
+                        <span class="glyphicon glyphicon-picture"></span>
+                    </a>
+                </dd>
+            </c:if>
         </dl>
 
         <spring:url var="closedAnswerNewLink" value="/question/closedAnswer/new/{closedQuestionId}">
@@ -45,7 +51,6 @@
                     <th><spring:message code="closedAnswer.correct.label"/></th>
                     <th><spring:message code="closedAnswer.answer.label"/></th>
                     <th><spring:message code="closedAnswer.manage.label"/></th>
-                    <th>obrazek</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,23 +74,34 @@
                         <td>${closedAnswer.answer}</td>
                         <td>
                             <div class="btn-group">
+                                <c:if test="${not empty closedAnswer.imageId}">
+                                    <spring:url var="imageUrl" value="/image/{id}">
+                                        <spring:param name="id" value="${closedAnswer.imageId}"/>
+                                    </spring:url>
+                                    <a id="${closedAnswer.imageId}" href="#" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-picture"></span>
+                                    </a>
+                                    <script>
+                                        var img = '<img src="${imageUrl}">';
+                                        $("a#" + ${closedAnswer.imageId}).popover({
+                                            title: "<spring:message code="closedAnswer.multipartFile.label"/>",
+                                            trigger: "hover",
+                                            placement: "left",
+                                            content: img,
+                                            html: true,
+                                            container: "body"
+                                        });
+
+                                        $("a#" + ${closedAnswer.imageId}).on("shown.bs.popover", function() {
+                                            $(".popover").css("width", "auto");
+                                            $(".popover").css("max-width", "600px");
+                                        });
+                                    </script>
+                                </c:if>
                                 <a href="${deleteUrl}" class="btn btn-default">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </a>
                             </div>
-                        </td>
-                        <td>
-                            <c:if test="${not empty closedAnswer.imageId}">
-                                <spring:url var="imageUrl" value="/image/{id}">
-                                    <spring:param name="id" value="${closedAnswer.imageId}"/>
-                                </spring:url>
-                                <img id="closedAnswerImage_${closedAnswer.imageId}" class="closedAnswerPicture" src="${imageUrl}" alt="Image should be here">
-                                <div class="btn-group">
-                                    <button id="${closedAnswer.imageId}" class="btn btn-default closedAnswerPicture">
-                                        <span id="closedAnswerImage_${closedAnswer.imageId}" class="glyphicon glyphicon-eye-open"></span>
-                                    </button>
-                                </div>
-                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>
@@ -100,26 +116,22 @@
         <c:forEach items="${closedQuestion.categoriesOfQuestion}" var="categoryOfQuestion">
             <span class="label label-info">${categoryOfQuestion.title}</span>
         </c:forEach>
+
         <script src="${activeJsUrl}"></script>
         <c:if test="${not empty closedQuestion.imageId}">
             <script>
-//HANDLE TOGGLING CLOSED QUESTION PICTURE
-                $("img.closedQuestionPicture").hide();
-                $("button#showClosedQuestionPicture").click(function() {
-                    $("img.closedQuestionPicture").toggle();
+                var img = '<img src="${closedQuestionImageUrl}">';
+
+                $("a#showClosedQuestionPicture").popover({
+                    title: "<spring:message code="closedQuestion.multipartFile.label"/>",
+                    trigger: "hover",
+                    content: img,
+                    html: true
                 });
-//HANDLE TOGGLING CLOSED ANSWER PICTURE
-                $("img.closedAnswerPicture").hide();
-                $("button.closedAnswerPicture").click(function() {
-                    var id = this.id;
-                    $("img#closedAnswerImage_" + id).toggle();
-                    if ($("img#" + id).is(":visible")) {
-                        $("span#closedAnswerImage_" + id).removeClass("glyphicon-eye-open");
-                        $("span#closedAnswerImage_" + id).addClass("glyphicon-eye-close");
-                    } else {
-                        $("span#closedAnswerImage_" + id).removeClass("glyphicon-eye-close");
-                        $("span#closedAnswerImage_" + id).addClass("glyphicon-eye-open");
-                    }
+
+                $("a#showClosedQuestionPicture").on("shown.bs.popover", function() {
+                    $(".popover").css("width", "auto");
+                    $(".popover").css("max-width", "600px");
                 });
             </script>
         </c:if>
