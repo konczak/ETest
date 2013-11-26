@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
     <mapping path="/*" decorator="/WEB-INF/decorator/standard.jsp"/>
+
+    <mapping>
+        <path>/user/new</path>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
     
     <mapping>
         <path>/user/settings*</path>
@@ -10,7 +15,13 @@
     
     <mapping>
         <path>/question*</path>
-        <decorator>/WEB-INF/decorator/question.jsp</decorator>
+        <decorator>/WEB-INF/decorator/admin.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
+    
+    <mapping>
+        <path>/user*</path>
+        <decorator>/WEB-INF/decorator/admin.jsp</decorator>
         <decorator>/WEB-INF/decorator/standard.jsp</decorator>
     </mapping>
         
