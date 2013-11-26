@@ -1,0 +1,1 @@
+$("li#userGroup").addClass("active");

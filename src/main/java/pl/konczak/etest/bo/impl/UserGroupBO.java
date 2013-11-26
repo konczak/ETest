@@ -58,6 +58,30 @@ public class UserGroupBO
 
     @Transactional
     @Override
+    public UserGroupEntity changeTitle(Integer id, String title) {
+        Validate.notNull(id);
+        Validate.notEmpty(title);
+
+        if (userGroupRepository.findByTitle(title) != null) {
+            throw new IllegalArgumentException(
+                    String.format("UserGroup with title <%s> already exists", title));
+        }
+
+        UserGroupEntity userGroupEntity = userGroupRepository.getById(id);
+        String oldTitle = userGroupEntity.getTitle();
+
+        userGroupEntity.setTitle(title);
+
+        userGroupRepository.save(userGroupEntity);
+
+        LOGGER.info(String.format("Changed title of UserGroup <%s> from <%s> to <%s>",
+                userGroupEntity.getId(), oldTitle, userGroupEntity.getTitle()));
+
+        return userGroupEntity;
+    }
+
+    @Transactional
+    @Override
     public void remove(Integer id) {
         Validate.notNull(id);
 
