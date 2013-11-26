@@ -42,6 +42,11 @@ public class CategoryOfQuestionBO
         Validate.notNull(categoryOfQuestionId);
         Validate.notEmpty(title);
 
+        if (categoryOfQuestionRepository.findByTitle(title) != null) {
+            throw new IllegalArgumentException(
+                    String.format("CategoryOfQuestion with title <%s> already exists", title));
+        }
+
         CategoryOfQuestionEntity categoryOfQuestionEntity =
                 categoryOfQuestionRepository.getById(categoryOfQuestionId);
         String oldTitle = categoryOfQuestionEntity.getTitle();

@@ -27,7 +27,6 @@ public class CategoryOfQuestionEditValidator
     @Transactional(readOnly = true)
     @Override
     public void validate(Object target, Errors errors) {
-        System.out.println("validate");
         super.validate(target, errors);
         if (errors.hasErrors()) {
             return;
@@ -45,7 +44,6 @@ public class CategoryOfQuestionEditValidator
     }
 
     private void myValidation(Object target, Errors errors) {
-        System.out.println("myValidation");
         CategoryOfQuestionEdit categoryOfQuestionEdit = (CategoryOfQuestionEdit) target;
 
         Integer id = categoryOfQuestionEdit.getId();

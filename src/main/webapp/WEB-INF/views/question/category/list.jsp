@@ -2,11 +2,10 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
-<c:url var="activeCategoryOfQuestionJsUrl" value="/resources/js/activeLink/categoryOfQuestion.js" />
+<c:url var="activeJsUrl" value="/resources/js/activeLink/categoryOfQuestion.js" />
 <c:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables.min.js" />
 <c:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging.js" />
-<c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="categoryOfQuestionNewUrl" value="/question/category/new"/>
+<c:url var="newLink" value="/question/category/new"/>
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +17,7 @@
         <div class="page-header">
             <h1>
                 <spring:message code="categoryOfQuestion.list.header"/>
-                <a href="${categoryOfQuestionNewUrl}" class="btn btn-default">
+                <a href="${newLink}" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus-sign"></span>
                 </a>
             </h1>
@@ -57,7 +56,7 @@
             </tbody>
         </table>
 
-        <script src="${activeCategoryOfQuestionJsUrl}"></script>
+        <script src="${activeJsUrl}"></script>
         <script src="${dataTablesJsUrl}"></script>
         <script src="${dataTablesBootstrapPagingJsUrl}"></script>
 

@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 
-<c:url var="activeCategoryOfQuestionJsUrl" value="/resources/js/activeLink/categoryOfQuestion.js" />
+<c:url var="activeJsUrl" value="/resources/js/activeLink/categoryOfQuestion.js" />
 
 <!DOCTYPE html>
 <html>
@@ -29,6 +29,6 @@
             </form:form>
         </div>
         
-        <script src="${activeCategoryOfQuestionJsUrl}"></script>
+        <script src="${activeJsUrl}"></script>
     </body>
 </html>
