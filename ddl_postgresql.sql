@@ -23,6 +23,12 @@
     alter table users_roles 
         drop constraint FKF6CCD9C6229B8C70;
 
+    alter table users_userGroups 
+        drop constraint FKC80EA016CE3BBC90;
+
+    alter table users_userGroups 
+        drop constraint FKC80EA016887EE4B2;
+
     drop table if exists categoryOfQuestions cascade;
 
     drop table if exists closedAnswers cascade;
@@ -35,11 +41,15 @@
 
     drop table if exists roles cascade;
 
+    drop table if exists userGroups cascade;
+
     drop table if exists userPersonalData cascade;
 
     drop table if exists users cascade;
 
     drop table if exists users_roles cascade;
+
+    drop table if exists users_userGroups cascade;
 
     create table categoryOfQuestions (
         categoryOfQuestionsId  serial not null unique,
@@ -83,6 +93,12 @@
         unique (name)
     );
 
+    create table userGroups (
+        userGroupsId  serial not null unique,
+        title varchar(255) not null unique,
+        primary key (userGroupsId)
+    );
+
     create table userPersonalData (
         usersId int4 not null unique,
         firstname varchar(50) not null,
@@ -103,6 +119,12 @@
         rolesId int4 not null,
         usersId int4 not null,
         primary key (usersId, rolesId)
+    );
+
+    create table users_userGroups (
+        userGroupsId int4 not null,
+        usersId int4 not null,
+        primary key (usersId, userGroupsId)
     );
 
     alter table closedAnswers 
@@ -144,3 +166,13 @@
         add constraint FKF6CCD9C6229B8C70 
         foreign key (rolesId) 
         references roles;
+
+    alter table users_userGroups 
+        add constraint FKC80EA016CE3BBC90 
+        foreign key (usersId) 
+        references users;
+
+    alter table users_userGroups 
+        add constraint FKC80EA016887EE4B2 
+        foreign key (userGroupsId) 
+        references userGroups;

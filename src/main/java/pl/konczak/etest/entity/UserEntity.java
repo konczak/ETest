@@ -42,6 +42,7 @@ public class UserEntity
     private UserPersonalDataEntity userPersonalData;
     private Set<RoleEntity> roles = new HashSet<RoleEntity>();
     private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
+    private Set<UserGroupEntity> groups = new HashSet<UserGroupEntity>();
 
     public UserEntity() {
     }
@@ -131,8 +132,7 @@ public class UserEntity
         return roles;
     }
 
-    public void setRoles(
-            Set<RoleEntity> roles) {
+    public void setRoles(Set<RoleEntity> roles) {
         this.roles = roles;
     }
 
@@ -142,8 +142,31 @@ public class UserEntity
         return closedQuestions;
     }
 
-    public void setClosedQuestions(
-            Set<ClosedQuestionEntity> closedQuestions) {
+    public void setClosedQuestions(Set<ClosedQuestionEntity> closedQuestions) {
         this.closedQuestions = closedQuestions;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL,
+                fetch = FetchType.LAZY)
+    @JoinTable(name = "users_userGroups",
+               uniqueConstraints = {
+        @UniqueConstraint(name = "users_userGroups_unique",
+                          columnNames = {"usersId", "userGroupsId"})},
+               joinColumns = {
+        @JoinColumn(name = "usersId",
+                    nullable = false,
+                    updatable = false)
+    },
+               inverseJoinColumns = {
+        @JoinColumn(name = "userGroupsId",
+                    nullable = false,
+                    updatable = false)
+    })
+    public Set<UserGroupEntity> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<UserGroupEntity> groups) {
+        this.groups = groups;
     }
 }

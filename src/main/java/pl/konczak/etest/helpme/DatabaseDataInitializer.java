@@ -10,12 +10,14 @@ import pl.konczak.etest.bo.ICategoryOfQuestionBO;
 import pl.konczak.etest.bo.IClosedAnswerBO;
 import pl.konczak.etest.bo.IClosedQuestionBO;
 import pl.konczak.etest.bo.IUserBO;
+import pl.konczak.etest.bo.IUserGroupBO;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.RoleEntity;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IRoleRepository;
+import pl.konczak.etest.repository.IUserGroupRepository;
 import pl.konczak.etest.repository.IUserRepository;
 
 @Component
@@ -37,6 +39,10 @@ public class DatabaseDataInitializer {
     private IClosedQuestionBO closedQuestionBO;
     @Autowired
     private IClosedAnswerBO closedAnswerBO;
+    @Autowired
+    private IUserGroupRepository userGroupRepository;
+    @Autowired
+    private IUserGroupBO userGroupBO;
 
     @Transactional
     @PostConstruct
@@ -53,6 +59,10 @@ public class DatabaseDataInitializer {
         }
         if (closedQuestionRepository.findAll().isEmpty()) {
             prepareClosedQuestions();
+        }
+        
+        if (userGroupRepository.findAll().isEmpty()) {
+            prepareUserGroups();
         }
     }
 
@@ -120,5 +130,14 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "ok 9.91 m/s<sup>2</sup>", false);
         closedAnswerBO.add(entity.getId(), "ok 9.81 cm/s<sup>2</sup>", false);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
+    }
+
+    private void prepareUserGroups() {
+        userGroupBO.add("Klasa I A 2013-14");
+        userGroupBO.add("Klasa I B 2013-14");
+        userGroupBO.add("Klasa II A 2013-14");
+        userGroupBO.add("Klasa III A 2013-14");
+        userGroupBO.add("Szostkowi");
+        userGroupBO.add("Madrale");
     }
 }

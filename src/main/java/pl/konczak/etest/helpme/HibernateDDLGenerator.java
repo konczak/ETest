@@ -10,6 +10,7 @@ import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.ImageEntity;
 import pl.konczak.etest.entity.RoleEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;
 
 public class HibernateDDLGenerator {
@@ -22,7 +23,8 @@ public class HibernateDDLGenerator {
                 ClosedQuestionEntity.class,
                 UserEntity.class,
                 UserPersonalDataEntity.class,
-                RoleEntity.class);
+                RoleEntity.class,
+                UserGroupEntity.class);
     }
 
     private void execute(Dialect dialect, Class<?>... classes) {
