@@ -21,7 +21,7 @@ public class ClosedQuestionPreviewController {
     private ClosedQuestionAssembler closedQuestionAssembler;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String delete(ModelMap model,
+    public String get(ModelMap model,
             @PathVariable("id") Integer closedQuestionId) {
 
         model.addAttribute(OBJECT, closedQuestionAssembler.toPreview(closedQuestionId));

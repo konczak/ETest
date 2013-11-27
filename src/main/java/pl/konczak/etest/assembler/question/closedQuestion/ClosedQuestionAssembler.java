@@ -17,7 +17,7 @@ public class ClosedQuestionAssembler {
     @Autowired
     private IClosedQuestionRepository closedQuestionRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public ClosedQuestionPreview toPreview(Integer closedQuestionId) {
         ClosedQuestionEntity entity =
                 closedQuestionRepository.getById(closedQuestionId);
