@@ -111,6 +111,7 @@
         email varchar(50) not null unique,
         locked boolean not null,
         password varchar(255) not null,
+        registeredAt timestamp not null,
         primary key (usersId),
         unique (email)
     );

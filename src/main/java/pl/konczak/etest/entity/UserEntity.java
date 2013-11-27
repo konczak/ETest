@@ -18,9 +18,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.Type;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import pl.konczak.etest.core.Validate;
 
@@ -39,6 +42,7 @@ public class UserEntity
     @NotBlank
     private String password;
     private boolean locked;
+    private LocalDateTime registeredAt;
     private UserPersonalDataEntity userPersonalData;
     private Set<RoleEntity> roles = new HashSet<RoleEntity>();
     private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
@@ -55,6 +59,7 @@ public class UserEntity
         this.email = email;
         this.password = password;
         this.roles = roles;
+        this.registeredAt = LocalDateTime.now();
     }
 
     @Id
@@ -98,6 +103,17 @@ public class UserEntity
 
     public void setLocked(boolean locked) {
         this.locked = locked;
+    }
+
+    @Column(nullable = false,
+            updatable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    public LocalDateTime getRegisteredAt() {
+        return registeredAt;
+    }
+
+    public void setRegisteredAt(LocalDateTime registeredAt) {
+        this.registeredAt = registeredAt;
     }
 
     @OneToOne(fetch = FetchType.LAZY,
