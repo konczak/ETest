@@ -27,10 +27,14 @@
                     <th><spring:message code="user.firstname.label"/></th>
                     <th><spring:message code="user.email.label"/></th>
                     <th><spring:message code="user.locked.label"/></th>
+                    <th><spring:message code="user.manage.label"/></th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${users}" var="user">
+                    <spring:url var="previewUrl" value="/user/{id}">
+                        <spring:param name="id" value="${user.id}"/>
+                    </spring:url>
                     <c:choose>
                         <c:when test="${user.locked}">
                             <c:set var="glyphicon" value="glyphicon-lock red"/>
@@ -46,6 +50,13 @@
                         <td>${user.email}</td>
                         <td>
                             <span class="glyphicon ${glyphicon}"></span>
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="${previewUrl}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-eye-open"></span>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 </c:forEach>

@@ -14,6 +14,8 @@ import pl.konczak.etest.bo.IUserGroupBO;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.RoleEntity;
+import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IRoleRepository;
@@ -50,7 +52,9 @@ public class DatabaseDataInitializer {
         if (roleRepository.findAll().isEmpty()) {
             prepareRoles();
         }
-
+        if (userGroupRepository.findAll().isEmpty()) {
+            prepareUserGroups();
+        }
         if (userRepository.findByEmail("konczak.piotrek@gmail.com") == null) {
             prepareUsers();
         }
@@ -59,10 +63,6 @@ public class DatabaseDataInitializer {
         }
         if (closedQuestionRepository.findAll().isEmpty()) {
             prepareClosedQuestions();
-        }
-        
-        if (userGroupRepository.findAll().isEmpty()) {
-            prepareUserGroups();
         }
     }
 
@@ -77,8 +77,26 @@ public class DatabaseDataInitializer {
         roleRepository.save(role);
     }
 
+    private void prepareUserGroups() {
+        userGroupBO.add("Klasa I A 2013-14");
+        userGroupBO.add("Klasa I B 2013-14");
+        userGroupBO.add("Klasa II A 2013-14");
+        userGroupBO.add("Klasa III A 2013-14");
+        userGroupBO.add("Szostkowi");
+        userGroupBO.add("Madrale");
+        userGroupBO.add("Admini");
+        userGroupBO.add("Nauczyciele");
+    }
+
     private void prepareUsers() {
-        userBO.register("konczak.piotrek@gmail.com", "haslo", "Piotr", "Konczak");
+        userBO.register(
+                "konczak.piotrek@gmail.com", "haslo", "Piotr", "Konczak");
+        userBO.register(
+                "bodziogodzio@gmail.com", "haslo", "Boguslaw", "Godziatkowski");
+
+        userGroupBO.addUserAsMember(1, 7);
+        userGroupBO.addUserAsMember(2, 7);
+        userGroupBO.addUserAsMember(2, 8);
     }
 
     private void prepareCategoriesOfQuestion() {
@@ -98,8 +116,10 @@ public class DatabaseDataInitializer {
     }
 
     private void prepareClosedQuestions() {
-        CategoryOfQuestionEntity fizyka = categoryOfQuestionRepository.findByTitle("Fizyka");
-        CategoryOfQuestionEntity grawitacja = categoryOfQuestionRepository.findByTitle("Grawitacja");
+        CategoryOfQuestionEntity fizyka =
+                categoryOfQuestionRepository.findByTitle("Fizyka");
+        CategoryOfQuestionEntity grawitacja =
+                categoryOfQuestionRepository.findByTitle("Grawitacja");
         ClosedQuestionEntity entity;
 
         entity = closedQuestionBO.add("I zasada dynamiki Newtona brzmi:", 1);
@@ -130,14 +150,5 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "ok 9.91 m/s<sup>2</sup>", false);
         closedAnswerBO.add(entity.getId(), "ok 9.81 cm/s<sup>2</sup>", false);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
-    }
-
-    private void prepareUserGroups() {
-        userGroupBO.add("Klasa I A 2013-14");
-        userGroupBO.add("Klasa I B 2013-14");
-        userGroupBO.add("Klasa II A 2013-14");
-        userGroupBO.add("Klasa III A 2013-14");
-        userGroupBO.add("Szostkowi");
-        userGroupBO.add("Madrale");
     }
 }
