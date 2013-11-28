@@ -1,8 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
 <c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
+<c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
 <c:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables.min.js" />
 <c:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging.js" />
 <c:url var="newLink" value="/question/closedQuestion/new"/>
@@ -19,7 +19,7 @@
                 <spring:message code="user.list.header"/>
             </h1>
         </div>
-        <table id="users" class="table table-striped table-hover">
+        <table id="dataTables" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th><spring:message code="entity_id"/></th>
@@ -68,7 +68,7 @@
         <script src="${dataTablesBootstrapPagingJsUrl}"></script>
 
         <script type="text/javascript">
-            $('#users').dataTable({
+            $('table#dataTables').dataTable({
                 "oLanguage": {
                     "sSearch": "<spring:message code="global_search"/>",
                     "sZeroRecords": "<spring:message code="dataTables.sZeroRecords"/>",
