@@ -8,6 +8,8 @@ public interface IUserGroupBO {
 
     UserGroupEntity addUserAsMember(Integer userId, Integer userGroupId);
 
+    UserGroupEntity removeUserFromMembers(Integer userId, Integer userGroupId);
+
     UserGroupEntity changeTitle(Integer id, String title);
 
     void remove(Integer id);

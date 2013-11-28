@@ -185,4 +185,12 @@ public class UserEntity
     public void setGroups(Set<UserGroupEntity> groups) {
         this.groups = groups;
     }
+
+    public void addGroup(UserGroupEntity userGroup) {
+        this.groups.add(userGroup);
+    }
+
+    public void removeGroup(UserGroupEntity userGroup) {
+        this.groups.remove(userGroup);
+    }
 }

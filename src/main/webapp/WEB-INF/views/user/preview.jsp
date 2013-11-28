@@ -3,7 +3,9 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
-
+<spring:url var="groupsUrl" value="/user/{id}/groups">
+    <spring:param name="id" value="${user.id}"/>
+</spring:url>
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,6 +42,9 @@
         <div class="page-header">
             <h3>
                 <spring:message code="userGroup.list.header"/>
+                <a href="${groupsUrl}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
             </h3>
         </div>
         <c:forEach items="${user.userGroups}" var="userGroup">

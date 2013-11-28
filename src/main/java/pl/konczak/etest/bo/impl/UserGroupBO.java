@@ -1,5 +1,6 @@
 package pl.konczak.etest.bo.impl;
 
+import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,7 +52,31 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info(String.format("Add user <%s> to UserGroup <%s>",
+        LOGGER.info(String.format("Add User <%s> to UserGroup <%s>",
+                userEntity.getId(), userGroupEntity.getId()));
+        return userGroupEntity;
+    }
+
+    @Transactional
+    @Override
+    public UserGroupEntity removeUserFromMembers(Integer userId, Integer userGroupId) {
+        Validate.notNull(userId);
+        Validate.notNull(userGroupId);
+
+        UserEntity userEntity = userRepository.getById(userId);
+        UserGroupEntity userGroupEntity = userGroupRepository.getById(userGroupId);
+
+        Set<UserEntity> members = userGroupEntity.getMembers();
+        if (!members.contains(userEntity)) {
+            throw new IllegalArgumentException(
+                    String.format("UserGroup <%s> does not contains User <%s>",
+                    userGroupEntity.getId(), userEntity.getId()));
+        }
+        userGroupEntity.removeUserFromMembers(userEntity);
+
+        userGroupRepository.save(userGroupEntity);
+
+        LOGGER.info(String.format("Remove User <%s> from UserGroup <%s>",
                 userEntity.getId(), userGroupEntity.getId()));
         return userGroupEntity;
     }

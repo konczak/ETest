@@ -86,4 +86,8 @@ public class UserGroupEntity
     public void addUserToMembers(UserEntity user) {
         this.members.add(user);
     }
+
+    public void removeUserFromMembers(UserEntity user) {
+        this.members.remove(user);
+    }
 }

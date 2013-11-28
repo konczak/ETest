@@ -1,64 +1,58 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
 <c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
 <c:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables.min.js" />
 <c:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging.js" />
-<c:url var="newLink" value="/user/group/new"/>
-
+<spring:url var="membersUrl" value="/user/group/{id}/members">
+    <spring:param name="id" value="${userGroup.id}"/>
+</spring:url>
 <!DOCTYPE html>
 <html>
     <head>
-        <title><spring:message code="userGroup.list.title"/></title>
+        <title><spring:message code="userGroup.preview.title"/></title>
         <link type="text/css" href="${dataTablesCssUrl}" rel="stylesheet">
     </head>
     <body>
         <div class="page-header">
-            <h1>
-                <spring:message code="userGroup.list.header"/>
-                <a href="${newLink}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus-sign"></span>
-                </a>
-            </h1>
+            <h1><spring:message code="userGroup.preview.header"/></h1>
         </div>
-        <table id="userGroups" class="table table-striped table-hover">
+
+        <dl class="dl-horizontal">
+            <dt><spring:message code="entity_id"/></dt>
+            <dd>${userGroup.id}</dd>
+            <dt><spring:message code="userGroup.title.label"/></dt>
+            <dd>${userGroup.title}</dd>
+            <dt><spring:message code="userGroup.membersCount.label"/></dt>
+            <dd>${fn:length(userGroup.members)}</dd>
+        </dl>
+
+        <div class="page-header">
+            <h3>
+                <spring:message code="user.list.header"/>
+                <a href="${membersUrl}" class="btn btn-default">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+            </h3>
+        </div>
+        <table id="dataTables" class="table table-striped table-hover">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th><spring:message code="entity_id"/></th>
-                    <th><spring:message code="userGroup.title.label"/></th>
-                    <th><spring:message code="userGroup.membersCount.label"/></th>
-                    <th><spring:message code="userGroup.manage.label"/></th>
+                    <th><spring:message code="user.lastname.label"/></th>
+                    <th><spring:message code="user.firstname.label"/></th>
                 </tr>
             </thead>
             <tbody>
-                <c:forEach items="${userGroups}" var="userGroup">
-                    <spring:url var="previewUrl" value="/user/group/{id}">
-                        <spring:param name="id" value="${userGroup.id}"/>
-                    </spring:url>
-                    <spring:url var="editUrl" value="/user/group/edit/{id}">
-                        <spring:param name="id" value="${userGroup.id}"/>
-                    </spring:url>
-                    <spring:url var="deleteUrl" value="/user/group/delete/{id}">
-                        <spring:param name="id" value="${userGroup.id}"/>
-                    </spring:url>
+                <c:forEach items="${userGroup.members}" var="member" varStatus="status">
                     <tr>
-                        <td>${userGroup.id}</td>
-                        <td>${userGroup.title}</td>
-                        <td>${userGroup.membersCount}</td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="${previewUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
-                                <a href="${editUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                                <a href="${deleteUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
-                            </div>
-                        </td>
+                        <td>${status.count}</td>
+                        <td>${member.id}</td>
+                        <td>${member.lastname}</td>
+                        <td>${member.firstname}</td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -67,9 +61,9 @@
         <script src="${activeJsUrl}"></script>
         <script src="${dataTablesJsUrl}"></script>
         <script src="${dataTablesBootstrapPagingJsUrl}"></script>
-
+        
         <script type="text/javascript">
-            $('#userGroups').dataTable({
+            $('table#dataTables').dataTable({
                 "oLanguage": {
                     "sSearch": "<spring:message code="global_search"/>",
                     "sZeroRecords": "<spring:message code="dataTables.sZeroRecords"/>",
