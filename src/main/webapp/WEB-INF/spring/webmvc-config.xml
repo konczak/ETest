@@ -60,8 +60,6 @@
                 <value>i18n/question/category/webmessages_categoryOfQuestion</value>
                 <value>i18n/question/closedAnswer/webmessages_closedAnswer</value>
                 <value>i18n/question/closedQuestion/webmessages_closedQuestion</value>
-                <value>i18n/webmessages_SomeDTO</value>
-                <value>i18n/webmessages_customer</value>
                 <value>i18n/application</value>
             </list>
         </property>
