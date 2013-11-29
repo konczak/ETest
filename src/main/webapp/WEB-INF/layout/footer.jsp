@@ -2,8 +2,25 @@
 
 <spring:message var="authorEmail" code="global.author.email"/>
 <spring:message var="ownerEmail" code="global.owner.email"/>
+<spring:url var="aboutUsUrl" value="/about"/>
+<spring:url var="contactUrl" value="/contact"/>
+
 <footer>
     <div class="container">
+
+        <ul class="list-inline">
+            <li>
+                <a href="${aboutUsUrl}">
+                    <spring:message code="global.aboutUs.title"/>
+                </a>
+            </li>
+            <li>-</li>
+            <li>
+                <a href="${contactUrl}">
+                    <spring:message code="global.contact.title"/>
+                </a>
+            </li>
+        </ul>
         <p>
             Copyright &copy; 2013 
             <a href="mailto:${authorEmail}">
