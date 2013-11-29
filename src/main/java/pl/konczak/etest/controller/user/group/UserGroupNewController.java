@@ -1,6 +1,9 @@
 package pl.konczak.etest.controller.user.group;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
+import org.joda.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,6 +43,7 @@ public class UserGroupNewController {
             method = RequestMethod.GET)
     public String initForm(ModelMap model) {
         UserGroupNew userGroupNew = new UserGroupNew();
+        userGroupNew.setClassPrefix("Klasa");
 
         //command object
         model.addAttribute(OBJECT, userGroupNew);
@@ -69,5 +73,48 @@ public class UserGroupNewController {
                     params = "cancel")
     public String processCancel() {
         return REDIRECT_TO_LIST;
+    }
+
+    @ModelAttribute("classNumberList")
+    public List<String> populateClassNumberList() {
+        //Data referencing for number radiobuttons
+        List<String> classNumberList = new ArrayList<String>();
+        classNumberList.add("I");
+        classNumberList.add("II");
+        classNumberList.add("III");
+
+        return classNumberList;
+    }
+
+    @ModelAttribute("classLetterList")
+    public List<String> populateClassLetterList() {
+        //Data referencing for number radiobuttons
+        List<String> classLetterList = new ArrayList<String>();
+        classLetterList.add("A");
+        classLetterList.add("B");
+        classLetterList.add("C");
+        classLetterList.add("D");
+        classLetterList.add("E");
+        classLetterList.add("K");
+
+        return classLetterList;
+    }
+
+    @ModelAttribute("classYearList")
+    public List<String> populateClassYearList() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        int year = localDateTime.getYear();
+        //Data referencing for number radiobuttons
+        List<String> classYearList = new ArrayList<String>();
+        classYearList.add(yearFormat(year, 0));
+        classYearList.add(yearFormat(year, 1));
+        classYearList.add(yearFormat(year, 2));
+        classYearList.add(yearFormat(year, 3));
+
+        return classYearList;
+    }
+
+    private String yearFormat(int year, int shift) {
+        return String.format("%s-%s", year + shift, year - 2000 + shift + 1);
     }
 }
