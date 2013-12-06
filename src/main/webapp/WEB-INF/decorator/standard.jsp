@@ -3,7 +3,7 @@
 <c:url var="bootstrapCssUrl" value="/resources/css/bootstrap.min.css" />
 <c:url var="projectCssUrl" value="/resources/css/standard.css" />
 <c:url var="flagsCssUrl" value="/resources/css/flags.css" />
-<c:url var="faviconUrl" value="/resources/images/telep.png" />
+<c:url var="faviconUrl" value="/resources/images/favicon.png" />
 <c:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2.min.js" />
 <c:url var="bootstrapJsUrl" value="/resources/js/bootstrap.min.js" />
 <c:set var="language" value="${pageContext.response.locale.language}"/>
