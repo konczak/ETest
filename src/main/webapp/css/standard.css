@@ -1,3 +1,5 @@
+@import url('/ETest/resources/css/colors.css');
+
 body {
     padding-top: 55px;
 }
@@ -37,20 +39,4 @@ footer {
 
 .nav-tabs li.active a:hover{
     cursor: pointer;
-}
-
-.green {
-    color: green;
-}
-
-.red {
-    color: red;
-}
-
-.blue {
-    color: blue;
-}
-
-.grey {
-    color: gray;
 }
