@@ -23,7 +23,7 @@ import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionNew;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.repository.IUserRepository;
-import pl.konczak.etest.validator.impl.ClosedQuestionNewValidator;
+import pl.konczak.etest.validator.question.ClosedQuestionNewValidator;
 
 @Controller
 @RequestMapping("question/closedQuestion/new")
