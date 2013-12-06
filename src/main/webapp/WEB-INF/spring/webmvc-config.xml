@@ -60,6 +60,7 @@
                 <value>i18n/question/category/webmessages_categoryOfQuestion</value>
                 <value>i18n/question/closedAnswer/webmessages_closedAnswer</value>
                 <value>i18n/question/closedQuestion/webmessages_closedQuestion</value>
+                <value>i18n/teacher/testTemplate/webmessages_testTemplate</value>
                 <value>i18n/application</value>
             </list>
         </property>
