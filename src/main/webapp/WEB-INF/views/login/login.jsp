@@ -20,7 +20,7 @@
                     <spring:message code="security_bad_credentials"/>
                 </div>
             </c:if>
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="<spring:message code="button_submit"/>">
+            <input class="btn btn-lg btn-primary btn-block" type="submit" value="<spring:message code="button_proceed"/>">
         </form>
 
     </body>
