@@ -17,11 +17,20 @@
     alter table closedQuestions_categoryOfQuestions 
         drop constraint FK11E8315A845D3B50;
 
-    alter table users_roles 
-        drop constraint FKF6CCD9C6CE3BBC90;
+    alter table testTemplates 
+        drop constraint FK9E09A2C7DD6FC9DC;
+
+    alter table testTemplates_closedQuestions 
+        drop constraint FK74DCE3C91CDF25A3;
+
+    alter table testTemplates_closedQuestions 
+        drop constraint FK74DCE3C947E9CE1D;
 
     alter table users_roles 
         drop constraint FKF6CCD9C6229B8C70;
+
+    alter table users_roles 
+        drop constraint FKF6CCD9C6CE3BBC90;
 
     alter table users_userGroups 
         drop constraint FKC80EA016CE3BBC90;
@@ -40,6 +49,10 @@
     drop table if exists images cascade;
 
     drop table if exists roles cascade;
+
+    drop table if exists testTemplates cascade;
+
+    drop table if exists testTemplates_closedQuestions cascade;
 
     drop table if exists userGroups cascade;
 
@@ -93,6 +106,20 @@
         unique (name)
     );
 
+    create table testTemplates (
+        testTemplatesId  serial not null unique,
+        subject varchar(50) not null unique,
+        author_usersId int4,
+        primary key (testTemplatesId)
+    );
+
+    create table testTemplates_closedQuestions (
+        mandatory boolean not null,
+        closedQuestion_closedQuestionsId int4,
+        testTemplate_testTemplatesId int4,
+        primary key (closedQuestion_closedQuestionsId, testTemplate_testTemplatesId)
+    );
+
     create table userGroups (
         userGroupsId  serial not null unique,
         title varchar(255) not null unique,
@@ -117,9 +144,9 @@
     );
 
     create table users_roles (
-        rolesId int4 not null,
         usersId int4 not null,
-        primary key (usersId, rolesId)
+        rolesId int4 not null,
+        primary key (rolesId, usersId)
     );
 
     create table users_userGroups (
@@ -158,15 +185,30 @@
         foreign key (closedQuestionsId) 
         references closedQuestions;
 
-    alter table users_roles 
-        add constraint FKF6CCD9C6CE3BBC90 
-        foreign key (usersId) 
+    alter table testTemplates 
+        add constraint FK9E09A2C7DD6FC9DC 
+        foreign key (author_usersId) 
         references users;
+
+    alter table testTemplates_closedQuestions 
+        add constraint FK74DCE3C91CDF25A3 
+        foreign key (closedQuestion_closedQuestionsId) 
+        references closedQuestions;
+
+    alter table testTemplates_closedQuestions 
+        add constraint FK74DCE3C947E9CE1D 
+        foreign key (testTemplate_testTemplatesId) 
+        references testTemplates;
 
     alter table users_roles 
         add constraint FKF6CCD9C6229B8C70 
         foreign key (rolesId) 
         references roles;
+
+    alter table users_roles 
+        add constraint FKF6CCD9C6CE3BBC90 
+        foreign key (usersId) 
+        references users;
 
     alter table users_userGroups 
         add constraint FKC80EA016CE3BBC90 

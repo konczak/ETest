@@ -37,6 +37,7 @@ public class ClosedQuestionEntity
     private ImageEntity image;
     private Set<CategoryOfQuestionEntity> categories = new HashSet<CategoryOfQuestionEntity>();
     private Set<ClosedAnswerEntity> closedAnswers = new HashSet<ClosedAnswerEntity>();
+    private Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions = new HashSet<TestTemplateClosedQuestionEntity>();
 
     public ClosedQuestionEntity() {
     }
@@ -133,5 +134,16 @@ public class ClosedQuestionEntity
 
     public void addClosedAnswer(ClosedAnswerEntity closedAnswer) {
         this.closedAnswers.add(closedAnswer);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "pk.closedQuestion",
+               cascade = CascadeType.ALL)
+    public Set<TestTemplateClosedQuestionEntity> getTestTemplateClosedQuestions() {
+        return testTemplateClosedQuestions;
+    }
+
+    public void setTestTemplateClosedQuestions(Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions) {
+        this.testTemplateClosedQuestions = testTemplateClosedQuestions;
     }
 }
