@@ -9,22 +9,28 @@ import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.ImageEntity;
 import pl.konczak.etest.entity.RoleEntity;
+import pl.konczak.etest.entity.TestTemplateClosedQuestionEntity;
+import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;
+import pl.konczak.etest.entity.id.TestTemplateClosedQuestionId;
 
 public class HibernateDDLGenerator {
 
     public static void main(String[] args) {
         new HibernateDDLGenerator().execute(Dialect.POSTGRESQL,
-                ImageEntity.class,
+                TestTemplateClosedQuestionId.class,
                 CategoryOfQuestionEntity.class,
                 ClosedAnswerEntity.class,
                 ClosedQuestionEntity.class,
-                UserEntity.class,
-                UserPersonalDataEntity.class,
+                ImageEntity.class,
                 RoleEntity.class,
-                UserGroupEntity.class);
+                TestTemplateClosedQuestionEntity.class,
+                TestTemplateEntity.class,
+                UserEntity.class,
+                UserGroupEntity.class,
+                UserPersonalDataEntity.class);
     }
 
     private void execute(Dialect dialect, Class<?>... classes) {
