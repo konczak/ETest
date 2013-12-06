@@ -1,4 +1,4 @@
-package pl.konczak.etest.validator.impl;
+package pl.konczak.etest.validator.question;
 
 import java.io.IOException;
 
@@ -8,18 +8,18 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartFile;
 
-import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionNew;
+import pl.konczak.etest.dto.question.closedAnswer.ClosedAnswerNew;
 
 @Component
-public class ClosedQuestionNewValidator
+public class ClosedAnswerNewValidator
         extends LocalValidatorFactoryBean
         implements Validator {
 
     private static final Integer MAXIMAL_IMAGE_BYTES_SIZE = 100000;
 
     @Override
-    public boolean supports(Class clazz) {
-        return ClosedQuestionNew.class.isAssignableFrom(clazz);
+    public boolean supports(Class<?> clazz) {
+        return ClosedAnswerNew.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -28,13 +28,14 @@ public class ClosedQuestionNewValidator
         if (errors.hasErrors()) {
             return;
         }
+        //TODO validate optional file
+        ClosedAnswerNew closedAnswerNew = (ClosedAnswerNew) target;
 
-        ClosedQuestionNew closedQuestionNew = (ClosedQuestionNew) target;
-        MultipartFile multipartFile = closedQuestionNew.getMultipartFile();
+        MultipartFile multipartFile = closedAnswerNew.getMultipartFile();
 
         if (multipartFile != null) {
             if (isFileTooBig(multipartFile)) {
-                errors.rejectValue("multipartFile", "closedQuestion.multipartFile.tooBig");
+                errors.rejectValue("multipartFile", "closedAnswerNew.multipartFile.tooBig");
             }
         }
 

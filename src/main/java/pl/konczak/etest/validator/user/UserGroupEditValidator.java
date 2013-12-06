@@ -1,4 +1,4 @@
-package pl.konczak.etest.validator.impl;
+package pl.konczak.etest.validator.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -7,11 +7,12 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import pl.konczak.etest.dto.user.group.UserGroupNew;
+import pl.konczak.etest.dto.user.group.UserGroupEdit;
+import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.repository.IUserGroupRepository;
 
 @Component
-public class UserGroupNewValidator
+public class UserGroupEditValidator
         extends LocalValidatorFactoryBean
         implements Validator {
 
@@ -20,7 +21,7 @@ public class UserGroupNewValidator
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return UserGroupNew.class.isAssignableFrom(clazz);
+        return UserGroupEdit.class.isAssignableFrom(clazz);
     }
 
     @Transactional(readOnly = true)
@@ -43,11 +44,22 @@ public class UserGroupNewValidator
     }
 
     private void myValidation(Object target, Errors errors) {
-        UserGroupNew userGroupNew = (UserGroupNew) target;
+        UserGroupEdit userGroupEdit = (UserGroupEdit) target;
 
-        String title = userGroupNew.getTitle();
+        Integer id = userGroupEdit.getId();
+        String title = userGroupEdit.getTitle();
 
-        if (userGroupRepository.findByTitle(title) != null) {
+        UserGroupEntity userGroupEntity = userGroupRepository.getById(id);
+
+        if (userGroupEntity.getTitle().equals(title)) {
+            errors.rejectValue("title", "userGroup.title.doesNotChanged");
+        }
+
+        UserGroupEntity userGroupEntitOther =
+                userGroupRepository.findByTitle(title);
+
+        if (userGroupEntitOther != null
+                && !userGroupEntitOther.getId().equals(id)) {
             errors.rejectValue("title", "userGroup.title.alreadyTaken");
         }
     }

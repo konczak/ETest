@@ -1,4 +1,4 @@
-package pl.konczak.etest.validator.impl;
+package pl.konczak.etest.validator.question;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

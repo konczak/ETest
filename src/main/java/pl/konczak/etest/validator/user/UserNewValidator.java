@@ -1,4 +1,4 @@
-package pl.konczak.etest.validator.impl;
+package pl.konczak.etest.validator.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -6,20 +6,21 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import pl.konczak.etest.dto.question.category.CategoryOfQuestionNew;
-import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
+import pl.konczak.etest.dto.user.UserNew;
+import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.repository.IUserRepository;
 
 @Component
-public class CategoryOfQuestionNewValidator
+public class UserNewValidator
         extends LocalValidatorFactoryBean
         implements Validator {
 
     @Autowired
-    private ICategoryOfQuestionRepository categoryOfQuestionRepository;
+    private IUserRepository userRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return CategoryOfQuestionNew.class.isAssignableFrom(clazz);
+        return UserNew.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -41,12 +42,18 @@ public class CategoryOfQuestionNewValidator
     }
 
     private void myValidation(Object target, Errors errors) {
-        CategoryOfQuestionNew categoryOfQuestionNew = (CategoryOfQuestionNew) target;
+        UserNew userNew = (UserNew) target;
 
-        String title = categoryOfQuestionNew.getTitle();
+        String password = userNew.getPassword();
+        String passwordConfirm = userNew.getPasswordConfirm();
 
-        if (categoryOfQuestionRepository.findByTitle(title) != null) {
-            errors.rejectValue("title", "categoryOfQuestion.title.alreadyTaken");
+        if (!password.equals(passwordConfirm)) {
+            errors.rejectValue("password", "user.password.mismatch");
+            errors.rejectValue("passwordConfirm", "user.password.mismatch");
+        }
+        UserEntity user = userRepository.findByEmail(userNew.getEmail());
+        if (user != null) {
+            errors.rejectValue("email", "user.email.alreadyTaken");
         }
     }
 }
