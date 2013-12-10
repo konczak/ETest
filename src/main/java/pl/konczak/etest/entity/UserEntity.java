@@ -18,11 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import org.hibernate.annotations.Type;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import pl.konczak.etest.core.Validate;
@@ -47,6 +46,8 @@ public class UserEntity
     private Set<RoleEntity> roles = new HashSet<RoleEntity>();
     private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
     private Set<UserGroupEntity> groups = new HashSet<UserGroupEntity>();
+    private Set<UserExamEntity> exams = new HashSet<UserExamEntity>();
+    private Set<ExamEntity> controlledExams = new HashSet<ExamEntity>();
 
     public UserEntity() {
     }
@@ -192,5 +193,25 @@ public class UserEntity
 
     public void removeGroup(UserGroupEntity userGroup) {
         this.groups.remove(userGroup);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "examined")
+    public Set<UserExamEntity> getExams() {
+        return exams;
+    }
+
+    public void setExams(Set<UserExamEntity> exams) {
+        this.exams = exams;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "examiner")
+    public Set<ExamEntity> getControlledExams() {
+        return controlledExams;
+    }
+
+    public void setControlledExams(Set<ExamEntity> controlledExams) {
+        this.controlledExams = controlledExams;
     }
 }

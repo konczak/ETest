@@ -38,6 +38,7 @@ public class ClosedQuestionEntity
     private Set<CategoryOfQuestionEntity> categories = new HashSet<CategoryOfQuestionEntity>();
     private Set<ClosedAnswerEntity> closedAnswers = new HashSet<ClosedAnswerEntity>();
     private Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions = new HashSet<TestTemplateClosedQuestionEntity>();
+    private Set<UserExamClosedQuestionEntity> usages = new HashSet<UserExamClosedQuestionEntity>();
 
     public ClosedQuestionEntity() {
     }
@@ -143,7 +144,18 @@ public class ClosedQuestionEntity
         return testTemplateClosedQuestions;
     }
 
-    public void setTestTemplateClosedQuestions(Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions) {
+    public void setTestTemplateClosedQuestions(
+            Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions) {
         this.testTemplateClosedQuestions = testTemplateClosedQuestions;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedQuestion")
+    public Set<UserExamClosedQuestionEntity> getUsages() {
+        return usages;
+    }
+
+    public void setUsages(Set<UserExamClosedQuestionEntity> usages) {
+        this.usages = usages;
     }
 }

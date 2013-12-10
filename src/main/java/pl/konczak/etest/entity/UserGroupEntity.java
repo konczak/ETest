@@ -7,12 +7,14 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -28,6 +30,7 @@ public class UserGroupEntity
     @NotBlank
     private String title;
     private Set<UserEntity> members = new HashSet<UserEntity>();
+    private Set<ExamEntity> exams = new HashSet<ExamEntity>();
 
     public UserGroupEntity() {
     }
@@ -89,5 +92,15 @@ public class UserGroupEntity
 
     public void removeUserFromMembers(UserEntity user) {
         this.members.remove(user);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "userGroup")
+    public Set<ExamEntity> getExams() {
+        return exams;
+    }
+
+    public void setExams(Set<ExamEntity> exams) {
+        this.exams = exams;
     }
 }

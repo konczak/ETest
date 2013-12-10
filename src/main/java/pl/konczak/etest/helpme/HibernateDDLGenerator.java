@@ -7,11 +7,15 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
+import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.ImageEntity;
 import pl.konczak.etest.entity.RoleEntity;
 import pl.konczak.etest.entity.TestTemplateClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserExamClosedAnswerEntity;
+import pl.konczak.etest.entity.UserExamClosedQuestionEntity;
+import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.entity.id.TestTemplateClosedQuestionId;
@@ -24,11 +28,15 @@ public class HibernateDDLGenerator {
                 CategoryOfQuestionEntity.class,
                 ClosedAnswerEntity.class,
                 ClosedQuestionEntity.class,
+                ExamEntity.class,
                 ImageEntity.class,
                 RoleEntity.class,
                 TestTemplateClosedQuestionEntity.class,
                 TestTemplateEntity.class,
                 UserEntity.class,
+                UserExamClosedAnswerEntity.class,
+                UserExamClosedQuestionEntity.class,
+                UserExamEntity.class,
                 UserGroupEntity.class,
                 UserPersonalDataEntity.class);
     }

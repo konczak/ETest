@@ -1,6 +1,8 @@
 package pl.konczak.etest.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,6 +33,7 @@ public class ClosedAnswerEntity
     private boolean correct;
     private ImageEntity image;
     private ClosedQuestionEntity closedQuestion;
+    private Set<UserExamClosedAnswerEntity> usages = new HashSet<UserExamClosedAnswerEntity>();
 
     public ClosedAnswerEntity() {
     }
@@ -98,5 +102,15 @@ public class ClosedAnswerEntity
 
     public void setClosedQuestion(ClosedQuestionEntity closedQuestion) {
         this.closedQuestion = closedQuestion;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedAnswer")
+    public Set<UserExamClosedAnswerEntity> getUsages() {
+        return usages;
+    }
+
+    public void setUsages(Set<UserExamClosedAnswerEntity> usages) {
+        this.usages = usages;
     }
 }

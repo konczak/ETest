@@ -17,6 +17,12 @@
     alter table closedQuestions_categoryOfQuestions 
         drop constraint FK11E8315A845D3B50;
 
+    alter table exams 
+        drop constraint FK5C74C34CE3BBC90;
+
+    alter table exams 
+        drop constraint FK5C74C34887EE4B2;
+
     alter table testTemplates 
         drop constraint FK9E09A2C7DD6FC9DC;
 
@@ -25,6 +31,24 @@
 
     alter table testTemplates_closedQuestions 
         drop constraint FK74DCE3C947E9CE1D;
+
+    alter table userExamClosedAnswers 
+        drop constraint FK699522FFEB4C8FFB;
+
+    alter table userExamClosedAnswers 
+        drop constraint FK699522FFF94C0CD0;
+
+    alter table userExamClosedQuestions 
+        drop constraint FK89AC3157845D3B50;
+
+    alter table userExamClosedQuestions 
+        drop constraint FK89AC315766EBE590;
+
+    alter table userExams 
+        drop constraint FK12D0172980E0DD10;
+
+    alter table userExams 
+        drop constraint FK12D01729CE3BBC90;
 
     alter table users_roles 
         drop constraint FKF6CCD9C6229B8C70;
@@ -46,6 +70,8 @@
 
     drop table if exists closedQuestions_categoryOfQuestions cascade;
 
+    drop table if exists exams cascade;
+
     drop table if exists images cascade;
 
     drop table if exists roles cascade;
@@ -53,6 +79,12 @@
     drop table if exists testTemplates cascade;
 
     drop table if exists testTemplates_closedQuestions cascade;
+
+    drop table if exists userExamClosedAnswers cascade;
+
+    drop table if exists userExamClosedQuestions cascade;
+
+    drop table if exists userExams cascade;
 
     drop table if exists userGroups cascade;
 
@@ -93,6 +125,15 @@
         primary key (categoryOfQuestionsId, closedQuestionsId)
     );
 
+    create table exams (
+        examsId  serial not null unique,
+        createdAt timestamp not null,
+        generated boolean not null,
+        usersId int4 not null,
+        userGroupsId int4 not null,
+        primary key (examsId)
+    );
+
     create table images (
         imagesId  serial not null unique,
         image oid not null,
@@ -118,6 +159,32 @@
         closedQuestion_closedQuestionsId int4,
         testTemplate_testTemplatesId int4,
         primary key (closedQuestion_closedQuestionsId, testTemplate_testTemplatesId)
+    );
+
+    create table userExamClosedAnswers (
+        userExamClosedAnswersId  serial not null unique,
+        markedByUser boolean not null,
+        closedAnswer_closedAnswersId int4,
+        userExamClosedQuestionsId int4 not null,
+        primary key (userExamClosedAnswersId)
+    );
+
+    create table userExamClosedQuestions (
+        userExamClosedQuestionsId  serial not null unique,
+        points int4,
+        pointsMax int4,
+        closedQuestionsId int4 not null,
+        userExamsId int4 not null,
+        primary key (userExamClosedQuestionsId)
+    );
+
+    create table userExams (
+        userExamsId  serial not null unique,
+        activeFrom timestamp not null,
+        activeTo timestamp not null,
+        examsId int4 not null,
+        usersId int4 not null,
+        primary key (userExamsId)
     );
 
     create table userGroups (
@@ -185,6 +252,16 @@
         foreign key (closedQuestionsId) 
         references closedQuestions;
 
+    alter table exams 
+        add constraint FK5C74C34CE3BBC90 
+        foreign key (usersId) 
+        references users;
+
+    alter table exams 
+        add constraint FK5C74C34887EE4B2 
+        foreign key (userGroupsId) 
+        references userGroups;
+
     alter table testTemplates 
         add constraint FK9E09A2C7DD6FC9DC 
         foreign key (author_usersId) 
@@ -199,6 +276,36 @@
         add constraint FK74DCE3C947E9CE1D 
         foreign key (testTemplate_testTemplatesId) 
         references testTemplates;
+
+    alter table userExamClosedAnswers 
+        add constraint FK699522FFEB4C8FFB 
+        foreign key (closedAnswer_closedAnswersId) 
+        references closedAnswers;
+
+    alter table userExamClosedAnswers 
+        add constraint FK699522FFF94C0CD0 
+        foreign key (userExamClosedQuestionsId) 
+        references userExamClosedQuestions;
+
+    alter table userExamClosedQuestions 
+        add constraint FK89AC3157845D3B50 
+        foreign key (closedQuestionsId) 
+        references closedQuestions;
+
+    alter table userExamClosedQuestions 
+        add constraint FK89AC315766EBE590 
+        foreign key (userExamsId) 
+        references userExams;
+
+    alter table userExams 
+        add constraint FK12D0172980E0DD10 
+        foreign key (examsId) 
+        references exams;
+
+    alter table userExams 
+        add constraint FK12D01729CE3BBC90 
+        foreign key (usersId) 
+        references users;
 
     alter table users_roles 
         add constraint FKF6CCD9C6229B8C70 
