@@ -10,6 +10,5 @@
     </button>
     <a class="navbar-brand" href="${rootUrl}">
         <span class="glyphicon glyphicon-home"></span>
-        <spring:message code="application_name"/>&nbsp;<spring:message code="app_version"/>
     </a>
 </div>

@@ -8,6 +8,9 @@
 <footer>
     <div class="container">
 
+        <p>
+            <spring:message code="application_name"/>&nbsp;<spring:message code="app_version"/>
+        </p>
         <ul class="list-inline">
             <li>
                 <a href="${aboutUsUrl}">
