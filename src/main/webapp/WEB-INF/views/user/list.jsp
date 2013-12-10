@@ -37,10 +37,10 @@
                     </spring:url>
                     <c:choose>
                         <c:when test="${user.locked}">
-                            <c:set var="glyphicon" value="glyphicon-lock red"/>
+                            <c:set var="glyphicon" value="glyphicon-lock text-danger"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="glyphicon" value="glyphicon-ok-circle green"/>
+                            <c:set var="glyphicon" value="glyphicon-ok-circle text-success"/>
                         </c:otherwise>
                     </c:choose>
                     <tr>

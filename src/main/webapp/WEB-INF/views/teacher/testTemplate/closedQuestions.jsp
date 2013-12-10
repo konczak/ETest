@@ -55,7 +55,7 @@
                 <c:forEach items="${testTemplate.closedQuestions}" var="entry" varStatus="status">
                     <c:choose>
                         <c:when test="${entry.value.alreadyIn}">
-                            <c:set var="closedQuestionAlreadyInCssClass" value="glyphicon-check green"/>
+                            <c:set var="closedQuestionAlreadyInCssClass" value="glyphicon-check text-success"/>
                         </c:when>
                         <c:otherwise>
                             <c:set var="closedQuestionAlreadyInCssClass" value="glyphicon-unchecked"/>
@@ -63,7 +63,7 @@
                     </c:choose>
                     <c:choose>
                         <c:when test="${entry.value.mandatory}">
-                            <c:set var="closedQuestionMandatoryCssClass" value="glyphicon-check green"/>
+                            <c:set var="closedQuestionMandatoryCssClass" value="glyphicon-check text-success"/>
                         </c:when>
                         <c:otherwise>
                             <c:set var="closedQuestionMandatoryCssClass" value="glyphicon-unchecked"/>
@@ -122,7 +122,7 @@
                 var theSpan = $("span#alreadyIn_" + closedQuestionId);
                 theSpan.removeClass("glyphicon-unchecked");
                 theSpan.addClass("glyphicon-check");
-                theSpan.addClass("green");
+                theSpan.addClass("text-success");
                 theSpan.attr("dataAlreadyIn",true);
                 var theDd = $("dd#countOfClosedQuestionsAlreadyIn");
                 var countOfClosedQuestionsAlreadyIn = theDd.html();
@@ -132,7 +132,7 @@
             function setAlreadyInToNegative(closedQuestionId) {
                 var theSpan = $("span#alreadyIn_" + closedQuestionId);
                 theSpan.removeClass("glyphicon-check");
-                theSpan.removeClass("green");
+                theSpan.removeClass("text-success");
                 theSpan.addClass("glyphicon-unchecked");
                 theSpan.attr("dataAlreadyIn",false);
                 var theDd = $("dd#countOfClosedQuestionsAlreadyIn");
@@ -144,7 +144,7 @@
                 var theSpan = $("span#mandatory_" + closedQuestionId);
                 theSpan.removeClass("glyphicon-unchecked");
                 theSpan.addClass("glyphicon-check");
-                theSpan.addClass("green");
+                theSpan.addClass("text-success");
                 theSpan.attr("dataMandatory",true);
                 var theDd = $("dd#countOfClosedQuestionsMandatory");
                 var countOfClosedQuestionsMandatory = theDd.html();
@@ -153,7 +153,7 @@
             function setMandatoryToNegative(closedQuestionId) {
                 var theSpan = $("span#mandatory_" + closedQuestionId);
                 theSpan.removeClass("glyphicon-check");
-                theSpan.removeClass("green");
+                theSpan.removeClass("text-success");
                 theSpan.addClass("glyphicon-unchecked");
                 theSpan.attr("dataMandatory",false);
                 var theDd = $("dd#countOfClosedQuestionsMandatory");

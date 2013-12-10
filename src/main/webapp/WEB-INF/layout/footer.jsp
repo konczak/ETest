@@ -6,7 +6,7 @@
 <spring:url var="contactUrl" value="/contact"/>
 
 <footer>
-    <div class="container">
+    <div class="container text-left">
 
         <p>
             <spring:message code="application_name"/>&nbsp;<spring:message code="app_version"/>

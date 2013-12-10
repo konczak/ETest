@@ -46,7 +46,7 @@
                 <c:forEach items="${testTemplate.closedQuestions}" var="closedQuestion">
                     <c:choose>
                         <c:when test="${closedQuestion.mandatory}">
-                            <c:set var="glyphicon" value="glyphicon-check green"/>
+                            <c:set var="glyphicon" value="glyphicon-check text-success"/>
                         </c:when>
                         <c:otherwise>
                             <c:set var="glyphicon" value="glyphicon-unchecked"/>

@@ -53,10 +53,10 @@
                 <c:forEach items="${user.groups}" var="entry" varStatus="status">
                     <c:choose>
                         <c:when test="${entry.value.alreadyMember}">
-                            <c:set var="memberColor" value="glyphicon-user green"/>
+                            <c:set var="memberColor" value="glyphicon-user text-success"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="memberColor" value="glyphicon-ban-circle gray"/>
+                            <c:set var="memberColor" value="glyphicon-ban-circle"/>
                         </c:otherwise>
                     </c:choose>
                     <tr>
@@ -110,9 +110,8 @@
                         success: function(response) {
                             var theSpan = $("span#" + userId);
                             theSpan.removeClass("glyphicon-user");
-                            theSpan.removeClass("green");
+                            theSpan.removeClass("text-success");
                             theSpan.addClass("glyphicon-ban-circle");
-                            theSpan.addClass("gray");
                             theSpan.attr("dataAlreadyMember",false);
                             var theDd = $("dd#countOfGroups");
                             var countOfGroups = theDd.html();
@@ -130,9 +129,8 @@
                         success: function(response) {
                             var theSpan = $("span#" + userId);
                             theSpan.removeClass("glyphicon-ban-circle");
-                            theSpan.removeClass("gray");
                             theSpan.addClass("glyphicon-user");
-                            theSpan.addClass("green");
+                            theSpan.addClass("text-success");
                             theSpan.attr("dataAlreadyMember",true);
                             var theDd = $("dd#countOfGroups");
                             var countOfGroups = theDd.html();

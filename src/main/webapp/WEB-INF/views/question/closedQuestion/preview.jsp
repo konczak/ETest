@@ -57,10 +57,10 @@
                 <c:forEach items="${closedQuestion.closedAnswers}" var="closedAnswer">
                     <c:choose>
                         <c:when test="${closedAnswer.correct}">
-                            <c:set var="glyphicon" value="glyphicon-check green"/>
+                            <c:set var="glyphicon" value="glyphicon-ok-sign text-success"/>
                         </c:when>
                         <c:otherwise>
-                            <c:set var="glyphicon" value="glyphicon-ban-circle red"/>
+                            <c:set var="glyphicon" value="glyphicon-minus-sign text-danger"/>
                         </c:otherwise>
                     </c:choose>
                     <spring:url var="deleteUrl" value="/question/closedAnswer/delete/{id}">
