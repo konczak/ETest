@@ -127,7 +127,7 @@
                 var theDd = $("dd#countOfClosedQuestionsAlreadyIn");
                 var countOfClosedQuestionsAlreadyIn = theDd.html();
                 theDd.html(++countOfClosedQuestionsAlreadyIn);
-                $("span#mandatory_" + closedQuestionId).parent().show();
+                $("span#mandatory_" + closedQuestionId).parent().fadeIn();
             }
             function setAlreadyInToNegative(closedQuestionId) {
                 var theSpan = $("span#alreadyIn_" + closedQuestionId);
@@ -138,7 +138,7 @@
                 var theDd = $("dd#countOfClosedQuestionsAlreadyIn");
                 var countOfClosedQuestionsAlreadyIn = theDd.html();
                 theDd.html(--countOfClosedQuestionsAlreadyIn);
-                $("span#mandatory_" + closedQuestionId).parent().hide();
+                $("span#mandatory_" + closedQuestionId).parent().fadeOut();
             }
             function setMandatoryToPositive(closedQuestionId) {
                 var theSpan = $("span#mandatory_" + closedQuestionId);
