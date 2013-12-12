@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.LocalDateTime;
 
 @Entity
 @Table(name = "userExams")
@@ -27,8 +25,6 @@ public class UserExamEntity
     private Integer id;
     private ExamEntity exam;
     private UserEntity examined;
-    private LocalDateTime activeFrom;
-    private LocalDateTime activeTo;
     private Set<UserExamClosedQuestionEntity> closedQuestions = new HashSet<UserExamClosedQuestionEntity>();
 
     @Id
@@ -65,26 +61,6 @@ public class UserExamEntity
 
     public void setExamined(UserEntity examined) {
         this.examined = examined;
-    }
-
-    @Column(nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    public LocalDateTime getActiveFrom() {
-        return activeFrom;
-    }
-
-    public void setActiveFrom(LocalDateTime activeFrom) {
-        this.activeFrom = activeFrom;
-    }
-
-    @Column(nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    public LocalDateTime getActiveTo() {
-        return activeTo;
-    }
-
-    public void setActiveTo(LocalDateTime activeTo) {
-        this.activeTo = activeTo;
     }
 
     @OneToMany(fetch = FetchType.LAZY,

@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
 
+import pl.konczak.etest.core.Validate;
+
 @Entity
 @Table(name = "exams")
 public class ExamEntity
@@ -25,20 +27,32 @@ public class ExamEntity
 
     private static final long serialVersionUID = 1L;
     private Integer id;
+    private TestTemplateEntity testTemplate;
     private UserGroupEntity userGroup;
+    private String titleSuffix;
     private UserEntity examiner;
     private LocalDateTime createdAt;
-    private boolean generated;
+    private LocalDateTime activeFrom;
+    private LocalDateTime activeTo;
     private Set<UserExamEntity> generatedExams = new HashSet<UserExamEntity>();
 
     public ExamEntity() {
     }
 
-    public ExamEntity(UserGroupEntity userGroup, UserEntity examiner) {
+    public ExamEntity(TestTemplateEntity testTemplate, UserGroupEntity userGroup, String titleSuffix,
+            UserEntity examiner, LocalDateTime activeFrom, LocalDateTime activeTo) {
+        Validate.notNull(testTemplate);
+        Validate.notNull(userGroup);
+        Validate.notNull(examiner);
+        Validate.notNull(activeFrom);
+        Validate.notNull(activeTo);
+        this.testTemplate = testTemplate;
         this.userGroup = userGroup;
+        this.titleSuffix = titleSuffix;
         this.examiner = examiner;
         this.createdAt = LocalDateTime.now();
-        this.generated = false;
+        this.activeFrom = activeFrom;
+        this.activeTo = activeTo;
     }
 
     @Id
@@ -56,6 +70,17 @@ public class ExamEntity
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "testTemplatesId",
+                nullable = false)
+    public TestTemplateEntity getTestTemplate() {
+        return testTemplate;
+    }
+
+    public void setTestTemplate(TestTemplateEntity testTemplate) {
+        this.testTemplate = testTemplate;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userGroupsId",
                 nullable = false)
     public UserGroupEntity getUserGroup() {
@@ -64,6 +89,15 @@ public class ExamEntity
 
     public void setUserGroup(UserGroupEntity userGroup) {
         this.userGroup = userGroup;
+    }
+
+    @Column(length = 25)
+    public String getTitleSuffix() {
+        return titleSuffix;
+    }
+
+    public void setTitleSuffix(String titleSuffix) {
+        this.titleSuffix = titleSuffix;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -88,12 +122,24 @@ public class ExamEntity
         this.createdAt = createdAt;
     }
 
-    public boolean isGenerated() {
-        return generated;
+    @Column(nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    public LocalDateTime getActiveFrom() {
+        return activeFrom;
     }
 
-    public void setGenerated(boolean generated) {
-        this.generated = generated;
+    public void setActiveFrom(LocalDateTime activeFrom) {
+        this.activeFrom = activeFrom;
+    }
+
+    @Column(nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    public LocalDateTime getActiveTo() {
+        return activeTo;
+    }
+
+    public void setActiveTo(LocalDateTime activeTo) {
+        this.activeTo = activeTo;
     }
 
     @OneToMany(fetch = FetchType.LAZY,

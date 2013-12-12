@@ -21,6 +21,9 @@
         drop constraint FK5C74C34CE3BBC90;
 
     alter table exams 
+        drop constraint FK5C74C34517BB150;
+
+    alter table exams 
         drop constraint FK5C74C34887EE4B2;
 
     alter table testTemplates 
@@ -127,9 +130,12 @@
 
     create table exams (
         examsId  serial not null unique,
+        activeFrom timestamp not null,
+        activeTo timestamp not null,
         createdAt timestamp not null,
-        generated boolean not null,
+        titleSuffix varchar(25),
         usersId int4 not null,
+        testTemplatesId int4 not null,
         userGroupsId int4 not null,
         primary key (examsId)
     );
@@ -180,8 +186,6 @@
 
     create table userExams (
         userExamsId  serial not null unique,
-        activeFrom timestamp not null,
-        activeTo timestamp not null,
         examsId int4 not null,
         usersId int4 not null,
         primary key (userExamsId)
@@ -256,6 +260,11 @@
         add constraint FK5C74C34CE3BBC90 
         foreign key (usersId) 
         references users;
+
+    alter table exams 
+        add constraint FK5C74C34517BB150 
+        foreign key (testTemplatesId) 
+        references testTemplates;
 
     alter table exams 
         add constraint FK5C74C34887EE4B2 

@@ -3,6 +3,7 @@ package pl.konczak.etest.entity;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import org.hibernate.annotations.Cascade;
+
 import pl.konczak.etest.core.Validate;
 
 @Entity
@@ -27,6 +28,7 @@ public class TestTemplateEntity
     private UserEntity author;
     private Set<TestTemplateClosedQuestionEntity> closedQuestions =
             new HashSet<TestTemplateClosedQuestionEntity>();
+    private Set<ExamEntity> exams = new HashSet<ExamEntity>();
 
     public TestTemplateEntity() {
     }
@@ -89,7 +91,7 @@ public class TestTemplateEntity
                 new TestTemplateClosedQuestionEntity(this, closedQuestionEntity);
         closedQuestions.add(testTemplateClosedQuestionEntity);
     }
-    
+
     public TestTemplateClosedQuestionEntity getClosedQuestion(Integer closedQuestionId) {
         TestTemplateClosedQuestionEntity testTemplateClosedQuestionEntity = null;
         for (TestTemplateClosedQuestionEntity entity : closedQuestions) {
@@ -123,7 +125,18 @@ public class TestTemplateEntity
             }
         }
         Validate.notNull(testTemplateClosedQuestionEntity, String.format("Specified ClosedQuestion <%s>"
-                + " is not signed to this TestTemplate and cannot be marked as not mandatory", closedQuestionId));
+                + " is not signed to this TestTemplate and cannot be marked as not mandatory",
+                closedQuestionId));
         testTemplateClosedQuestionEntity.markAsNotMandatory();
+    }
+
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "testTemplate")
+    public Set<ExamEntity> getExams() {
+        return exams;
+    }
+
+    public void setExams(Set<ExamEntity> exams) {
+        this.exams = exams;
     }
 }
