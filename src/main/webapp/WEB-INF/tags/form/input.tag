@@ -5,6 +5,10 @@
 <%@attribute name="object" required="true"%>
 <%@attribute name="fieldName" required="true"%>
 <%@attribute name="required" required="false"%>
+<%@attribute name="dataBind" required="false" %>
+<c:if test="${visible == null}">
+    <c:set var="visible" value=""/>
+</c:if>
 
 <c:set var="opaqueDivCssClass" value="form-group"/>
 <c:set var="newScoreErrors"><form:errors path="${fieldName}"/></c:set>
@@ -20,5 +24,5 @@
         <util:requiredField required="${required}"/>
     </form:label>
     <form:errors path="${fieldName}" cssClass="alert alert-danger" element="div"/>
-    <form:input path="${fieldName}" placeholder="${placeholderVal}" cssClass="form-control"/>
+    <form:input path="${fieldName}" placeholder="${placeholderVal}" cssClass="form-control" data-bind="${dataBind}"/>
 </div>
