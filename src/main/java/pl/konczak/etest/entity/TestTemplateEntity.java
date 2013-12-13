@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import pl.konczak.etest.core.Validate;
 
@@ -23,6 +24,7 @@ import pl.konczak.etest.core.Validate;
 public class TestTemplateEntity
         implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     private Integer id;
     private String subject;
     private UserEntity author;
@@ -138,5 +140,31 @@ public class TestTemplateEntity
 
     public void setExams(Set<ExamEntity> exams) {
         this.exams = exams;
+    }
+
+    @Transient
+    public Set<ClosedQuestionEntity> getMandatoryClosedQuestions() {
+        Set<ClosedQuestionEntity> mandatoryClosedQuestions = new HashSet<ClosedQuestionEntity>();
+
+        for (TestTemplateClosedQuestionEntity testTemplateClosedQuestionEntity : closedQuestions) {
+            if (testTemplateClosedQuestionEntity.isMandatory()) {
+                mandatoryClosedQuestions.add(testTemplateClosedQuestionEntity.getClosedQuestionEntity());
+            }
+        }
+
+        return mandatoryClosedQuestions;
+    }
+
+    @Transient
+    public Set<ClosedQuestionEntity> getNotMandatoryClosedQuestions() {
+        Set<ClosedQuestionEntity> notMandatoryClosedQuestions = new HashSet<ClosedQuestionEntity>();
+
+        for (TestTemplateClosedQuestionEntity testTemplateClosedQuestionEntity : closedQuestions) {
+            if (!testTemplateClosedQuestionEntity.isMandatory()) {
+                notMandatoryClosedQuestions.add(testTemplateClosedQuestionEntity.getClosedQuestionEntity());
+            }
+        }
+
+        return notMandatoryClosedQuestions;
     }
 }
