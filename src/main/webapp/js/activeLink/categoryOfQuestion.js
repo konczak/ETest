@@ -1,1 +1,4 @@
-$("li#categoryOfQuestion").addClass("active");
+$("li#categoryOfQuestion")
+        .addClass("active");
+$("li#admin")
+        .addClass("active");

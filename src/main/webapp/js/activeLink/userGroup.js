@@ -1,1 +1,4 @@
-$("li#userGroup").addClass("active");
+$("li#userGroup")
+        .addClass("active");
+$("li#admin")
+        .addClass("active");

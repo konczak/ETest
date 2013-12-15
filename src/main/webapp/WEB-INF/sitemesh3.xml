@@ -15,12 +15,28 @@
     
     <mapping>
         <path>/question*</path>
+        <decorator>/WEB-INF/decorator/teacher.jsp</decorator>
+        <decorator>/WEB-INF/decorator/admin.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
+    
+    <mapping>
+        <path>/teacher*</path>
+        <decorator>/WEB-INF/decorator/teacher.jsp</decorator>
+        <decorator>/WEB-INF/decorator/admin.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>
+    
+    <mapping>
+        <path>/admin*</path>
+        <decorator>/WEB-INF/decorator/teacher.jsp</decorator>
         <decorator>/WEB-INF/decorator/admin.jsp</decorator>
         <decorator>/WEB-INF/decorator/standard.jsp</decorator>
     </mapping>
     
     <mapping>
         <path>/user*</path>
+        <decorator>/WEB-INF/decorator/teacher.jsp</decorator>
         <decorator>/WEB-INF/decorator/admin.jsp</decorator>
         <decorator>/WEB-INF/decorator/standard.jsp</decorator>
     </mapping>
