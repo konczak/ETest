@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import pl.konczak.etest.core.Validate;
 
 @Entity
 @Table(name = "userExamClosedAnswers")
@@ -28,8 +29,11 @@ public class UserExamClosedAnswerEntity
     public UserExamClosedAnswerEntity() {
     }
 
-    public UserExamClosedAnswerEntity(ClosedAnswerEntity closedAnswer) {
+    public UserExamClosedAnswerEntity(ClosedAnswerEntity closedAnswer, UserExamClosedQuestionEntity closedQuestion) {
+        Validate.notNull(closedAnswer);
+        Validate.notNull(closedQuestion);
         this.closedAnswer = closedAnswer;
+        this.closedQuestion = closedQuestion;
         this.markedByUser = false;
     }
 
