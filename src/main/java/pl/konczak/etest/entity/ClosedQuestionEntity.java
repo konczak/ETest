@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -157,5 +158,27 @@ public class ClosedQuestionEntity
 
     public void setUsages(Set<UserExamClosedQuestionEntity> usages) {
         this.usages = usages;
+    }
+
+    @Transient
+    public Set<ClosedAnswerEntity> getCorrectClosedAnswers() {
+        Set<ClosedAnswerEntity> correctClosedAnswers = new HashSet<ClosedAnswerEntity>();
+        for (ClosedAnswerEntity closedAnswer : closedAnswers) {
+            if (closedAnswer.isCorrect()) {
+                correctClosedAnswers.add(closedAnswer);
+            }
+        }
+        return correctClosedAnswers;
+    }
+
+    @Transient
+    public Set<ClosedAnswerEntity> getIncorrectClosedAnswers() {
+        Set<ClosedAnswerEntity> incorrectClosedAnswers = new HashSet<ClosedAnswerEntity>();
+        for (ClosedAnswerEntity closedAnswer : closedAnswers) {
+            if (!closedAnswer.isCorrect()) {
+                incorrectClosedAnswers.add(closedAnswer);
+            }
+        }
+        return incorrectClosedAnswers;
     }
 }
