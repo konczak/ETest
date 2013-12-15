@@ -65,6 +65,7 @@
                 <value>i18n/question/closedQuestion/webmessages_closedQuestion</value>
                 <value>i18n/teacher/testTemplate/webmessages_testTemplate</value>
                 <value>i18n/teacher/exam/webmessages_exam</value>
+                <value>i18n/student/webmessages_userExam</value>
                 <value>i18n/application</value>
             </list>
         </property>
@@ -97,6 +98,7 @@
                 <prop key=".NoSuchRequestHandlingMethodException">resourceNotFound</prop>
                 <prop key=".TypeMismatchException">resourceNotFound</prop>
                 <prop key=".MissingServletRequestParameterException">resourceNotFound</prop>
+                <prop key=".ResourceAccessDeniedException">resourceNotFound</prop>
             </props>
         </property>
     </bean>
