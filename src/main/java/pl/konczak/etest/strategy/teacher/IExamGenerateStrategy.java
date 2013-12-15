@@ -4,5 +4,6 @@ import pl.konczak.etest.entity.ExamEntity;
 
 public interface IExamGenerateStrategy {
 
-    ExamEntity generateUserExams(ExamEntity examEntity);
+    ExamEntity generateUserExams(ExamEntity examEntity,
+            Integer maxClosedQuestionsPerExam, Integer maxClosedAnswersPerClosedQuestion);
 }

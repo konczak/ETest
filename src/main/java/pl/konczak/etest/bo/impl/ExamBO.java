@@ -16,6 +16,7 @@ import pl.konczak.etest.repository.IExamRepository;
 import pl.konczak.etest.repository.ITestTemplateRepository;
 import pl.konczak.etest.repository.IUserGroupRepository;
 import pl.konczak.etest.repository.IUserRepository;
+import pl.konczak.etest.strategy.teacher.IExamGenerateStrategy;
 
 @Service
 public class ExamBO
@@ -30,11 +31,14 @@ public class ExamBO
     private IUserRepository userRepository;
     @Autowired
     private IExamRepository examRepository;
+    @Autowired
+    private IExamGenerateStrategy examGenerateStrategy;
 
     @Transactional
     @Override
     public ExamEntity add(Integer testTemplateId, Integer userGroupId, String titleSufix, Integer examinerId,
-            LocalDateTime activeFrom, LocalDateTime activeTo) {
+            LocalDateTime activeFrom, LocalDateTime activeTo,
+            Integer maxClosedQuestionsPerExam, Integer maxClosedAnswersPerClosedQuestion) {
         Validate.notNull(testTemplateId);
         Validate.notNull(userGroupId);
         Validate.notNull(examinerId);
@@ -49,8 +53,10 @@ public class ExamBO
         ExamEntity examEntity = new ExamEntity(testTemplateEntity, userGroupEntity, titleSufix,
                 userEntity, activeFrom, activeTo);
 
-        examRepository.save(examEntity);
+        examGenerateStrategy.generateUserExams(examEntity, maxClosedQuestionsPerExam, maxClosedAnswersPerClosedQuestion);
 
+        examRepository.save(examEntity);
+        
         LOGGER.info(String.format("Add Exam <%s>", examEntity.getId()));
 
         return examEntity;

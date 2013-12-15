@@ -7,5 +7,6 @@ import pl.konczak.etest.entity.ExamEntity;
 public interface IExamBO {
 
     ExamEntity add(Integer testTemplateId, Integer userGroupId, String titleSufix, Integer examinerId,
-            LocalDateTime activeFrom, LocalDateTime activeTo);
+            LocalDateTime activeFrom, LocalDateTime activeTo,
+            Integer maxClosedQuestionsPerExam, Integer maxClosedAnswersPerClosedQuestion);
 }
