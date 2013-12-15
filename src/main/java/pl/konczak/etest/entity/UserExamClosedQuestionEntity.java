@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import pl.konczak.etest.core.Validate;
 
 @Entity
 @Table(name = "userExamClosedQuestions")
@@ -27,6 +30,18 @@ public class UserExamClosedQuestionEntity
     private UserExamEntity userExam;
     private ClosedQuestionEntity closedQuestion;
     private Set<UserExamClosedAnswerEntity> closedAnswers = new HashSet<UserExamClosedAnswerEntity>();
+
+    public UserExamClosedQuestionEntity() {
+    }
+
+    public UserExamClosedQuestionEntity(UserExamEntity userExam, ClosedQuestionEntity closedQuestion) {
+        Validate.notNull(userExam);
+        Validate.notNull(closedQuestion);
+        this.userExam = userExam;
+        this.closedQuestion = closedQuestion;
+        this.points = 0;
+        this.pointsMax = 1;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -71,12 +86,17 @@ public class UserExamClosedQuestionEntity
 
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "closedQuestion")
+    @Cascade(CascadeType.ALL)
     public Set<UserExamClosedAnswerEntity> getClosedAnswers() {
         return closedAnswers;
     }
 
     public void setClosedAnswers(Set<UserExamClosedAnswerEntity> closedAnswers) {
         this.closedAnswers = closedAnswers;
+    }
+    
+    public void addClosedAnswer(ClosedAnswerEntity closedAnswer) {
+        this.closedAnswers.add(new UserExamClosedAnswerEntity(closedAnswer, this));
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

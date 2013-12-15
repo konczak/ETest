@@ -2,6 +2,7 @@ package pl.konczak.etest.entity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
@@ -144,8 +147,17 @@ public class ExamEntity
 
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "exam")
+    @Cascade(CascadeType.ALL)
     public Set<UserExamEntity> getGeneratedExams() {
         return generatedExams;
+    }
+
+    public void addUserExam(UserEntity examined, Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionWithAnswers) {
+        UserExamEntity userExamEntity = new UserExamEntity(this, examined);
+        for (Map.Entry<ClosedQuestionEntity, Set<ClosedAnswerEntity>> entry : mapOfClosedQuestionWithAnswers.entrySet()) {
+            userExamEntity.addClosedQuestion(entry.getKey(), entry.getValue());
+        }
+        this.generatedExams.add(userExamEntity);
     }
 
     public void setGeneratedExams(Set<UserExamEntity> generatedExams) {
