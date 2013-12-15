@@ -1,13 +1,14 @@
 package pl.konczak.etest.assembler.user;
 
-import java.util.List;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import pl.konczak.etest.dto.user.UserGroups;
 import pl.konczak.etest.dto.user.UserPreview;
+import pl.konczak.etest.entity.ExamEntity;
+import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.repository.IUserGroupRepository;
@@ -38,11 +39,19 @@ public class UserAssembler {
         userPreview.setFirstname(userPersonalDataEntity.getFirstname());
         userPreview.setLastname(userPersonalDataEntity.getLastname());
 
-        Set<UserGroupEntity> groups = userEntity.getGroups();
-
-        for (UserGroupEntity userGroupEntity : groups) {
+        for (UserGroupEntity userGroupEntity : userEntity.getGroups()) {
             userPreview.addUserGroup(userGroupEntity.getTitle());
         }
+
+        for (UserExamEntity userExam : userEntity.getExams()) {
+            ExamEntity exam = userExam.getExam();
+            TestTemplateEntity testTemplate = exam.getTestTemplate();
+            userPreview.addUserExam(userExam.getId(),
+                    format(testTemplate.getSubject(), exam.getTitleSuffix()),
+                    exam.getActiveFrom(),
+                    exam.getActiveTo());
+        }
+
 
         return userPreview;
     }
@@ -68,5 +77,16 @@ public class UserAssembler {
         }
 
         return userGroups;
+    }
+
+    private String format(String subject, String titleSuffix) {
+        String formatted;
+        if (titleSuffix == null
+                || titleSuffix.isEmpty()) {
+            formatted = subject;
+        } else {
+            formatted = String.format("%s %s", subject, titleSuffix);
+        }
+        return formatted;
     }
 }

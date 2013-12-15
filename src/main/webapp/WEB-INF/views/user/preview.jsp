@@ -51,6 +51,44 @@
             <span class="label label-info">${userGroup.title}</span>
         </c:forEach>
 
+        <div class="page-header">
+            <h3>
+                <spring:message code="exam.list.header"/>
+            </h3>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><spring:message code="entity_id"/></th>
+                    <th><spring:message code="testTemplate.subject.label"/></th>
+                    <th><spring:message code="exam.activeFrom.label"/></th>
+                    <th><spring:message code="exam.activeFrom.label"/></th>
+                    <th><spring:message code="exam.activeTo.label"/></th>
+                    <th><spring:message code="exam.activeTo.label"/></th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${user.userExams}" var="exam">
+                    <tr>
+                        <td>${exam.id}</td>
+                        <td>${exam.subject}</td>
+                        <td>
+                            <joda:format value="${exam.activeFrom}" style="M-" />
+                        </td>
+                        <td>
+                            <joda:format value="${exam.activeFrom}" style="-M" />
+                        </td>
+                        <td>
+                            <joda:format value="${exam.activeTo}" style="-M" />
+                        </td>
+                        <td>
+                            <joda:format value="${exam.activeTo}" style="M-" />
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+            
         <script src="${activeJsUrl}"></script>
     </body>
 </html>

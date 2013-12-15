@@ -14,6 +14,8 @@ public class UserPreview {
     private LocalDateTime registeredAt;
     private Set<UserGroupInternal> userGroups =
             new HashSet<UserGroupInternal>();
+    private Set<UserExamInternal> userExams =
+            new HashSet<UserExamInternal>();
 
     public static class UserGroupInternal {
 
@@ -25,6 +27,37 @@ public class UserPreview {
 
         public String getTitle() {
             return title;
+        }
+    }
+
+    public static class UserExamInternal {
+
+        private Integer id;
+        private String subject;
+        private LocalDateTime activeFrom;
+        private LocalDateTime activeTo;
+
+        public UserExamInternal(Integer id, String subject, LocalDateTime activeFrom, LocalDateTime activeTo) {
+            this.id = id;
+            this.subject = subject;
+            this.activeFrom = activeFrom;
+            this.activeTo = activeTo;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public LocalDateTime getActiveFrom() {
+            return activeFrom;
+        }
+
+        public LocalDateTime getActiveTo() {
+            return activeTo;
         }
     }
 
@@ -86,5 +119,17 @@ public class UserPreview {
 
     public void addUserGroup(String title) {
         this.userGroups.add(new UserGroupInternal(title));
+    }
+
+    public Set<UserExamInternal> getUserExams() {
+        return userExams;
+    }
+
+    public void setUserExams(Set<UserExamInternal> userExams) {
+        this.userExams = userExams;
+    }
+
+    public void addUserExam(Integer id, String subject, LocalDateTime activeFrom, LocalDateTime activeTo) {
+        this.userExams.add(new UserExamInternal(id, subject, activeFrom, activeTo));
     }
 }
