@@ -1,8 +1,11 @@
 package pl.konczak.etest.assembler.teacher.exam;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pl.konczak.etest.dto.teacher.exam.ExamListRow;
 
 import pl.konczak.etest.dto.teacher.exam.ExamPreview;
 import pl.konczak.etest.entity.ExamEntity;
@@ -53,5 +56,42 @@ public class ExamAssembler {
         }
 
         return examPreview;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ExamListRow> toList() {
+        List<ExamListRow> examList = new ArrayList<ExamListRow>();
+
+        List<ExamEntity> exams = examRepository.findAll();
+
+        for (ExamEntity exam : exams) {
+            ExamListRow examListRow = new ExamListRow();
+
+            examListRow.setId(exam.getId());
+            examListRow.setSuffix(exam.getTitleSuffix());
+
+            TestTemplateEntity testTemplate = exam.getTestTemplate();
+            UserGroupEntity userGroup = exam.getUserGroup();
+
+            examListRow.setTestTemplateId(testTemplate.getId());
+            examListRow.setTestTemplateSubject(testTemplate.getSubject());
+
+            examListRow.setUserGroupId(userGroup.getId());
+            examListRow.setUserGroupTitle(userGroup.getTitle());
+
+            UserEntity examiner = exam.getExaminer();
+            UserPersonalDataEntity examinerPersonalData = examiner.getUserPersonalData();
+
+            examListRow.setExaminerId(examiner.getId());
+            examListRow.setExaminerFirstname(examinerPersonalData.getFirstname());
+            examListRow.setExaminerLastname(examinerPersonalData.getLastname());
+
+            examListRow.setActiveFrom(exam.getActiveFrom());
+            examListRow.setActiveTo(exam.getActiveTo());
+
+            examList.add(examListRow);
+        }
+
+        return examList;
     }
 }

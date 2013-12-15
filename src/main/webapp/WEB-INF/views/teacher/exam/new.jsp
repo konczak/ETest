@@ -69,6 +69,8 @@
                 </div>
 
                 <myForm:input object="exam" fieldName="suffix"/>
+                <myForm:input object="exam" fieldName="maxClosedQuestionsPerUserExam"/>
+                <myForm:input object="exam" fieldName="maxClosedAnswersPerClosedQuestion"/>
 
                 <c:set var="opaqueDivCssClass" value="form-group"/>
                 <c:set var="newScoreErrors"><form:errors path="duration"/></c:set>

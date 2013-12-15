@@ -63,6 +63,8 @@ public class ExamNewController {
     @RequestMapping(method = RequestMethod.GET)
     public String initForm(ModelMap model) {
         ExamNew examNew = new ExamNew();
+        examNew.setMaxClosedQuestionsPerUserExam(10);
+        examNew.setMaxClosedAnswersPerClosedQuestion(4);
 
         //command object
         model.addAttribute(OBJECT, examNew);
@@ -115,7 +117,9 @@ public class ExamNewController {
                     examNew.getSuffix(),
                     getIdOfAuthenticatedUser(),
                     activeFrom,
-                    activeTo);
+                    activeTo,
+                    examNew.getMaxClosedQuestionsPerUserExam(),
+                    examNew.getMaxClosedAnswersPerClosedQuestion());
             status.setComplete();
             //form success
             action = String.format(REDIRECT_TO_PREVIEW, examEntity.getId());

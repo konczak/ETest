@@ -13,6 +13,10 @@ public class ExamNew {
     private String suffix;
     @NotBlank
     private String duration;
+    @NotNull
+    private Integer maxClosedQuestionsPerUserExam;
+    @NotNull
+    private Integer maxClosedAnswersPerClosedQuestion;
 
     public Integer getTestTemplateId() {
         return testTemplateId;
@@ -44,5 +48,21 @@ public class ExamNew {
 
     public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public Integer getMaxClosedAnswersPerClosedQuestion() {
+        return maxClosedAnswersPerClosedQuestion;
+    }
+
+    public void setMaxClosedAnswersPerClosedQuestion(Integer maxClosedAnswersPerClosedQuestion) {
+        this.maxClosedAnswersPerClosedQuestion = maxClosedAnswersPerClosedQuestion;
+    }
+
+    public Integer getMaxClosedQuestionsPerUserExam() {
+        return maxClosedQuestionsPerUserExam;
+    }
+
+    public void setMaxClosedQuestionsPerUserExam(Integer maxClosedQuestionsPerUserExam) {
+        this.maxClosedQuestionsPerUserExam = maxClosedQuestionsPerUserExam;
     }
 }
