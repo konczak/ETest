@@ -15,8 +15,18 @@
     <body onload="document.f.j_username.focus();">
         <form name="f" action="${credentialsCheckUrl}" method="POST" class="form-signin">
             <h2 class="form-signin-heading"><spring:message code="security_login_title"/></h2>
-            <input type="text" name="j_username" placeholder="${usernamePlaceholder}" class="form-control">
-            <input type="password" name="j_password" placeholder="${passwordPlaceholder}" class="form-control">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                </span>
+                <input type="text" name="j_username" placeholder="${usernamePlaceholder}" class="form-control">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                <input type="password" name="j_password" placeholder="${passwordPlaceholder}" class="form-control">
+            </div>
             <c:if test="${error}">
                 <div class="alert alert-danger">
                     <spring:message code="security_bad_credentials"/>
