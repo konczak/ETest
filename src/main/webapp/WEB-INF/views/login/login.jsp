@@ -29,6 +29,7 @@
             </div>
             <c:if test="${error}">
                 <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-warning-sign"></span>
                     <spring:message code="security_bad_credentials"/>
                 </div>
             </c:if>
