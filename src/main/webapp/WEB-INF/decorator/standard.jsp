@@ -1,11 +1,12 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<c:url var="bootstrapCssUrl" value="/resources/css/bootstrap.min.css" />
-<c:url var="projectCssUrl" value="/resources/css/standard.css" />
-<c:url var="flagsCssUrl" value="/resources/css/flags.css" />
-<c:url var="faviconUrl" value="/resources/images/favicon.png" />
-<c:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2.min.js" />
-<c:url var="bootstrapJsUrl" value="/resources/js/bootstrap.min.js" />
+<spring:url var="bootstrapCssUrl" value="/resources/css/bootstrap.min.css" />
+<spring:url var="projectCssUrl" value="/resources/css/standard.css" />
+<spring:url var="flagsCssUrl" value="/resources/css/flags.css" />
+<spring:url var="faviconUrl" value="/resources/images/favicon.png" />
+<spring:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2.min.js" />
+<spring:url var="bootstrapJsUrl" value="/resources/js/bootstrap.min.js" />
 <c:set var="language" value="${pageContext.response.locale.language}"/>
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
         <meta name="author" content="Konczak Piotr">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title><sitemesh:write property="title"/></title>
+        <title><spring:message code="application_name"/> - <sitemesh:write property="title"/></title>
 
         <sitemesh:write property="head"/>
 
