@@ -36,6 +36,12 @@
         <decorator>/WEB-INF/decorator/teacher.jsp</decorator>
         <decorator>/WEB-INF/decorator/admin.jsp</decorator>
         <decorator>/WEB-INF/decorator/standard.jsp</decorator>
+    </mapping>>
+    
+    <mapping>
+        <path>/student*</path>
+        <decorator>/WEB-INF/decorator/student.jsp</decorator>
+        <decorator>/WEB-INF/decorator/standard.jsp</decorator>
     </mapping>
         
 </sitemesh>
