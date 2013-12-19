@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
 <spring:url var="closedQuestionsUrl" value="/teacher/testTemplate/{id}/closedQuestions">
@@ -23,6 +24,8 @@
             <dd>${testTemplate.subject}</dd>
             <dt><spring:message code="testTemplate.author.label"/></dt>
             <dd>${testTemplate.authorLastname} ${testTemplate.authorFirstname}</dd>
+            <dt><spring:message code="testTemplate.countOfClosedQuestionsAlreadyIn.label"/></dt>
+            <dd>${fn:length(testTemplate.closedQuestions)}</dd>
         </dl>
 
         <div class="page-header">
