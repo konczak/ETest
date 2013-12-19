@@ -72,7 +72,7 @@ public class ExamEntity
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "testTemplatesId",
                 nullable = false)
     public TestTemplateEntity getTestTemplate() {
