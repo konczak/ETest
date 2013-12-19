@@ -1,6 +1,11 @@
 package pl.konczak.etest.controller.student.userExam;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.List;
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.Days;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Seconds;
@@ -13,10 +18,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.konczak.etest.assembler.student.userExam.UserExamAssembler;
+import pl.konczak.etest.dto.student.userExam.UserExamClosedQuestion;
+import pl.konczak.etest.dto.student.userExam.UserExamQuestionHeader;
 import pl.konczak.etest.entity.ExamEntity;
-import pl.konczak.etest.entity.TestTemplateEntity;
+
 
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserExamEntity;
@@ -45,7 +54,7 @@ public class UserExamSheetController {
     @Transactional(readOnly = true)
     @RequestMapping(method = RequestMethod.GET)
     public String getById(ModelMap modelMap,
-            @PathVariable("id") Integer id) {
+            @PathVariable("id") Integer id) throws IOException {
         UserExamEntity userExam = userExamRepository.getById(id);
         if (!isUserExamIdBelongsToLoggedUser(userExam)) {
             throw new ResourceAccessDeniedException("Sorry searched resource does not exists");
@@ -61,7 +70,15 @@ public class UserExamSheetController {
             modelMap.addAttribute(OBJECT, userExamAssembler.toUserExamNotActiveYet(id));
             view = VIEW_USEREXAM_NOTACTIVEYET;
         } else if (isUserExamActiveNow(exam, now)) {
-            modelMap.addAttribute(OBJECT, userExamAssembler.toExamSheet(id));
+            List<UserExamQuestionHeader> userExamQuestionHeaders =
+                    userExamAssembler.toUserExamQuestionHeader(id);
+            Writer strWriter = new StringWriter();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(strWriter, userExamQuestionHeaders);
+            modelMap.addAttribute("userExamId", userExam.getId());
+            modelMap.addAttribute("questionHeaders", strWriter.toString());
+            modelMap.addAttribute("testTemplateSubject", exam.getTestTemplate().getSubject());
+            modelMap.addAttribute("testTemplateSuffix", exam.getTitleSuffix());
             view = VIEW_USEREXAM_ACTIVENOW;
         } else {
             String msg = String.format("Unrecognized date for UserExam <%s>", userExam.getId());
@@ -93,7 +110,6 @@ public class UserExamSheetController {
     }
 
     private boolean isUserExamNotActiveYet(ExamEntity exam, LocalDateTime now) {
-        //System.out.println("isUserExamNotActiveYet <" + exam.getActiveFrom() +"> now <" + now +">");
         boolean isUserExamNotActiveYet = false;
         if (exam.getActiveFrom().isAfter(now)) {
             isUserExamNotActiveYet = true;
@@ -108,5 +124,20 @@ public class UserExamSheetController {
             isUserExamActiveNow = true;
         }
         return isUserExamActiveNow;
+    }
+
+    @Transactional(readOnly = true)
+    @RequestMapping(value = "closedQuestion",
+                    produces = "application/json",
+                    method = RequestMethod.GET)
+    @ResponseBody
+    public UserExamClosedQuestion get(@PathVariable("id") Integer id,
+            @RequestParam("closedQuestionId") Integer closedQuestionId) {
+        UserExamEntity userExam = userExamRepository.getById(id);
+        if (!isUserExamIdBelongsToLoggedUser(userExam)) {
+            throw new ResourceAccessDeniedException("Sorry searched resource does not exists");
+        }
+
+        return userExamAssembler.toUserExamClosedQuestion(id, closedQuestionId);
     }
 }

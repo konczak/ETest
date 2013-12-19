@@ -96,4 +96,16 @@ public class UserExamEntity
         }
         this.closedQuestions.add(userExamClosedQuestionEntity);
     }
+
+    public UserExamClosedQuestionEntity getUserExamClosedQuestionEntity(Integer userExamCLosedQuestionId) {
+        UserExamClosedQuestionEntity userExamClosedQuestionEntity = null;
+        for (UserExamClosedQuestionEntity element : closedQuestions) {
+            if (element.getId().equals(userExamCLosedQuestionId)) {
+                userExamClosedQuestionEntity = element;
+            }
+        }
+        Validate.notNull(userExamClosedQuestionEntity, "Not found UserExamClosedQuestion in UserExam");
+
+        return userExamClosedQuestionEntity;
+    }
 }
