@@ -41,7 +41,7 @@
                     }
                     setInterval(function() {
                         duration = moment.duration(duration.asSeconds() - interval, 'seconds');
-                        if (duration.asSeconds() === 0) {
+                        if (duration.asSeconds() < 0) {
                             location.reload();
                         }
                         $('#counter').text(formatter(duration.hours()) + ':' 
