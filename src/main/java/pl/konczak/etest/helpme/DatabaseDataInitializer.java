@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.konczak.etest.bo.ICategoryOfQuestionBO;
 import pl.konczak.etest.bo.IClosedAnswerBO;
 import pl.konczak.etest.bo.IClosedQuestionBO;
+import pl.konczak.etest.bo.ITestTemplateBO;
 import pl.konczak.etest.bo.IUserBO;
 import pl.konczak.etest.bo.IUserGroupBO;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
@@ -18,6 +19,7 @@ import pl.konczak.etest.entity.RoleEntity;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IRoleRepository;
+import pl.konczak.etest.repository.ITestTemplateRepository;
 import pl.konczak.etest.repository.IUserGroupRepository;
 import pl.konczak.etest.repository.IUserRepository;
 
@@ -44,6 +46,10 @@ public class DatabaseDataInitializer {
     private IUserGroupRepository userGroupRepository;
     @Autowired
     private IUserGroupBO userGroupBO;
+    @Autowired
+    private ITestTemplateRepository testTemplateRepository;
+    @Autowired
+    private ITestTemplateBO testTemplateBO;
 
     @Transactional
     @PostConstruct
@@ -62,6 +68,9 @@ public class DatabaseDataInitializer {
         }
         if (closedQuestionRepository.findAll().isEmpty()) {
             prepareClosedQuestions();
+        }
+        if (testTemplateRepository.findAll().isEmpty()) {
+            prepareTestTemplates();
         }
     }
 
@@ -244,5 +253,32 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "frodach", false);
         closedAnswerBO.add(entity.getId(), "farfadach", false);
         closedAnswerBO.add(entity.getId(), "faradach", true);
+    }
+
+    private void prepareTestTemplates() {
+        testTemplateBO.add("Fizyka Prad 3", 2);
+        testTemplateBO.addClosedQuestion(1, 6);
+        testTemplateBO.addClosedQuestion(1, 7);
+        testTemplateBO.addClosedQuestion(1, 8);
+        testTemplateBO.addClosedQuestion(1, 9);
+        testTemplateBO.addClosedQuestion(1, 10);
+        testTemplateBO.addClosedQuestion(1, 11);
+        testTemplateBO.addClosedQuestion(1, 12);
+        
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 6, true);
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 7, true);
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 8, true);
+        
+        
+        testTemplateBO.add("Fizyka Mechanika 1", 2);
+        testTemplateBO.addClosedQuestion(2, 1);
+        testTemplateBO.addClosedQuestion(2, 2);
+        testTemplateBO.addClosedQuestion(2, 3);
+        testTemplateBO.addClosedQuestion(2, 4);
+        testTemplateBO.addClosedQuestion(2, 5);
+        
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 1, true);
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 4, true);
+        testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 5, true);
     }
 }
