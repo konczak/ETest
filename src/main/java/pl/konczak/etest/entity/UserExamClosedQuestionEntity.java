@@ -27,6 +27,8 @@ public class UserExamClosedQuestionEntity
     private Integer id;
     private Integer points;
     private Integer pointsMax;
+    private Integer orderNumber;
+    private boolean subbmited;
     private UserExamEntity userExam;
     private ClosedQuestionEntity closedQuestion;
     private Set<UserExamClosedAnswerEntity> closedAnswers = new HashSet<UserExamClosedAnswerEntity>();
@@ -34,13 +36,16 @@ public class UserExamClosedQuestionEntity
     public UserExamClosedQuestionEntity() {
     }
 
-    public UserExamClosedQuestionEntity(UserExamEntity userExam, ClosedQuestionEntity closedQuestion) {
+    public UserExamClosedQuestionEntity(UserExamEntity userExam, ClosedQuestionEntity closedQuestion, Integer orderNumber) {
         Validate.notNull(userExam);
         Validate.notNull(closedQuestion);
+        Validate.notNull(orderNumber);
         this.userExam = userExam;
         this.closedQuestion = closedQuestion;
         this.points = 0;
         this.pointsMax = 1;
+        this.orderNumber = orderNumber;
+        this.subbmited = false;
     }
 
     @Id
@@ -73,6 +78,27 @@ public class UserExamClosedQuestionEntity
         this.pointsMax = pointsMax;
     }
 
+    public Integer getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public boolean isSubbmited() {
+        return subbmited;
+    }
+
+    public void setSubbmited(boolean subbmited) {
+        this.subbmited = subbmited;
+    }
+    
+    public void markAsSubmitted() {
+        Validate.isFalse(subbmited, "Can not again mark UserExamClosedQuestion as subbmited");
+        this.subbmited = true;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "closedQuestionsId",
                 nullable = false)
@@ -94,7 +120,7 @@ public class UserExamClosedQuestionEntity
     public void setClosedAnswers(Set<UserExamClosedAnswerEntity> closedAnswers) {
         this.closedAnswers = closedAnswers;
     }
-    
+
     public void addClosedAnswer(ClosedAnswerEntity closedAnswer) {
         this.closedAnswers.add(new UserExamClosedAnswerEntity(closedAnswer, this));
     }

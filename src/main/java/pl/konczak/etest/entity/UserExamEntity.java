@@ -87,8 +87,10 @@ public class UserExamEntity
         this.closedQuestions = closedQuestions;
     }
 
-    public void addClosedQuestion(ClosedQuestionEntity closedQuestion, Set<ClosedAnswerEntity> closedAnswers) {
-        UserExamClosedQuestionEntity userExamClosedQuestionEntity = new UserExamClosedQuestionEntity(this, closedQuestion);
+    public void addClosedQuestion(ClosedQuestionEntity closedQuestion, Integer closedQuestionOrderNumber,
+            Set<ClosedAnswerEntity> closedAnswers) {
+        UserExamClosedQuestionEntity userExamClosedQuestionEntity =
+                new UserExamClosedQuestionEntity(this, closedQuestion, closedQuestionOrderNumber);
         for (ClosedAnswerEntity closedAnswerEntity : closedAnswers) {
             userExamClosedQuestionEntity.addClosedAnswer(closedAnswerEntity);
         }

@@ -177,8 +177,10 @@
 
     create table userExamClosedQuestions (
         userExamClosedQuestionsId  serial not null unique,
+        orderNumber int4,
         points int4,
         pointsMax int4,
+        subbmited boolean not null,
         closedQuestionsId int4 not null,
         userExamsId int4 not null,
         primary key (userExamClosedQuestionsId)

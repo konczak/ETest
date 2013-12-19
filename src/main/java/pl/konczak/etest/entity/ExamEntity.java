@@ -154,8 +154,10 @@ public class ExamEntity
 
     public void addUserExam(UserEntity examined, Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionWithAnswers) {
         UserExamEntity userExamEntity = new UserExamEntity(this, examined);
+        Integer closedQuestionOrderNumber = 1;
         for (Map.Entry<ClosedQuestionEntity, Set<ClosedAnswerEntity>> entry : mapOfClosedQuestionWithAnswers.entrySet()) {
-            userExamEntity.addClosedQuestion(entry.getKey(), entry.getValue());
+            userExamEntity.addClosedQuestion(entry.getKey(), closedQuestionOrderNumber, entry.getValue());
+            closedQuestionOrderNumber++;
         }
         this.generatedExams.add(userExamEntity);
     }
