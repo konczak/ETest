@@ -54,7 +54,7 @@ public class UserExamEntity
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "examsId",
                 nullable = false)
     public ExamEntity getExam() {
