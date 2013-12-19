@@ -25,17 +25,29 @@
             <c:if test="${not empty userExam.activeInSeconds}">
                 <div class="col-md-3 col-md-offset-1 alert alert-info text-center">
                     <spring:message code="userExam.activeInSeconds.text"/><br>
-                    <strong id="counter">HH:MM:SS</strong>
+                    <strong id="counter">--:--:--</strong>
                 </div>
                 <script src="${momentJsUrl}"></script>
                 <script>
-                var diffTime = ${userExam.activeInSeconds};
-                var duration = moment.duration(diffTime, 'seconds');
-                var interval = 1;
-                setInterval(function() {
-                    duration = moment.duration(duration.asSeconds() - interval, 'seconds');
-                    $('#counter').text(duration.hours() + ':' + duration.minutes() + ':' + duration.seconds());
-                }, 1000);
+                    var diffTime = ${userExam.activeInSeconds};
+                    var duration = moment.duration(diffTime, 'seconds');
+                    var interval = 1;
+                    function formatter(numericValue) {
+                        var result = numericValue;
+                        if (numericValue < 10) {
+                            result = "0" + result;
+                        }
+                        return result;
+                    }
+                    setInterval(function() {
+                        duration = moment.duration(duration.asSeconds() - interval, 'seconds');
+                        if (duration.asSeconds() === 0) {
+                            location.reload();
+                        }
+                        $('#counter').text(formatter(duration.hours()) + ':' 
+                                + formatter(duration.minutes()) + ':' 
+                                + formatter(duration.seconds()));
+                    }, 1000);
                 </script>
             </c:if>
         </div>
