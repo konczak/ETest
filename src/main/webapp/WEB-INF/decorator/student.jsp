@@ -12,7 +12,7 @@
 </head>
 <body>
     <ul class="nav nav-tabs nav-justified">
-        <li id="exam">
+        <li id="userExam">
             <a href="${userExamListUrl}">
                 <spring:message code="exam.list.title"/>
             </a>
