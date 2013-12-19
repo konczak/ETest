@@ -16,7 +16,7 @@ import pl.konczak.etest.repository.IUserRepository;
 @RequestMapping("student/userExam/")
 public class UserExamListController {
 
-    private static final String VIEW_LIST = "student/list";
+    private static final String VIEW_LIST = "student/userExam/list";
     @Autowired
     private IUserRepository userRepository;
     @Autowired

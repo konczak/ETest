@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <c:forEach items="${userExams}" var="userExam">
-                    <spring:url var="userExamSheetUrl" value="/userExam/{id}">
+                    <spring:url var="userExamSheetUrl" value="/student/userExam/{id}">
                         <spring:param name="id" value="${userExam.id}"/>
                     </spring:url>
                     <tr>
