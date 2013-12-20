@@ -41,3 +41,7 @@ footer {
 #ajaxLoader {
     display: none;
 }
+
+.clickable {
+    cursor: pointer;
+}
