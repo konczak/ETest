@@ -71,7 +71,7 @@ public class ClosedQuestionNewController {
             ClosedQuestionEntity closedQuestionEntity =
                     closedQuestionBO.add(closedQuestionNew.getQuestion(), getIdOfAuthenticatedUser());
             MultipartFile multipartFile = closedQuestionNew.getMultipartFile();
-            if (multipartFile != null) {
+            if (!multipartFile.isEmpty()) {
                 closedQuestionBO.addPicture(closedQuestionEntity.getId(),
                         multipartFile.getBytes());
             }

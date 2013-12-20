@@ -79,7 +79,7 @@ public class ClosedAnswerNewController {
                     closedAnswerNew.getAnswer(),
                     closedAnswerNew.isCorrect());
             MultipartFile multipartFile = closedAnswerNew.getMultipartFile();
-            if (multipartFile != null) {
+            if (!multipartFile.isEmpty()) {
                 closedAnswerBO.addPicture(closedAnswerEntity.getId(),
                         multipartFile.getBytes());
             }
