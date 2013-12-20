@@ -12,9 +12,11 @@
             <h1><spring:message code="userExam.sheet.header" arguments="${testTemplateSubject}, ${examTitleSuffix}"/></h1>
         </div>
         
-       <div class="alert alert-info">
+        <div class="row">
+       <div class="col-md-4 col-md-offset-4 alert alert-info text-center">
            <spring:message code="userExam.alreadyFinished.text"/>
        </div>
+        </div>
 
         <script src="${activeJsUrl}"></script>
     </body>
