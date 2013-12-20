@@ -1,25 +1,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<spring:url var="lightboxCssUrl" value="/resources/css/lightbox.css" />
 <spring:url var="ajaxLoaderUrl" value="/resources/images/ajax-loader.gif" />
 <spring:url var="knockoutJsUrl" value="/resources/js/knockout-3.0.0.js" />
+<spring:url var="lightboxJsUrl" value="/resources/js/lightbox-2.6.min.js" />
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
 <spring:url var="getClosedQuestionUrl" value="/student/userExam/{id}/closedQuestion" >
     <spring:param name="id" value="${userExamId}"/>
 </spring:url>
+<spring:url var="imageWithoutIdUrl" value="/image/"/>
 
 <!DOCTYPE html>
 <html>
     <head>
         <title><spring:message code="userExam.sheet.title" arguments="${testTemplateSubject}, ${testTemplateSuffix}"/></title>
+        <link type="text/css" href="${lightboxCssUrl}" rel="stylesheet">
     </head>
     <body>
         <div class="page-header">
             <h1>
                 <spring:message code="userExam.sheet.header" arguments="${testTemplateSubject}, ${testTemplateSuffix}"/>
                 <span id="ajaxLoader">
-                <img  src="${ajaxLoaderUrl}"/>
-                <small><spring:message code="global.ajax.text"/></small>
+                    <img  src="${ajaxLoaderUrl}"/>
+                    <small><spring:message code="global.ajax.text"/></small>
                 </span>
             </h1>
         </div>
@@ -37,26 +41,39 @@
                 </div>
             </div>
             <div class="col-lg-9" data-bind="with: chosenQuestionData, fadeVisible: chosenQuestionData.loaded">
-                <h3 data-bind="text: question, value: id"></h3><br>
+                <div class="media">
+                    <a class="pull-right thumbnail" data-lightbox="image" data-bind="attr: { href: imageSrc }, visible: imageSrc()">
+                        <img width="64px" height="64px" data-bind="attr: { src: imageSrc }" >
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading" data-bind="text: question, value: id"></h4>
+                    </div>
+                </div>
 
                 <div data-bind="foreach: userExamClosedAnswers">
-                    <div class="row" >
+                    <hr>
+                    <div class="row">
                         <div class="col-md-1">
-                            <button type="button" class="btn btn-default" data-bind="click: negateAnswer">
+                            <button type="button" class="btn btn-default btn-lg" data-bind="click: negateAnswer">
                                 <span class="glyphicon" data-bind="css: markedOrNot"></span>
                             </button>                            
                         </div>
-                        <div class="col-md-8" data-bind="text: answer, value: id, click: negateAnswer">
+                        <div class="col-md-8 media" data-bind="">
+                            <a class="pull-right thumbnail" data-lightbox="images" data-bind="attr: { href: imageSrc }, visible: imageSrc">
+                                <img width="64px" height="64px" data-bind="attr: { src: imageSrc }" >
+                            </a>
+                            <div class="media-body clickable" data-bind="text: answer, value: id, click: negateAnswer">
+                            </div>
                         </div>
                     </div>
-                    <hr>
                 </div>
-                <br>
+                <hr>
                 <button type="button" class="btn btn-success btn-lg" data-bind="click: $parent.subbmitQuestion, visible: loaded, enable: loaded">
                     <spring:message code="button_submit"/>
                 </button>
             </div>
         </div>
+        <script src="${lightboxJsUrl}"></script>
         <script src="${knockoutJsUrl}"></script>
         <script>
             function Answer(id, answer, correct, imageId) {
@@ -64,7 +81,11 @@
                 self.id = id;
                 self.answer = answer;
                 self.correct = ko.observable(correct);
-                self.imageId = imageId;
+                if (imageId) {
+                    self.imageSrc = '${imageWithoutIdUrl}' + imageId;
+                } else {
+                    self.imageSrc = null;
+                }
 
                 self.markedOrNot = ko.computed(function() {
                     return (self.correct() ? "glyphicon-check" : "glyphicon-unchecked");
@@ -79,12 +100,19 @@
                 self.loaded = ko.observable(false);
                 self.id = ko.observable();
                 self.question = ko.observable();
-                self.imageId = ko.observable();
+                self.imageSrc = ko.observable();
                 self.userExamClosedAnswers = ko.observableArray();
 
                 self.init = function(data) {
                     self.id(data.id);
                     self.question(data.question);
+                    self.imageSrc('${imageWithoutIdUrl}' + data.imageId);
+                    if (data.imageId) {
+                        self.imageSrc('${imageWithoutIdUrl}' + data.imageId);
+                    } else {
+                        self.imageSrc(null);
+                    }
+
                     self.userExamClosedAnswers.removeAll();
                     for (var i = 0; i < data.userExamClosedAnswers.length; i++) {
                         var closedAnswer = data.userExamClosedAnswers[i];
