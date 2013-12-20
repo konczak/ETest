@@ -63,6 +63,9 @@ public class UserExamSheetController {
         LocalDateTime now = LocalDateTime.now();
         ExamEntity exam = userExam.getExam();
 
+        modelMap.addAttribute("testTemplateSubject", exam.getTestTemplate().getSubject());
+        modelMap.addAttribute("testTemplateSuffix", exam.getTitleSuffix());
+
         if (isUserExamAlreadyFinished(exam, now)) {
             modelMap.addAttribute(OBJECT, userExamAssembler.toUserExamAlreadyFinished(id));
             view = VIEW_USEREXAM_ALREADYFINISHED;
@@ -77,8 +80,7 @@ public class UserExamSheetController {
             mapper.writeValue(strWriter, userExamQuestionHeaders);
             modelMap.addAttribute("userExamId", userExam.getId());
             modelMap.addAttribute("questionHeaders", strWriter.toString());
-            modelMap.addAttribute("testTemplateSubject", exam.getTestTemplate().getSubject());
-            modelMap.addAttribute("testTemplateSuffix", exam.getTitleSuffix());
+
             view = VIEW_USEREXAM_ACTIVENOW;
         } else {
             String msg = String.format("Unrecognized date for UserExam <%s>", userExam.getId());
@@ -132,11 +134,12 @@ public class UserExamSheetController {
                     method = RequestMethod.GET)
     @ResponseBody
     public UserExamClosedQuestion get(@PathVariable("id") Integer id,
-            @RequestParam("closedQuestionId") Integer closedQuestionId) {
+            @RequestParam("closedQuestionId") Integer closedQuestionId) throws InterruptedException {
         UserExamEntity userExam = userExamRepository.getById(id);
         if (!isUserExamIdBelongsToLoggedUser(userExam)) {
             throw new ResourceAccessDeniedException("Sorry searched resource does not exists");
         }
+        Thread.sleep(750);
 
         return userExamAssembler.toUserExamClosedQuestion(id, closedQuestionId);
     }
