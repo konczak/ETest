@@ -37,3 +37,7 @@ footer {
 .nav-tabs li.active a:hover{
     cursor: pointer;
 }
+
+#ajaxLoader {
+    display: none;
+}
