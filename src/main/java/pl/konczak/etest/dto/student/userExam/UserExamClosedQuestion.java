@@ -2,19 +2,24 @@ package pl.konczak.etest.dto.student.userExam;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import javax.validation.constraints.NotNull;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserExamClosedQuestion {
 
+    @NotNull
     private Integer id;
     private String question;
     private Integer imageId;
+    @NotNull
     private List<UserExamClosedAnswer> userExamClosedAnswers =
             new ArrayList<UserExamClosedAnswer>();
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class UserExamClosedAnswer {
 
+        @NotNull
         private Integer id;
         private String answer;
         private boolean correct;

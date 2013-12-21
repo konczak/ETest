@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,8 +140,17 @@ public class UserExamSheetController {
         if (!isUserExamIdBelongsToLoggedUser(userExam)) {
             throw new ResourceAccessDeniedException("Sorry searched resource does not exists");
         }
-        Thread.sleep(750);
+        Thread.sleep(400);
 
         return userExamAssembler.toUserExamClosedQuestion(id, closedQuestionId);
+    }
+
+    @RequestMapping(value = "closedQuestion",
+                    consumes = "application/json",
+                    method = RequestMethod.POST)
+    @ResponseBody
+    public void submit(@RequestBody UserExamClosedQuestion userExamClosedQuestion) {
+        System.out.println("submitted!");
+        throw new RuntimeException();
     }
 }

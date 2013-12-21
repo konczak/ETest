@@ -151,7 +151,21 @@
                 };
 
                 self.subbmitQuestion = function(chosenQuestionData) {
+                    var jsonData = ko.toJSON(chosenQuestionData);
 
+                    $.ajax({
+                        type: 'POST',
+                        url: "${getClosedQuestionUrl}",
+                        data: jsonData,
+                        contentType: "application/json",
+                        beforeSend: function(xhrd) {
+                            alert("beforeSend");
+
+                        },
+                        success: function(data) {
+                            alert("success:");
+                        }
+                    });
                 };
                 self.questionHeaderTitle = function(questionHeaderOrderNumber) {
                     return '<spring:message code="userExam.questionList.text"/> ' + questionHeaderOrderNumber;
