@@ -52,7 +52,7 @@ public class UserExamClosedAnswerEntity
     }
 
     @Column(nullable = false,
-            updatable = false)
+            updatable = true)
     public boolean isMarkedByUser() {
         return markedByUser;
     }

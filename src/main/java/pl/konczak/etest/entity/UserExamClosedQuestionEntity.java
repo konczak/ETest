@@ -93,7 +93,7 @@ public class UserExamClosedQuestionEntity
     public void setSubbmited(boolean subbmited) {
         this.subbmited = subbmited;
     }
-    
+
     public void markAsSubmitted() {
         Validate.isFalse(subbmited, "Can not again mark UserExamClosedQuestion as subbmited");
         this.subbmited = true;
@@ -123,6 +123,17 @@ public class UserExamClosedQuestionEntity
 
     public void addClosedAnswer(ClosedAnswerEntity closedAnswer) {
         this.closedAnswers.add(new UserExamClosedAnswerEntity(closedAnswer, this));
+    }
+
+    public void markClosedAnswerByUser(Integer answerId, boolean correct) {
+        for (UserExamClosedAnswerEntity userExamClosedAnswerEntity : closedAnswers) {
+            if (userExamClosedAnswerEntity.getId().equals(answerId)) {
+                userExamClosedAnswerEntity.setMarkedByUser(correct);
+                return;
+            }
+        }
+        throw new RuntimeException(String.format(
+                "Unable to markClosedAnswer because id <%s> does not belong to this question", answerId));
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
