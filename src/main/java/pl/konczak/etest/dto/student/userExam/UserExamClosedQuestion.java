@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import pl.konczak.etest.vo.UserExamClosedQuestionWithAnswersVO;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserExamClosedQuestion {
@@ -107,5 +108,16 @@ public class UserExamClosedQuestion {
 
     public void addClosedAnswer(Integer id, String answer, Integer imageId) {
         this.userExamClosedAnswers.add(new UserExamClosedAnswer(id, answer, imageId));
+    }
+
+    public UserExamClosedQuestionWithAnswersVO toVO() {
+        UserExamClosedQuestionWithAnswersVO vo =
+                new UserExamClosedQuestionWithAnswersVO(id);
+
+        for (UserExamClosedAnswer userExamClosedAnswer : userExamClosedAnswers) {
+            vo.addClosedAnswer(userExamClosedAnswer.getId(), userExamClosedAnswer.isCorrect());
+        }
+
+        return vo;
     }
 }

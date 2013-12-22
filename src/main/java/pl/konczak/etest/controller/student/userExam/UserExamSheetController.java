@@ -6,23 +6,27 @@ import java.io.Writer;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.joda.time.Days;
 import org.joda.time.LocalDateTime;
-import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import pl.konczak.etest.assembler.student.userExam.UserExamAssembler;
+import pl.konczak.etest.bo.IUserExamBO;
 import pl.konczak.etest.dto.student.userExam.UserExamClosedQuestion;
 import pl.konczak.etest.dto.student.userExam.UserExamQuestionHeader;
 import pl.konczak.etest.entity.ExamEntity;
@@ -31,9 +35,12 @@ import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.exception.ResourceAccessDeniedException;
+import pl.konczak.etest.exception.ValidationException;
 
 import pl.konczak.etest.repository.IUserExamRepository;
 import pl.konczak.etest.repository.IUserRepository;
+
+import pl.konczak.etest.vo.UserExamClosedQuestionWithAnswersVO;
 
 @Controller
 @RequestMapping("student/userExam/{id}")
@@ -51,6 +58,11 @@ public class UserExamSheetController {
     @Autowired
     @Qualifier("userExamAssembler")
     private UserExamAssembler userExamAssembler;
+    @Autowired
+    @Qualifier("userExamClosedQuestionValidator")
+    private Validator userExamClosedQuestionValidator;
+    @Autowired
+    private IUserExamBO userExamBO;
 
     @Transactional(readOnly = true)
     @RequestMapping(method = RequestMethod.GET)
@@ -149,8 +161,23 @@ public class UserExamSheetController {
                     consumes = "application/json",
                     method = RequestMethod.POST)
     @ResponseBody
-    public void submit(@RequestBody UserExamClosedQuestion userExamClosedQuestion) {
-        System.out.println("submitted!");
-        throw new RuntimeException();
+    public void submit(@RequestBody UserExamClosedQuestion userExamClosedQuestion,
+            BindingResult result) {
+        userExamClosedQuestionValidator.validate(userExamClosedQuestion, result);
+
+        if (result.hasErrors()) {
+            String msg = "UserExamClosedQuestion contains errors :(";
+            throw new ValidationException(msg);
+        }
+        UserExamClosedQuestionWithAnswersVO vo = userExamClosedQuestion.toVO();
+
+        userExamBO.solve(vo);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    @ExceptionHandler(ValidationException.class)
+    public void handleCustomException(ValidationException ex) {
+        LOGGER.error(ex.getMessage());
     }
 }
