@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="list-group">
-                    <ul class="list-group" data-bind="foreach: questionHeaders">
+                    <ul class="list-group" data-bind="template: {foreach: questionHeaders, beforeRemove: hideQuestionHeader}">
                         <li data-bind="text: $root.questionHeaderTitle(orderNumber),
                             value: id,
                             css: { active: id == $root.chosenQuestionHeaderId() },
@@ -132,7 +132,7 @@
                 // Data
                 var self = this;
 
-                self.questionHeaders = ${questionHeaders};
+                self.questionHeaders = ko.observableArray(${questionHeaders});
                 self.chosenQuestionHeaderId = ko.observable();
                 self.chosenQuestionData = new Question();
 
@@ -159,19 +159,39 @@
                         data: jsonData,
                         contentType: "application/json",
                         beforeSend: function(xhrd) {
-                            alert("beforeSend");
+//                            alert("beforeSend");
 
                         },
                         success: function(data) {
-                            alert("success:");
+                            for (var i = 0; i < self.questionHeaders().length; i++) {
+                                var questionHeader = self.questionHeaders()[i];
+                                if (questionHeader.id === chosenQuestionData.id()) {
+                                    self.chosenQuestionHeaderId(null);
+                                    self.chosenQuestionData.destroy();
+                                    self.questionHeaders.remove(questionHeader);
+                                    break;
+                                }
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert("error");
                         }
                     });
                 };
                 self.questionHeaderTitle = function(questionHeaderOrderNumber) {
                     return '<spring:message code="userExam.questionList.text"/> ' + questionHeaderOrderNumber;
                 };
+
+                self.hideQuestionHeader = function(elem) {
+                    if (elem.nodeType === 1) {
+                        $(elem).fadeOut(function() {
+                            $(elem).remove();
+                        });
+                    }
+                    ;
+                }
+                ;
             }
-            ;
 
             ko.bindingHandlers.fadeVisible = {
                 init: function(element, valueAccessor) {
