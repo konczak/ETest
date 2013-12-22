@@ -66,6 +66,7 @@
                 <value>i18n/teacher/testTemplate/webmessages_testTemplate</value>
                 <value>i18n/teacher/exam/webmessages_exam</value>
                 <value>i18n/student/userExam/webmessages_userExam</value>
+                <value>i18n/student/userExam/webmessages_userExamClosedQuestion</value>
                 <value>i18n/application</value>
             </list>
         </property>
