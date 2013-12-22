@@ -87,7 +87,7 @@ public class UserExamSheetController {
             view = VIEW_USEREXAM_NOTACTIVEYET;
         } else if (isUserExamActiveNow(exam, now)) {
             List<UserExamQuestionHeader> userExamQuestionHeaders =
-                    userExamAssembler.toUserExamQuestionHeader(id);
+                    userExamAssembler.toUserExamQuestionHeaders(id);
             Writer strWriter = new StringWriter();
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(strWriter, userExamQuestionHeaders);

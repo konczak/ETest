@@ -133,7 +133,7 @@ public class UserExamAssembler {
     }
 
     @Transactional(readOnly = true)
-    public List<UserExamQuestionHeader> toUserExamQuestionHeader(Integer id) {
+    public List<UserExamQuestionHeader> toUserExamQuestionHeaders(Integer id) {
         UserExamEntity userExamEntity = userExamRepository.getById(id);
         List<UserExamQuestionHeader> userExamQuestionHeaders = new ArrayList<UserExamQuestionHeader>();
 
