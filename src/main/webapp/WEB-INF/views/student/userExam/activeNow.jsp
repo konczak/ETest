@@ -4,6 +4,7 @@
 <spring:url var="lightboxCssUrl" value="/resources/css/lightbox.css" />
 <spring:url var="ajaxLoaderUrl" value="/resources/images/ajax-loader.gif" />
 <spring:url var="knockoutJsUrl" value="/resources/js/knockout-3.0.0.js" />
+<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs.min.js" />
 <spring:url var="lightboxJsUrl" value="/resources/js/lightbox-2.6.min.js" />
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
 <spring:url var="getClosedQuestionUrl" value="/student/userExam/{id}/closedQuestion" >
@@ -29,6 +30,10 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
+                <div class="alert alert-warning text-center">
+                    <spring:message code="userExam.inactiveInSeconds.text"/><br>
+                    <strong id="counter">--:--:--</strong>
+                </div>
                 <div class="list-group">
                     <ul class="list-group" data-bind="template: {foreach: questionHeaders, beforeRemove: hideQuestionHeader}">
                         <li data-bind="text: $root.questionHeaderTitle(orderNumber),
@@ -73,6 +78,28 @@
                 </button>
             </div>
         </div>
+        <script src="${momentJsUrl}"></script>
+        <script>
+            var diffTime = ${inactiveInSeconds};
+            var duration = moment.duration(diffTime, 'seconds');
+            var interval = 1;
+            function formatter(numericValue) {
+                var result = numericValue;
+                if (numericValue < 10) {
+                    result = "0" + result;
+                }
+                return result;
+            }
+            setInterval(function() {
+                duration = moment.duration(duration.asSeconds() - interval, 'seconds');
+                if (duration.asSeconds() < 0) {
+                    location.reload();
+                }
+                $('#counter').text(formatter(duration.hours()) + ':'
+                        + formatter(duration.minutes()) + ':'
+                        + formatter(duration.seconds()));
+            }, 1000);
+        </script>
         <script src="${lightboxJsUrl}"></script>
         <script src="${knockoutJsUrl}"></script>
         <script>

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -94,6 +95,8 @@ public class UserExamSheetController {
             modelMap.addAttribute("userExamId", userExam.getId());
             modelMap.addAttribute("questionHeaders", strWriter.toString());
 
+            Integer inactiveInSeconds = Seconds.secondsBetween(now, exam.getActiveTo()).getSeconds();
+            modelMap.addAttribute("inactiveInSeconds", inactiveInSeconds);
             view = VIEW_USEREXAM_ACTIVENOW;
         } else {
             String msg = String.format("Unrecognized date for UserExam <%s>", userExam.getId());
