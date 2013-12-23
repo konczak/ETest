@@ -2,11 +2,13 @@ package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
 import org.apache.log4j.Logger;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.konczak.etest.bo.IUserExamBO;
 import pl.konczak.etest.core.Validate;
+import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.UserExamClosedAnswerEntity;
 import pl.konczak.etest.entity.UserExamClosedQuestionEntity;
 import pl.konczak.etest.repository.IUserExamClosedQuestionRepository;
@@ -25,10 +27,16 @@ public class UserExamBO
     @Override
     public void solve(UserExamClosedQuestionWithAnswersVO userExamClosedQuestionWithAnswersVO) {
         Validate.notNull(userExamClosedQuestionWithAnswersVO);
+        LocalDateTime now = LocalDateTime.now().plusSeconds(20);
 
         UserExamClosedQuestionEntity userExamClosedQuestionEntity =
                 userExamClosedQuestionRepository.getById(userExamClosedQuestionWithAnswersVO.getId());
 
+        ExamEntity examEntity =
+                userExamClosedQuestionEntity.getUserExam().getExam();
+
+        Validate.isTrue(examEntity.getActiveTo().isAfter(now),
+                "Subbmiting UserExamClosedQuestion after end of exam is forbidden");
         Validate.isFalse(userExamClosedQuestionEntity.isSubbmited(), "UserExamClosedQuestion is already subbmited");
         Set<UserExamClosedAnswerEntity> closedAnswers = userExamClosedQuestionEntity.getClosedAnswers();
         Set<UserExamClosedAnswerVO> closedAnswerVOs = userExamClosedQuestionWithAnswersVO.getClosedAnswers();
