@@ -25,6 +25,10 @@ public class Validate
      * @param max
      */
     public static void isBetween(Integer tested, Integer min, Integer max) {
+        isBetween(tested, min, max, String.format(BETWEEN_FAILED, tested, min, max));
+    }
+
+    public static void isBetween(Integer tested, Integer min, Integer max, String message) {
         Validate.notNull(tested, TESTED_VALUE_NULL);
         Validate.notNull(min, MIN_VALUE_NULL);
         Validate.notNull(max, MAX_VALUE_NULL);
@@ -33,7 +37,7 @@ public class Validate
         boolean isMoreThenMax = tested > max;
 
         if (isLessThenMin || isMoreThenMax) {
-            throw new IllegalArgumentException(String.format(BETWEEN_FAILED, tested, min, max));
+            throw new IllegalArgumentException(message);
         }
     }
 }
