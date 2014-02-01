@@ -2,10 +2,9 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="categoryListLink" value="/question/category/"/>
-<c:url var="closedQuestionListLink" value="/question/closedQuestion/"/>
-<c:url var="userListLink" value="/user/"/>
-<c:url var="userGroupListLink" value="/user/group/"/>
+<c:url var="categoryOfQuestionListLink" value="/admin/categoryOfQuestion/"/>
+<c:url var="userListLink" value="/admin/user/"/>
+<c:url var="userGroupListLink" value="/admin/userGroup/"/>
 
 <!DOCTYPE html>
 <html lang="${language}">
@@ -26,13 +25,8 @@
             </a>
         </li>
         <li id="categoryOfQuestion">
-            <a href="${categoryListLink}">
+            <a href="${categoryOfQuestionListLink}">
                 <spring:message code="categoryOfQuestion.list.title"/>
-            </a>
-        </li>
-        <li id="closedQuestion">
-            <a href="${closedQuestionListLink}">
-                <spring:message code="closedQuestion.list.title"/>
             </a>
         </li>
     </ul>
