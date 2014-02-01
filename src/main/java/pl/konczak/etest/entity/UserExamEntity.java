@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import pl.konczak.etest.core.Validate;
@@ -27,7 +28,27 @@ public class UserExamEntity
     private Integer id;
     private ExamEntity exam;
     private UserEntity examined;
+    private boolean checked;
     private Set<UserExamClosedQuestionEntity> closedQuestions = new HashSet<UserExamClosedQuestionEntity>();
+
+    public class UserExamResult {
+
+        private Integer resultingPoints;
+        private Integer maximalPoints;
+
+        protected UserExamResult(Integer resultingPoints, Integer maximalPoints) {
+            this.resultingPoints = resultingPoints;
+            this.maximalPoints = maximalPoints;
+        }
+
+        public Integer getResultingPoints() {
+            return resultingPoints;
+        }
+
+        public Integer getMaximalPoints() {
+            return maximalPoints;
+        }
+    }
 
     public UserExamEntity() {
     }
@@ -38,6 +59,7 @@ public class UserExamEntity
         Validate.notNull(closedQuestions);
         this.exam = exam;
         this.examined = examined;
+        this.checked = false;
     }
 
     @Id
@@ -76,6 +98,19 @@ public class UserExamEntity
         this.examined = examined;
     }
 
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void markAsChecked() {
+        Validate.isFalse(checked, String.format("UserExam <%s> has been already checked", id));
+        this.checked = true;
+    }
+
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "userExam")
     @Cascade(CascadeType.ALL)
@@ -107,5 +142,17 @@ public class UserExamEntity
         Validate.notNull(userExamClosedQuestionEntity, "Not found UserExamClosedQuestion in UserExam");
 
         return userExamClosedQuestionEntity;
+    }
+
+    @Transient
+    public UserExamResult getResults() {
+        Validate.isTrue(checked, String.format("UserExam <%s> is not checked yet and cannot get results", id));
+        int resultPoints = 0;
+        int maxPoints = 0;
+        for (UserExamClosedQuestionEntity userExamClosedQuestionEntity : closedQuestions) {
+            resultPoints += userExamClosedQuestionEntity.getPoints();
+            maxPoints += userExamClosedQuestionEntity.getPointsMax();
+        }
+        return new UserExamResult(resultPoints, maxPoints);
     }
 }

@@ -132,6 +132,7 @@
         examsId  serial not null unique,
         activeFrom timestamp not null,
         activeTo timestamp not null,
+        checked boolean not null,
         createdAt timestamp not null,
         titleSuffix varchar(25),
         usersId int4 not null,
@@ -188,6 +189,7 @@
 
     create table userExams (
         userExamsId  serial not null unique,
+        checked boolean not null,
         examsId int4 not null,
         usersId int4 not null,
         primary key (userExamsId)

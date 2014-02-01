@@ -70,6 +70,12 @@ public class UserExamClosedQuestionEntity
         this.points = points;
     }
 
+    public void grantPoints(Integer grantedPoints) {
+        Validate.isBetween(grantedPoints, 0, pointsMax,
+                String.format("Granted points have to be between 0 and %s while it was %s", pointsMax, grantedPoints));
+        this.points = grantedPoints;
+    }
+
     public Integer getPointsMax() {
         return pointsMax;
     }

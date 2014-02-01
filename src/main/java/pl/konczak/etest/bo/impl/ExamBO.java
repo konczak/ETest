@@ -1,5 +1,6 @@
 package pl.konczak.etest.bo.impl;
 
+import java.util.Set;
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,14 @@ import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.repository.IExamRepository;
 import pl.konczak.etest.repository.ITestTemplateRepository;
 import pl.konczak.etest.repository.IUserGroupRepository;
 import pl.konczak.etest.repository.IUserRepository;
 import pl.konczak.etest.strategy.teacher.IExamGenerateStrategy;
+import pl.konczak.etest.strategy.teacher.IUserExamCheckStrategy;
 
 @Service
 public class ExamBO
@@ -33,6 +36,8 @@ public class ExamBO
     private IExamRepository examRepository;
     @Autowired
     private IExamGenerateStrategy examGenerateStrategy;
+    @Autowired
+    private IUserExamCheckStrategy userExamCheckStrategy;
 
     @Transactional
     @Override
@@ -56,9 +61,26 @@ public class ExamBO
         examGenerateStrategy.generateUserExams(examEntity, maxClosedQuestionsPerExam, maxClosedAnswersPerClosedQuestion);
 
         examRepository.save(examEntity);
-        
+
         LOGGER.info(String.format("Add Exam <%s>", examEntity.getId()));
 
         return examEntity;
+    }
+
+    @Transactional
+    @Override
+    public void check(Integer examId) {
+        Validate.notNull(examId);
+        ExamEntity examEntity = examRepository.getById(examId);
+
+        Set<UserExamEntity> userExamEntityies = examEntity.getGeneratedExams();
+        for (UserExamEntity userExamEntity : userExamEntityies) {
+            userExamCheckStrategy.check(userExamEntity);
+        }
+        examEntity.markAsChecked();
+
+        examRepository.save(examEntity);
+
+        LOGGER.info(String.format("Exam <%s> checked", examEntity.getId()));
     }
 }

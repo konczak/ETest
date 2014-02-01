@@ -37,6 +37,7 @@ public class ExamEntity
     private LocalDateTime createdAt;
     private LocalDateTime activeFrom;
     private LocalDateTime activeTo;
+    private boolean checked;
     private Set<UserExamEntity> generatedExams = new HashSet<UserExamEntity>();
 
     public ExamEntity() {
@@ -143,6 +144,28 @@ public class ExamEntity
 
     public void setActiveTo(LocalDateTime activeTo) {
         this.activeTo = activeTo;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void markAsChecked() {
+        Validate.isFalse(checked, String.format("Exam <%s> has been already checked", id));
+        boolean allUserExamsAreChecked = true;
+        for (UserExamEntity userExamEntity : generatedExams) {
+            if (!userExamEntity.isChecked()) {
+                allUserExamsAreChecked = false;
+                break;
+            }
+        }
+        Validate.isTrue(allUserExamsAreChecked,
+                String.format("Exam <%s> cannot be marked as checked because some of UserExams are not checked yet", id));
+        this.checked = true;
     }
 
     @OneToMany(fetch = FetchType.LAZY,
