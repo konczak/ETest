@@ -18,18 +18,26 @@ public class ExamPreview {
     private String examinerLastname;
     private LocalDateTime activeFrom;
     private LocalDateTime activeTo;
-    private List<UserGroupMemberInternal> userGroupMembers = new ArrayList<UserGroupMemberInternal>();
+    private boolean ended;
+    private boolean checked;
+    private List<ExaminedUserInternal> examinedUsers = new ArrayList<ExaminedUserInternal>();
 
-    public static class UserGroupMemberInternal {
+    public static class ExaminedUserInternal {
 
         private Integer id;
         private String firstname;
         private String lastname;
+        private Integer resultPoints;
+        private Integer maxPoints;
 
-        public UserGroupMemberInternal(Integer id, String firstname, String lastname) {
+        public ExaminedUserInternal(Integer id,
+                String firstname, String lastname,
+                Integer resultPoints, Integer maxPoints) {
             this.id = id;
             this.firstname = firstname;
             this.lastname = lastname;
+            this.resultPoints = resultPoints;
+            this.maxPoints = maxPoints;
         }
 
         public Integer getId() {
@@ -42,6 +50,14 @@ public class ExamPreview {
 
         public String getLastname() {
             return lastname;
+        }
+
+        public Integer getResultPoints() {
+            return resultPoints;
+        }
+
+        public Integer getMaxPoints() {
+            return maxPoints;
         }
     }
 
@@ -131,13 +147,30 @@ public class ExamPreview {
 
     public void setActiveTo(LocalDateTime activeTo) {
         this.activeTo = activeTo;
+        if (activeTo.isBefore(LocalDateTime.now())) {
+            ended = true;
+        }
     }
 
-    public List<UserGroupMemberInternal> getUserGroupMembers() {
-        return userGroupMembers;
+    public boolean isEnded() {
+        return ended;
     }
 
-    public void addMember(Integer userId, String firstname, String lastname) {
-        this.userGroupMembers.add(new UserGroupMemberInternal(userId, firstname, lastname));
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void markAsChecked() {
+        this.checked = true;
+    }
+
+    public List<ExaminedUserInternal> getExaminedUsers() {
+        return examinedUsers;
+    }
+
+    public void addExaminedUser(Integer userId, String firstname, String lastname,
+            Integer resultPoints, Integer maxPoints) {
+        this.examinedUsers
+                .add(new ExaminedUserInternal(userId, firstname, lastname, resultPoints, maxPoints));
     }
 }

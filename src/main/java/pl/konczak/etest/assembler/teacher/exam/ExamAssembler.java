@@ -2,15 +2,17 @@ package pl.konczak.etest.assembler.teacher.exam;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import pl.konczak.etest.dto.teacher.exam.ExamListRow;
 
+import pl.konczak.etest.dto.teacher.exam.ExamListRow;
 import pl.konczak.etest.dto.teacher.exam.ExamPreview;
 import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.repository.IExamRepository;
@@ -47,12 +49,24 @@ public class ExamAssembler {
         examPreview.setActiveFrom(examEntity.getActiveFrom());
         examPreview.setActiveTo(examEntity.getActiveTo());
 
-        for (UserEntity member : userGroupEntity.getMembers()) {
-            UserPersonalDataEntity memberPersonalDataEntity = member.getUserPersonalData();
+        for (UserExamEntity userExamEntity : examEntity.getGeneratedExams()) {
+            UserEntity examined = userExamEntity.getExamined();
+            UserPersonalDataEntity examinedPersonalDataEntity = examined.getUserPersonalData();
+            if (examEntity.isChecked()) {
+                UserExamEntity.UserExamResult userExamResult = userExamEntity.getResults();
+                examPreview.addExaminedUser(examined.getId(),
+                        examinedPersonalDataEntity.getFirstname(), examinedPersonalDataEntity.getLastname(),
+                        userExamResult.getResultingPoints(), userExamResult.getMaximalPoints());
+            } else {
+                examPreview.addExaminedUser(examined.getId(),
+                        examinedPersonalDataEntity.getFirstname(), examinedPersonalDataEntity.getLastname(),
+                        0, 0);
+            }
 
-            examPreview.addMember(member.getId(),
-                    memberPersonalDataEntity.getFirstname(),
-                    memberPersonalDataEntity.getLastname());
+        }
+
+        if (examEntity.isChecked()) {
+            examPreview.markAsChecked();
         }
 
         return examPreview;
