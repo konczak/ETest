@@ -154,6 +154,8 @@ public class ExamEntity
 
     public void terminateExam() {
         LocalDateTime now = LocalDateTime.now();
+        Validate.isTrue(activeFrom.isBefore(now),
+                String.format("Exam <%s> cannot be terminated because it does not started yet", id));
         Validate.isTrue(activeTo.isAfter(now),
                 String.format("Exam <%s> cannot be terminated because activeTo is from past", id));
         this.activeTo = now;
