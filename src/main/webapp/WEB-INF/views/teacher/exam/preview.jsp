@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
 <spring:url var="examCheckUrl" value="/teacher/exam/{id}/check" >
@@ -123,6 +124,7 @@
                         <c:if test="${exam.checked}">
                         <th><spring:message code="userExam.resultPoints.label"/></th>
                         <th><spring:message code="userExam.maxPoints.label"/></th>
+                        <th>%</th>
                         <th><spring:message code="userExam.passed.label"/></th>
                         </c:if>
                 </tr>
@@ -136,6 +138,9 @@
                         <c:if test="${exam.checked}">
                             <td>${examinedUser.resultPoints}</td>
                             <td>${examinedUser.maxPoints}</td>
+                            <td>
+                                <fmt:formatNumber value="${examinedUser.resultPoints / examinedUser.maxPoints * 100.00}" minFractionDigits="0" maxFractionDigits="0"/> 
+                            </td>
                             <td>
                                 <c:choose>
                                     <c:when test="${examinedUser.resultPoints > 0.5 * examinedUser.maxPoints}">
