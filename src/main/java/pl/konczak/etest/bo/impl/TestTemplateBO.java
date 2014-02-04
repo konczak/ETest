@@ -4,11 +4,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import pl.konczak.etest.bo.ITestTemplateBO;
 import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateClosedQuestionEntity;
-
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
@@ -50,6 +50,8 @@ public class TestTemplateBO
         TestTemplateEntity testTemplateEntity = testTemplateRepository.getById(id);
         ClosedQuestionEntity closedQuestionEntity = closedQuestionRepository.getById(closedQuestionId);
 
+        Validate.isFalse(closedQuestionEntity.getCorrectClosedAnswers().isEmpty(), String.format(
+                "ClosedQuestion <%s> does not have any correct answer and cannot be used in test", id));
         testTemplateEntity.addClosedQuestion(closedQuestionEntity);
 
         testTemplateRepository.save(testTemplateEntity);
@@ -70,9 +72,7 @@ public class TestTemplateBO
 
         TestTemplateClosedQuestionEntity testTemplateClosedQuestionEntity =
                 testTemplateEntity.getClosedQuestion(closedQuestionId);
-        System.out.println("size before <" + testTemplateEntity.getClosedQuestions().size() + ">");
         testTemplateEntity.getClosedQuestions().remove(testTemplateClosedQuestionEntity);
-        System.out.println("size after <" + testTemplateEntity.getClosedQuestions().size() + ">");
         testTemplateRepository.save(testTemplateEntity);
 
         LOGGER.info(String.format("Removed ClosedQuestion <%s> from TestTemplate <%s>",
@@ -83,7 +83,8 @@ public class TestTemplateBO
 
     @Transactional
     @Override
-    public TestTemplateEntity changeClosedQuestionStatusOfMandatory(Integer id, Integer closedQuestionId, boolean mandatory) {
+    public TestTemplateEntity changeClosedQuestionStatusOfMandatory(Integer id, Integer closedQuestionId,
+            boolean mandatory) {
         Validate.notNull(id);
         Validate.notNull(closedQuestionId);
         TestTemplateEntity testTemplateEntity = testTemplateRepository.getById(id);
@@ -95,7 +96,8 @@ public class TestTemplateBO
         }
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(String.format("Change mandatory status for ClosedQuestion <%s> in TestTemplate <%s> to <%b>",
+        LOGGER.info(String.format(
+                "Change mandatory status for ClosedQuestion <%s> in TestTemplate <%s> to <%b>",
                 closedQuestionId, testTemplateEntity.getId(), mandatory));
 
         return testTemplateEntity;
