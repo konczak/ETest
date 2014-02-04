@@ -152,6 +152,13 @@ public class ExamEntity
         this.activeTo = this.activeTo.plus(seconds);
     }
 
+    public void terminateExam() {
+        LocalDateTime now = LocalDateTime.now();
+        Validate.isTrue(activeTo.isAfter(now),
+                String.format("Exam <%s> cannot be terminated because activeTo is from past", id));
+        this.activeTo = now;
+    }
+
     public boolean isChecked() {
         return checked;
     }

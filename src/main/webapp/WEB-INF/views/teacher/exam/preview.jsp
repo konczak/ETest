@@ -9,6 +9,9 @@
 <spring:url var="examProlongUrl" value="/teacher/exam/{id}/prolong" >
     <spring:param name="id" value="${exam.id}"/>
 </spring:url>
+<spring:url var="examTerminateUrl" value="/teacher/exam/{id}/terminate" >
+    <spring:param name="id" value="${exam.id}"/>
+</spring:url>
 <spring:url var="processingImageUrl" value="/resources/images/processing.gif"/>
 
 <!DOCTYPE html>
@@ -41,7 +44,9 @@
                         <i class="glyphicon glyphicon-check text-success"></i>
                     </c:when>
                     <c:otherwise>
-                        <i class="glyphicon glyphicon-unchecked"></i>
+                        <button class="btn btn-danger" onclick="runTerminate();">
+                            <i class="glyphicon glyphicon-off"></i> <spring:message code="exam.terminate.button"/>
+                        </button>
                     </c:otherwise>
                 </c:choose>
             </dd>
@@ -149,49 +154,63 @@
 
         <script src="${activeJsUrl}"></script>
         <script>
-                            function runCheck() {
-                                $('#processing-modal')
-                                        .modal();
-                                $.ajax({
-                                    type: "POST",
-                                    url: "${examCheckUrl}",
-                                    success: function(response) {
-                                        $('#processing-modal')
-                                                .modal("hide");
-                                        location.reload();
-                                    },
-                                    error: function(e) {
-                                        alert('Error ' + e);
-                                    }
-                                });
-                            }
+            function runCheck() {
+                $('#processing-modal')
+                        .modal();
+                $.ajax({
+                    type: "POST",
+                    url: "${examCheckUrl}",
+                    success: function(response) {
+                        $('#processing-modal')
+                                .modal("hide");
+                        location.reload();
+                    },
+                    error: function(e) {
+                        alert('Error ' + e);
+                    }
+                });
+            }
 
-                            function runProlong(minutes) {
-                                $.ajax({
-                                    type: "POST",
-                                    url: "${examProlongUrl}",
-                                    data: {minutes: minutes},
-                                    success: function(response) {
-                                        location.reload();
-                                    },
-                                    error: function(e) {
-                                        alert('Error ' + e);
-                                    }
-                                });
-                            }
-                            $('#prolong .btn').on('click', function(e) {
-                                e.preventDefault();
-                                var $this = $(this);
-                                var $collapse = $this.closest('.collapse-group').find('.collapse');
-                                if ($($collapse).is(":visible")) {
-                                    $this.find('i').removeClass("glyphicon-chevron-left");
-                                    $this.find('i').addClass("glyphicon-chevron-right");
-                                } else {
-                                    $this.find('i').removeClass("glyphicon-chevron-right");
-                                    $this.find('i').addClass("glyphicon-chevron-left");
-                                }
-                                $collapse.collapse('toggle');
-                            });
+            function runProlong(minutes) {
+                $.ajax({
+                    type: "POST",
+                    url: "${examProlongUrl}",
+                    data: {minutes: minutes},
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(e) {
+                        alert('Error ' + e);
+                    }
+                });
+            }
+            
+            function runTerminate() {
+                $.ajax({
+                    type: "POST",
+                    url: "${examTerminateUrl}",
+                    success: function(response) {
+                        location.reload();
+                    },
+                    error: function(e) {
+                        alert('Error ' + e);
+                    }
+                });
+            }
+
+            $('#prolong .btn').on('click', function(e) {
+                e.preventDefault();
+                var $this = $(this);
+                var $collapse = $this.closest('.collapse-group').find('.collapse');
+                if ($($collapse).is(":visible")) {
+                    $this.find('i').removeClass("glyphicon-chevron-left");
+                    $this.find('i').addClass("glyphicon-chevron-right");
+                } else {
+                    $this.find('i').removeClass("glyphicon-chevron-right");
+                    $this.find('i').addClass("glyphicon-chevron-left");
+                }
+                $collapse.collapse('toggle');
+            });
         </script>
     </body>
 </html>

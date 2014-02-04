@@ -104,4 +104,17 @@ public class ExamBO
                 "Exam <%s> has been prolonged about <%s> seconds and will be active up to <%s>",
                 examEntity.getId(), seconds.getSeconds(), examEntity.getActiveTo()));
     }
+
+    @Transactional
+    @Override
+    public void terminate(Integer examId) {
+        Validate.notNull(examId);
+        ExamEntity examEntity = examRepository.getById(examId);
+
+        examEntity.terminateExam();
+
+        examRepository.save(examEntity);
+
+        LOGGER.info(String.format("Exam <%s> has been terminated", examEntity.getId()));
+    }
 }

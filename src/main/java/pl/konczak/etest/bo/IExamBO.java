@@ -14,4 +14,6 @@ public interface IExamBO {
     void check(Integer examId);
 
     void prolong(Integer examId, Seconds seconds);
+    
+    void terminate(Integer examId);
 }
