@@ -1,8 +1,10 @@
 package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +60,8 @@ public class ExamBO
         ExamEntity examEntity = new ExamEntity(testTemplateEntity, userGroupEntity, titleSufix,
                 userEntity, activeFrom, activeTo);
 
-        examGenerateStrategy.generateUserExams(examEntity, maxClosedQuestionsPerExam, maxClosedAnswersPerClosedQuestion);
+        examGenerateStrategy.generateUserExams(examEntity, maxClosedQuestionsPerExam,
+                maxClosedAnswersPerClosedQuestion);
 
         examRepository.save(examEntity);
 
@@ -82,5 +85,23 @@ public class ExamBO
         examRepository.save(examEntity);
 
         LOGGER.info(String.format("Exam <%s> checked", examEntity.getId()));
+    }
+
+    @Transactional
+    @Override
+    public void prolong(Integer examId, Seconds seconds) {
+        Validate.notNull(examId);
+        LocalDateTime now = LocalDateTime.now();
+        ExamEntity examEntity = examRepository.getById(examId);
+        Validate.isTrue(examEntity.getActiveTo().isAfter(now),
+                String.format("Exam <%s> is no longer active and cannot be prolonged", examId));
+
+        examEntity.prolongExam(seconds);
+
+        examRepository.save(examEntity);
+
+        LOGGER.info(String.format(
+                "Exam <%s> has been prolonged about <%s> seconds and will be active up to <%s>",
+                examEntity.getId(), seconds.getSeconds(), examEntity.getActiveTo()));
     }
 }

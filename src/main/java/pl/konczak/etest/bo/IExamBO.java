@@ -1,6 +1,7 @@
 package pl.konczak.etest.bo;
 
 import org.joda.time.LocalDateTime;
+import org.joda.time.Seconds;
 
 import pl.konczak.etest.entity.ExamEntity;
 
@@ -11,4 +12,6 @@ public interface IExamBO {
             Integer maxClosedQuestionsPerExam, Integer maxClosedAnswersPerClosedQuestion);
 
     void check(Integer examId);
+
+    void prolong(Integer examId, Seconds seconds);
 }

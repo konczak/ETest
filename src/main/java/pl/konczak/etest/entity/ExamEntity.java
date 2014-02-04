@@ -14,12 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Seconds;
 
 import pl.konczak.etest.core.Validate;
 
@@ -146,6 +148,10 @@ public class ExamEntity
         this.activeTo = activeTo;
     }
 
+    public void prolongExam(Seconds seconds) {
+        this.activeTo = this.activeTo.plus(seconds);
+    }
+
     public boolean isChecked() {
         return checked;
     }
@@ -164,18 +170,21 @@ public class ExamEntity
             }
         }
         Validate.isTrue(allUserExamsAreChecked,
-                String.format("Exam <%s> cannot be marked as checked because some of UserExams are not checked yet", id));
+                String.format(
+                "Exam <%s> cannot be marked as checked because some of UserExams are not checked yet", id));
         this.checked = true;
     }
 
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "exam")
     @Cascade(CascadeType.ALL)
+    @OrderBy("id")
     public Set<UserExamEntity> getGeneratedExams() {
         return generatedExams;
     }
 
-    public void addUserExam(UserEntity examined, Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionWithAnswers) {
+    public void addUserExam(UserEntity examined,
+            Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionWithAnswers) {
         UserExamEntity userExamEntity = new UserExamEntity(this, examined);
         Integer closedQuestionOrderNumber = 1;
         for (Map.Entry<ClosedQuestionEntity, Set<ClosedAnswerEntity>> entry : mapOfClosedQuestionWithAnswers.entrySet()) {
