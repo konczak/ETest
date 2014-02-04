@@ -1,6 +1,5 @@
 package pl.konczak.etest.strategy.teacher.impl;
 
-import pl.konczak.etest.util.UnusedMapKeySearchUtil;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,9 +7,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.konczak.etest.core.Validate;
@@ -19,18 +18,17 @@ import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
-import pl.konczak.etest.repository.IExamRepository;
 import pl.konczak.etest.strategy.teacher.IExamGenerateStrategy;
+import pl.konczak.etest.util.UnusedMapKeySearchUtil;
 
 @Service
 public class ExamGenerateStrategy
         implements IExamGenerateStrategy {
 
+    private static final Logger LOGGER = Logger.getLogger(ExamGenerateStrategy.class);
     private Integer closedQuestionsCountPerUserTest = 10;
     private Integer closedAnswersCountPerClosedQuestion = 5;
     private static final Integer RANDOM_MAX = 10000;
-    @Autowired
-    private IExamRepository examRepository;
 
     @Transactional
     @Override
@@ -54,12 +52,18 @@ public class ExamGenerateStrategy
         TestTemplateEntity testTemplate = examEntity.getTestTemplate();
 
         for (UserEntity examined : examinedUsers) {
-            System.out.println("preparing UserExam for <" + examined.getEmail() + "> id <" + examined.getId() + ">");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(String.format("Preparing UserExam for <%s> id <%s>",
+                        examined.getEmail(), examined.getId()));
+            }
             //generate Exam per user
             Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionsWithAnswers =
                     prepareIndividualUserExam(testTemplate);
 
-            System.out.println("prepared <" + mapOfClosedQuestionsWithAnswers.size() + "> closedAnswers for UserExam");
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(String.format("Prepared <%s> closedAnswers for UserExam",
+                        mapOfClosedQuestionsWithAnswers.size()));
+            }
 
             examEntity.addUserExam(examined, mapOfClosedQuestionsWithAnswers);
         }
@@ -106,7 +110,8 @@ public class ExamGenerateStrategy
         }
     }
 
-    private Map<Integer, ClosedQuestionEntity> prepareRandomlySortedClosedQuestions(Set<ClosedQuestionEntity> closedQuestions) {
+    private Map<Integer, ClosedQuestionEntity> prepareRandomlySortedClosedQuestions(
+            Set<ClosedQuestionEntity> closedQuestions) {
         Map<Integer, ClosedQuestionEntity> map = new TreeMap<Integer, ClosedQuestionEntity>();
         Random generator = new Random(new Date().getTime());
         for (ClosedQuestionEntity closedQuestionEntity : closedQuestions) {
@@ -123,17 +128,22 @@ public class ExamGenerateStrategy
         addAllCorrect(map, closedQuestion.getCorrectClosedAnswers());
         addAllIncorrect(map, closedQuestion.getIncorrectClosedAnswers());
 
-        System.out.println("prepared <" + map.size() + "> closedAnswers set for closedQuestion <" + closedQuestion.getId() + ">");
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(String.format("Prepared <%s> closedAnswers set for closedQuestion <%s>",
+                    map.size(), closedQuestion.getId()));
+        }
 
         return map;
     }
 
-    private void addAllCorrect(Map<Integer, ClosedAnswerEntity> map, Set<ClosedAnswerEntity> correctClosedAnswers) {
+    private void addAllCorrect(Map<Integer, ClosedAnswerEntity> map,
+            Set<ClosedAnswerEntity> correctClosedAnswers) {
         Validate.notEmpty(correctClosedAnswers, "Not found any correct ClosedAnswer!");
         fillUntilReachMax(map, correctClosedAnswers, closedAnswersCountPerClosedQuestion);
     }
 
-    private void addAllIncorrect(Map<Integer, ClosedAnswerEntity> map, Set<ClosedAnswerEntity> incorrectClosedAnswers) {
+    private void addAllIncorrect(Map<Integer, ClosedAnswerEntity> map,
+            Set<ClosedAnswerEntity> incorrectClosedAnswers) {
         fillUntilReachMax(map, incorrectClosedAnswers, closedAnswersCountPerClosedQuestion);
     }
 
