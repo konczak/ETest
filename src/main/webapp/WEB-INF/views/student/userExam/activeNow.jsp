@@ -34,15 +34,16 @@
                     <spring:message code="userExam.inactiveInSeconds.text"/><br>
                     <strong id="counter">--:--:--</strong>
                 </div>
-                <div class="list-group">
-                    <ul class="list-group" data-bind="template: {foreach: questionHeaders, beforeRemove: hideQuestionHeader}">
-                        <li data-bind="text: $root.questionHeaderTitle(orderNumber),
-                            value: id,
-                            css: { active: id == $root.chosenQuestionHeaderId() },
-                            click: $root.loadQuestion" class="list-group-item">
-                            Pytanie
-                        </li>
-                    </ul>
+                <div class="alert alert-success text-center" data-bind="visible: questionHeaders().length === 0">
+                    <spring:message code="userExam.allQuestionsAreSubbmitted.text"/><br>
+                </div>
+                <div class="list-group" data-bind="template: {foreach: questionHeaders, beforeRemove: hideQuestionHeader}">
+                    <a class="list-group-item" data-bind="text: $root.questionHeaderTitle(orderNumber),
+                        value: id,
+                        css: { active: id == $root.chosenQuestionHeaderId() },
+                        click: $root.loadQuestion">
+                        Pytanie
+                    </a>
                 </div>
             </div>
             <div class="col-lg-9" data-bind="with: chosenQuestionData, fadeVisible: chosenQuestionData.loaded">
