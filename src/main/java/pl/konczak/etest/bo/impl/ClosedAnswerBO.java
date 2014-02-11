@@ -1,6 +1,7 @@
 package pl.konczak.etest.bo.impl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import pl.konczak.etest.repository.IImageRepository;
 public class ClosedAnswerBO
         implements IClosedAnswerBO {
 
-    private static final Logger LOGGER = Logger.getLogger(ClosedAnswerBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClosedAnswerBO.class);
     @Autowired
     private IClosedQuestionRepository closedQuestionRepository;
     @Autowired
@@ -35,8 +36,8 @@ public class ClosedAnswerBO
         closedQuestionEntity.addClosedAnswer(closedAnswerEntity);
         closedAnswerRepository.save(closedAnswerEntity);
 
-        LOGGER.info(String.format("Add ClosedAnswer <%s> to ClosedQuestion <%s>",
-                closedAnswerEntity.getId(), closedQuestionEntity.getId()));
+        LOGGER.info("Add ClosedAnswer <{}> to ClosedQuestion <{}>",
+                closedAnswerEntity.getId(), closedQuestionEntity.getId());
         return closedAnswerEntity;
     }
 
@@ -53,8 +54,8 @@ public class ClosedAnswerBO
 
         closedAnswerRepository.save(closedAnswerEntity);
 
-        LOGGER.info(String.format("Add picture <%s> to ClosedAnswer <%s>",
-                imageEntity.getId(), closedAnswerEntity.getId()));
+        LOGGER.info("Add picture <{}> to ClosedAnswer <{}>",
+                imageEntity.getId(), closedAnswerEntity.getId());
 
         return closedAnswerEntity;
     }
@@ -66,6 +67,6 @@ public class ClosedAnswerBO
 
         closedAnswerRepository.delete(closedAnswerEntity);
 
-        LOGGER.info(String.format("Removed ClosedAnswer <%s>", closedAnswerEntity.getId()));
+        LOGGER.info("Removed ClosedAnswer <{}>", closedAnswerEntity.getId());
     }
 }

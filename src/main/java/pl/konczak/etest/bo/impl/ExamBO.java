@@ -2,9 +2,11 @@ package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+
 import org.joda.time.LocalDateTime;
 import org.joda.time.Seconds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +29,7 @@ import pl.konczak.etest.strategy.teacher.IUserExamCheckStrategy;
 public class ExamBO
         implements IExamBO {
 
-    private static final Logger LOGGER = Logger.getLogger(ExamBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExamBO.class);
     @Autowired
     private ITestTemplateRepository testTemplateRepository;
     @Autowired
@@ -65,7 +67,7 @@ public class ExamBO
 
         examRepository.save(examEntity);
 
-        LOGGER.info(String.format("Add Exam <%s>", examEntity.getId()));
+        LOGGER.info("Add Exam <{}>", examEntity.getId());
 
         return examEntity;
     }
@@ -84,7 +86,7 @@ public class ExamBO
 
         examRepository.save(examEntity);
 
-        LOGGER.info(String.format("Exam <%s> checked", examEntity.getId()));
+        LOGGER.info("Exam <{}> checked", examEntity.getId());
     }
 
     @Transactional
@@ -100,9 +102,9 @@ public class ExamBO
 
         examRepository.save(examEntity);
 
-        LOGGER.info(String.format(
-                "Exam <%s> has been prolonged about <%s> seconds and will be active up to <%s>",
-                examEntity.getId(), seconds.getSeconds(), examEntity.getActiveTo()));
+        LOGGER.info(
+                "Exam <{}> has been prolonged about <{}> seconds and will be active up to <{}>",
+                examEntity.getId(), seconds.getSeconds(), examEntity.getActiveTo());
     }
 
     @Transactional
@@ -115,6 +117,6 @@ public class ExamBO
 
         examRepository.save(examEntity);
 
-        LOGGER.info(String.format("Exam <%s> has been terminated", examEntity.getId()));
+        LOGGER.info("Exam <{}> has been terminated", examEntity.getId());
     }
 }

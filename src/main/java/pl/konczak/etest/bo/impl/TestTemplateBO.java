@@ -1,6 +1,8 @@
 package pl.konczak.etest.bo.impl;
 
-import org.apache.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +21,7 @@ import pl.konczak.etest.repository.IUserRepository;
 public class TestTemplateBO
         implements ITestTemplateBO {
 
-    private static final Logger LOGGER = Logger.getLogger(TestTemplateBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestTemplateBO.class);
     @Autowired
     private IUserRepository userRepository;
     @Autowired
@@ -38,7 +40,7 @@ public class TestTemplateBO
 
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(String.format("Add TestTemplate <%s>", testTemplateEntity.getId()));
+        LOGGER.info("Add TestTemplate <{}>", testTemplateEntity.getId());
         return testTemplateEntity;
     }
 
@@ -56,8 +58,8 @@ public class TestTemplateBO
 
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(String.format("Add ClosedQuestion <%s> to TestTemplate <%s>",
-                closedQuestionEntity.getId(), testTemplateEntity.getId()));
+        LOGGER.info("Add ClosedQuestion <{}> to TestTemplate <{}>",
+                closedQuestionEntity.getId(), testTemplateEntity.getId());
 
         return testTemplateEntity;
     }
@@ -75,8 +77,8 @@ public class TestTemplateBO
         testTemplateEntity.getClosedQuestions().remove(testTemplateClosedQuestionEntity);
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(String.format("Removed ClosedQuestion <%s> from TestTemplate <%s>",
-                closedQuestionId, testTemplateEntity.getId()));
+        LOGGER.info("Removed ClosedQuestion <{}> from TestTemplate <{}>",
+                closedQuestionId, testTemplateEntity.getId());
 
         return testTemplateEntity;
     }
@@ -96,9 +98,9 @@ public class TestTemplateBO
         }
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(String.format(
-                "Change mandatory status for ClosedQuestion <%s> in TestTemplate <%s> to <%b>",
-                closedQuestionId, testTemplateEntity.getId(), mandatory));
+        LOGGER.info(
+                "Change mandatory status for ClosedQuestion <{}> in TestTemplate <{}> to <{}>",
+                closedQuestionId, testTemplateEntity.getId(), mandatory);
 
         return testTemplateEntity;
     }
@@ -111,6 +113,6 @@ public class TestTemplateBO
 
         testTemplateRepository.delete(testTemplateEntity);
 
-        LOGGER.info(String.format("Removed TestTemplate <%s>", testTemplateEntity.getId()));
+        LOGGER.info("Removed TestTemplate <{}>", testTemplateEntity.getId());
     }
 }

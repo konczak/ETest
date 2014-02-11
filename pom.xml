@@ -19,6 +19,8 @@
         <org.sitemesh.sitemesh.version>3.0-alpha-2</org.sitemesh.sitemesh.version>
         <javax.servlet.servlet-api.version>2.5</javax.servlet.servlet-api.version>
         <javax.servlet.jsp.jsp-api>2.2</javax.servlet.jsp.jsp-api>
+        <org.slf4j.slf4j-api.version>1.7.5</org.slf4j.slf4j-api.version>
+        <org.slf4j.slf4j-log4j12.version>1.7.5</org.slf4j.slf4j-log4j12.version>
         <log4j.log4j.version>1.2.17</log4j.log4j.version>
         <joda-time.joda-time.version>2.3</joda-time.joda-time.version>
         <joda-time.joda-time-jsptags.version>1.0.2</joda-time.joda-time-jsptags.version>
@@ -143,6 +145,16 @@
             <type>jar</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.slf4j-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${org.slf4j.slf4j-log4j12.version}</version>
+        </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>

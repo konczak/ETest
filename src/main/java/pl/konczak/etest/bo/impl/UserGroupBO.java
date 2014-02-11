@@ -1,7 +1,8 @@
 package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import pl.konczak.etest.repository.IUserRepository;
 public class UserGroupBO
         implements IUserGroupBO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserGroupBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestTemplateBO.class);
     @Autowired
     private IUserGroupRepository userGroupRepository;
     @Autowired
@@ -35,7 +36,7 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info(String.format("Add UserGroup <%s>", userGroupEntity.getId()));
+        LOGGER.info("Add UserGroup <{}>", userGroupEntity.getId());
         return userGroupEntity;
     }
 
@@ -52,8 +53,8 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info(String.format("Add User <%s> to UserGroup <%s>",
-                userEntity.getId(), userGroupEntity.getId()));
+        LOGGER.info("Add User <{}> to UserGroup <{}>",
+                userEntity.getId(), userGroupEntity.getId());
         return userGroupEntity;
     }
 
@@ -76,8 +77,8 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info(String.format("Remove User <%s> from UserGroup <%s>",
-                userEntity.getId(), userGroupEntity.getId()));
+        LOGGER.info("Remove User <{}> from UserGroup <{}>",
+                userEntity.getId(), userGroupEntity.getId());
         return userGroupEntity;
     }
 
@@ -99,8 +100,8 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info(String.format("Changed title of UserGroup <%s> from <%s> to <%s>",
-                userGroupEntity.getId(), oldTitle, userGroupEntity.getTitle()));
+        LOGGER.info("Changed title of UserGroup <{}> from <{}> to <{}>",
+                userGroupEntity.getId(), oldTitle, userGroupEntity.getTitle());
 
         return userGroupEntity;
     }
@@ -113,6 +114,6 @@ public class UserGroupBO
         UserGroupEntity userGroupEntity = userGroupRepository.getById(id);
 
         userGroupRepository.delete(userGroupEntity);
-        LOGGER.info(String.format("Removed UserGroup <%s>", userGroupEntity.getId()));
+        LOGGER.info("Removed UserGroup <{}>", userGroupEntity.getId());
     }
 }

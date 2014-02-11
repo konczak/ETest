@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.LocalDateTime;
 import org.joda.time.Seconds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,6 @@ import pl.konczak.etest.dto.student.userExam.UserExamClosedQuestion;
 import pl.konczak.etest.dto.student.userExam.UserExamQuestionHeader;
 import pl.konczak.etest.entity.ExamEntity;
 
-
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.exception.ResourceAccessDeniedException;
@@ -47,7 +47,7 @@ import pl.konczak.etest.vo.UserExamClosedQuestionWithAnswersVO;
 @RequestMapping("student/userExam/{id}")
 public class UserExamSheetController {
 
-    private static final Logger LOGGER = Logger.getLogger(UserExamSheetController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserExamSheetController.class);
     private static final String OBJECT = "userExam";
     private static final String VIEW_USEREXAM_NOTACTIVEYET = "student/userExam/notActiveYet";
     private static final String VIEW_USEREXAM_ACTIVENOW = "student/userExam/activeNow";
@@ -100,7 +100,7 @@ public class UserExamSheetController {
             view = VIEW_USEREXAM_ACTIVENOW;
         } else {
             String msg = String.format("Unrecognized date for UserExam <%s>", userExam.getId());
-            LOGGER.fatal(msg);
+            LOGGER.error(msg);
             throw new RuntimeException(msg);
         }
 

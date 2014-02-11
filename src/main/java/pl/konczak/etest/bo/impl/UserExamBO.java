@@ -1,8 +1,9 @@
 package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
-import org.apache.log4j.Logger;
 import org.joda.time.LocalDateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import pl.konczak.etest.vo.UserExamClosedQuestionWithAnswersVO;
 public class UserExamBO
         implements IUserExamBO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserExamBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserExamBO.class);
     @Autowired
     private IUserExamClosedQuestionRepository userExamClosedQuestionRepository;
 
@@ -51,6 +52,6 @@ public class UserExamBO
 
         userExamClosedQuestionRepository.save(userExamClosedQuestionEntity);
 
-        LOGGER.info(String.format("Solved %s", userExamClosedQuestionWithAnswersVO));
+        LOGGER.info("Solved UserExamClosedQuestion <{}>", userExamClosedQuestionWithAnswersVO);
     }
 }

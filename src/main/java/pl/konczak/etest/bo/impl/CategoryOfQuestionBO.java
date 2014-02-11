@@ -1,6 +1,7 @@
 package pl.konczak.etest.bo.impl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 public class CategoryOfQuestionBO
         implements ICategoryOfQuestionBO {
 
-    private static final Logger LOGGER = Logger.getLogger(CategoryOfQuestionBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CategoryOfQuestionBO.class);
     @Autowired
     private ICategoryOfQuestionRepository categoryOfQuestionRepository;
 
@@ -31,8 +32,8 @@ public class CategoryOfQuestionBO
         CategoryOfQuestionEntity categoryOfQuestionEntity = new CategoryOfQuestionEntity(title);
         categoryOfQuestionRepository.save(categoryOfQuestionEntity);
 
-        LOGGER.info(String.format("Add CategoryOfQuestion <%s> with title <%s>",
-                categoryOfQuestionEntity.getId(), categoryOfQuestionEntity.getTitle()));
+        LOGGER.info("Add CategoryOfQuestion <{}> with title <{}>",
+                categoryOfQuestionEntity.getId(), categoryOfQuestionEntity.getTitle());
         return categoryOfQuestionEntity;
     }
 
@@ -55,8 +56,8 @@ public class CategoryOfQuestionBO
 
         categoryOfQuestionRepository.save(categoryOfQuestionEntity);
 
-        LOGGER.info(String.format("Changed title of CategoryOfQuestion <%s> from <%s> to <%s>",
-                categoryOfQuestionEntity.getId(), oldTitle, categoryOfQuestionEntity.getTitle()));
+        LOGGER.info("Changed title of CategoryOfQuestion <{}> from <{}> to <{}>",
+                categoryOfQuestionEntity.getId(), oldTitle, categoryOfQuestionEntity.getTitle());
 
         return categoryOfQuestionEntity;
     }
@@ -70,6 +71,6 @@ public class CategoryOfQuestionBO
 
         categoryOfQuestionRepository.delete(categoryOfQuestionEntity);
 
-        LOGGER.info(String.format("Removed CategoryOfQuestion <%s>", categoryOfQuestionEntity.getId()));
+        LOGGER.info("Removed CategoryOfQuestion <{}>", categoryOfQuestionEntity.getId());
     }
 }

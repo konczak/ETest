@@ -2,7 +2,8 @@ package pl.konczak.etest.validator.student.userExam;
 
 import java.util.List;
 import java.util.Set;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class UserExamClosedQuestionValidator
         extends LocalValidatorFactoryBean
         implements Validator {
 
-    private static final Logger LOGGER = Logger.getLogger(UserExamClosedQuestionValidator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserExamClosedQuestionValidator.class);
     @Autowired
     private IUserExamClosedQuestionRepository userExamClosedQuestionRepository;
     @Autowired
@@ -64,9 +65,9 @@ public class UserExamClosedQuestionValidator
 
         if (!isUserExamIdBelongsToLoggedUser(userExamEntity)) {
             errors.reject("userExamClosedQuestion.examinerIdAndSubbmitedIdDoesNotMatch.error");
-            LOGGER.warn(String.format(
-                    "Subbmited UserExamClosedQuestion is incorrect because userExaminedId <%s> while userLoggedId <%s>",
-                    userExamEntity.getId(), getIdOfAuthenticatedUser()));
+            LOGGER.warn(
+                    "Subbmited UserExamClosedQuestion is incorrect because userExaminedId <{}> while userLoggedId <{}>",
+                    userExamEntity.getId(), getIdOfAuthenticatedUser());
         }
         hasAllClosedAnswersIncluded(userExamClosedQuestionEntity, userExamClosedQuestion, errors);
     }
@@ -99,9 +100,9 @@ public class UserExamClosedQuestionValidator
         for (UserExamClosedAnswerEntity userExamClosedAnswerEntity : userExamClosedAnswerEntities) {
             if (!isUserExamClosedAnswerSubbmited(userExamClosedAnswerEntity.getId(), userExamClosedAnswers)) {
                 errors.rejectValue("userExamClosedAnswers", "userExamClosedQuestion.userExamClosedAnswers.missingClosedAnswer");
-                LOGGER.warn(String.format(
-                        "Subbmited UserExamClosedQuestion is incorrect because UserExamClosedAnswer <%s> is missing",
-                        userExamClosedAnswerEntity.getId()));
+                LOGGER.warn(
+                        "Subbmited UserExamClosedQuestion is incorrect because UserExamClosedAnswer <{}> is missing",
+                        userExamClosedAnswerEntity.getId());
                 break;
             }
         }

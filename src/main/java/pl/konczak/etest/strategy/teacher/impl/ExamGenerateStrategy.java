@@ -7,8 +7,9 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ import pl.konczak.etest.util.UnusedMapKeySearchUtil;
 public class ExamGenerateStrategy
         implements IExamGenerateStrategy {
 
-    private static final Logger LOGGER = Logger.getLogger(ExamGenerateStrategy.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExamGenerateStrategy.class);
     private Integer closedQuestionsCountPerUserTest = 10;
     private Integer closedAnswersCountPerClosedQuestion = 5;
     private static final Integer RANDOM_MAX = 10000;
@@ -52,18 +53,15 @@ public class ExamGenerateStrategy
         TestTemplateEntity testTemplate = examEntity.getTestTemplate();
 
         for (UserEntity examined : examinedUsers) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(String.format("Preparing UserExam for <%s> id <%s>",
-                        examined.getEmail(), examined.getId()));
-            }
+            LOGGER.debug("Preparing UserExam for <{}> id <{}>",
+                    examined.getEmail(), examined.getId());
+
             //generate Exam per user
             Map<ClosedQuestionEntity, Set<ClosedAnswerEntity>> mapOfClosedQuestionsWithAnswers =
                     prepareIndividualUserExam(testTemplate);
 
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(String.format("Prepared <%s> closedAnswers for UserExam",
-                        mapOfClosedQuestionsWithAnswers.size()));
-            }
+            LOGGER.debug("Prepared <{}> closedAnswers for UserExam",
+                    mapOfClosedQuestionsWithAnswers.size());
 
             examEntity.addUserExam(examined, mapOfClosedQuestionsWithAnswers);
         }
@@ -128,10 +126,8 @@ public class ExamGenerateStrategy
         addAllCorrect(map, closedQuestion.getCorrectClosedAnswers());
         addAllIncorrect(map, closedQuestion.getIncorrectClosedAnswers());
 
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug(String.format("Prepared <%s> closedAnswers set for closedQuestion <%s>",
-                    map.size(), closedQuestion.getId()));
-        }
+        LOGGER.debug("Prepared <{}> closedAnswers set for closedQuestion <{}>",
+                map.size(), closedQuestion.getId());
 
         return map;
     }

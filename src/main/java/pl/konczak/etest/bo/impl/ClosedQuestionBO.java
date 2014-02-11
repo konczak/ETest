@@ -1,6 +1,7 @@
 package pl.konczak.etest.bo.impl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import pl.konczak.etest.repository.IUserRepository;
 public class ClosedQuestionBO
         implements IClosedQuestionBO {
 
-    private static final Logger LOGGER = Logger.getLogger(ClosedQuestionBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClosedQuestionBO.class);
     @Autowired
     private IUserRepository userRepository;
     @Autowired
@@ -37,7 +38,7 @@ public class ClosedQuestionBO
 
         closedQuestionRepository.save(closedQuestionEntity);
 
-        LOGGER.info(String.format("Add ClosedQuestion <%s>", closedQuestionEntity.getId()));
+        LOGGER.info("Add ClosedQuestion <{}>", closedQuestionEntity.getId());
         return closedQuestionEntity;
     }
 
@@ -54,8 +55,8 @@ public class ClosedQuestionBO
 
         closedQuestionRepository.save(closedQuestionEntity);
 
-        LOGGER.info(String.format("Add picture <%s> to ClosedQuestion <%s>",
-                imageEntity.getId(), closedQuestionEntity.getId()));
+        LOGGER.info("Add picture <{}> to ClosedQuestion <{}>",
+                imageEntity.getId(), closedQuestionEntity.getId());
 
         return closedQuestionEntity;
     }
@@ -67,7 +68,7 @@ public class ClosedQuestionBO
 
         closedQuestionRepository.delete(closedQuestionEntity);
 
-        LOGGER.info(String.format("Removed ClosedQuestion <%s>", closedQuestionEntity.getId()));
+        LOGGER.info("Removed ClosedQuestion <{}>", closedQuestionEntity.getId());
     }
 
     @Transactional
@@ -81,6 +82,9 @@ public class ClosedQuestionBO
         closedQuestionEntity.addCategoryOfQuestion(categoryOfQuestionEntity);
 
         closedQuestionRepository.save(closedQuestionEntity);
+
+        LOGGER.info("Add ClosedQuestion <{}> to CategoryOfQuestion <{}>",
+                closedQuestionEntity.getId(), categoryOfQuestionEntity.getId());
 
         return closedQuestionEntity;
     }

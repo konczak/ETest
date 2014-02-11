@@ -2,8 +2,9 @@ package pl.konczak.etest.bo.impl;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import pl.konczak.etest.repository.IUserRepository;
 public class UserBO
         implements IUserBO {
 
-    private static final Logger LOGGER = Logger.getLogger(UserBO.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserBO.class);
     @Autowired
     private IUserRepository userRepository;
     @Autowired
@@ -57,8 +58,8 @@ public class UserBO
 
         userRepository.save(user);
 
-        LOGGER.info(String.format("Registered User <%s> with email <%s>",
-                user.getId(), user.getEmail()));
+        LOGGER.info("Registered User <{}> with email <{}>",
+                user.getId(), user.getEmail());
 
         return user;
     }
@@ -77,8 +78,8 @@ public class UserBO
 
         userRepository.save(userEntity);
 
-        LOGGER.info(String.format("Add User <%s> to UserGroup <%s>",
-                userEntity.getId(), userGroupEntity.getId()));
+        LOGGER.info("Add User <{}> to UserGroup <{}>",
+                userEntity.getId(), userGroupEntity.getId());
         return userEntity;
     }
 
@@ -102,8 +103,8 @@ public class UserBO
 
         userRepository.save(userEntity);
 
-        LOGGER.info(String.format("Remove User <%s> from UserGroup <%s>",
-                userEntity.getId(), userGroupEntity.getId()));
+        LOGGER.info("Remove User <{}> from UserGroup <{}>",
+                userEntity.getId(), userGroupEntity.getId());
         return userEntity;
     }
 }
