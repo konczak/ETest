@@ -14,21 +14,19 @@
         <div class="page-header">
             <h1><spring:message code="closedQuestion.new.header"/></h1>
         </div>
-        <div class="project-template">
-            <form:form method="POST" commandName="closedQuestion" role="form" enctype="multipart/form-data">
-                <form:errors path="*" cssClass="info-danger" element="div" />
+        <form:form method="POST" commandName="closedQuestion" role="form" enctype="multipart/form-data">
+            <form:errors path="*" cssClass="info-danger" element="div" />
 
-                <myForm:input object="closedQuestion" fieldName="question" required="true"/>
-                <myForm:file object="closedQuestion" fieldName="multipartFile" acceptedFiles="image/*"/>
+            <myForm:input object="closedQuestion" fieldName="question" required="true"/>
+            <myForm:file object="closedQuestion" fieldName="multipartFile" acceptedFiles="image/*"/>
 
-                <button type="submit" class="btn btn-primary" name="save" value="save">
-                    <spring:message code="button_submit"/>
-                </button>
-                <button type="submit" class="btn btn-default" name="cancel" value="cancel">
-                    <spring:message code="button_cancel"/>
-                </button>
-            </form:form>
-        </div>
+            <button type="submit" class="btn btn-primary" name="save" value="save">
+                <spring:message code="button_submit"/>
+            </button>
+            <button type="submit" class="btn btn-default" name="cancel" value="cancel">
+                <spring:message code="button_cancel"/>
+            </button>
+        </form:form>
         <script src="${activeJsUrl}"></script>
     </body>
 </html>

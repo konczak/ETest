@@ -14,21 +14,19 @@
         <div class="page-header">
             <h1><spring:message code="userGroup.edit.header"/></h1>
         </div>
-        <div class="project-template">
-            <form:form method="POST" commandName="userGroup" role="form">
-                <form:errors path="*" cssClass="info-danger" element="div" />
+        <form:form method="POST" commandName="userGroup" role="form">
+            <form:errors path="*" cssClass="info-danger" element="div" />
 
-                <form:hidden path="id"/>
-                <myForm:input object="userGroup" fieldName="title" required="true"/>
-                <button type="submit" class="btn btn-primary" name="edit" value="edit">
-                    <spring:message code="button_submit"/>
-                </button>
-                <button type="submit" class="btn btn-default" name="cancel" value="cancel">
-                    <spring:message code="button_cancel"/>
-                </button>
-            </form:form>
-        </div>
-        
+            <form:hidden path="id"/>
+            <myForm:input object="userGroup" fieldName="title" required="true"/>
+            <button type="submit" class="btn btn-primary" name="edit" value="edit">
+                <spring:message code="button_submit"/>
+            </button>
+            <button type="submit" class="btn btn-default" name="cancel" value="cancel">
+                <spring:message code="button_cancel"/>
+            </button>
+        </form:form>
+
         <script src="${activeJsUrl}"></script>
     </body>
 </html>

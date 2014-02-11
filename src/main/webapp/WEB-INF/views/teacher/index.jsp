@@ -9,15 +9,13 @@
         <meta name="description" content="A simple page">
     </head>
     <body>
-        <div class="project-template">
-            <div class="jumbotron">
-                <h3>
-                    <spring:message code="welcome_h3" arguments="${applciationName}"/>
-                </h3>
-                <p>
-                    <spring:message code="welcome_text"/>
-                </p>
-            </div>
+        <div class="jumbotron">
+            <h3>
+                <spring:message code="welcome_h3" arguments="${applciationName}"/>
+            </h3>
+            <p>
+                <spring:message code="welcome_text"/>
+            </p>
         </div>
     </body>
 </html>
