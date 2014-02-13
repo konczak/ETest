@@ -3,7 +3,7 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
+<spring:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
 <spring:url var="groupsUrl" value="/admin/user/{id}/groups">
     <spring:param name="id" value="${user.id}"/>
 </spring:url>

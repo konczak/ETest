@@ -2,10 +2,10 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
-<c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
-<c:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables.min.js" />
-<c:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging.js" />
+<spring:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
+<spring:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
+<spring:url var="dataTablesJsUrl" value="/resources/js/jquery.dataTables-1.9.4/jquery.dataTables.js" />
+<spring:url var="dataTablesBootstrapPagingJsUrl" value="/resources/js/jquery.dataTables.bootstrap-paging-0.0.1/jquery.dataTables.bootstrap-paging.js" />
 
 <!DOCTYPE html>
 <html>

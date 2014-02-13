@@ -5,8 +5,8 @@
 <spring:url var="projectCssUrl" value="/resources/css/standard.css" />
 <spring:url var="flagsCssUrl" value="/resources/css/flags.css" />
 <spring:url var="faviconUrl" value="/resources/images/favicon.png" />
-<spring:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2.min.js" />
-<spring:url var="bootstrapJsUrl" value="/resources/js/bootstrap.min.js" />
+<spring:url var="jqueryJsUrl" value="/resources/js/jquery-1.10.2/jquery.js" />
+<spring:url var="bootstrapJsUrl" value="/resources/js/bootstrap-3.1.0/bootstrap.js" />
 <c:set var="language" value="${pageContext.response.locale.language}"/>
 
 <!DOCTYPE html>

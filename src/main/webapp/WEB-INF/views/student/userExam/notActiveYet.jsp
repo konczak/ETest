@@ -3,7 +3,7 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
-<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs.min.js" />
+<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
 
 <!DOCTYPE html>
 <html>

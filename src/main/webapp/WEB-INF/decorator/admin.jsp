@@ -2,9 +2,9 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="categoryOfQuestionListLink" value="/admin/categoryOfQuestion/"/>
-<c:url var="userListLink" value="/admin/user/"/>
-<c:url var="userGroupListLink" value="/admin/userGroup/"/>
+<spring:url var="categoryOfQuestionListLink" value="/admin/categoryOfQuestion/"/>
+<spring:url var="userListLink" value="/admin/user/"/>
+<spring:url var="userGroupListLink" value="/admin/userGroup/"/>
 
 <!DOCTYPE html>
 <html lang="${language}">

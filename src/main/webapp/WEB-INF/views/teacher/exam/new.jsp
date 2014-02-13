@@ -4,9 +4,9 @@
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 <%@taglib prefix="util" tagdir="/WEB-INF/tags/util"%>
 
-<c:url var="datarangepcikerCssUrl" value="/resources/css/daterangepicker-bs3.css" />
-<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs.min.js" />
-<spring:url var="datarangepickerJsUrl" value="/resources/js/daterangepicker.js" />
+<spring:url var="datarangepcikerCssUrl" value="/resources/css/daterangepicker-bs3.css" />
+<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
+<spring:url var="datarangepickerJsUrl" value="/resources/js/daterangepicker-1.2/daterangepicker.js" />
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
 
 <!DOCTYPE html>

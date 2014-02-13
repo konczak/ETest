@@ -3,9 +3,9 @@
 
 <spring:url var="lightboxCssUrl" value="/resources/css/lightbox.css" />
 <spring:url var="ajaxLoaderUrl" value="/resources/images/ajax-loader.gif" />
-<spring:url var="knockoutJsUrl" value="/resources/js/knockout-3.0.0.js" />
-<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs.min.js" />
-<spring:url var="lightboxJsUrl" value="/resources/js/lightbox-2.6.min.js" />
+<spring:url var="knockoutJsUrl" value="/resources/js/knockout-3.0.0/knockout.js" />
+<spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
+<spring:url var="lightboxJsUrl" value="/resources/js/lightbox-2.6/lightbox.js" />
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
 <spring:url var="getClosedQuestionUrl" value="/student/userExam/{id}/closedQuestion" >
     <spring:param name="id" value="${userExamId}"/>

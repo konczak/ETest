@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
+<spring:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
 
 <!DOCTYPE html>
 <html>

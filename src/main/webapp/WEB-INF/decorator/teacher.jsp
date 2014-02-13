@@ -2,9 +2,9 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<c:url var="closedQuestionListLink" value="/teacher/closedQuestion/"/>
-<c:url var="testTemplateListLink" value="/teacher/testTemplate/"/>
-<c:url var="examListLink" value="/teacher/exam/"/>
+<spring:url var="closedQuestionListLink" value="/teacher/closedQuestion/"/>
+<spring:url var="testTemplateListLink" value="/teacher/testTemplate/"/>
+<spring:url var="examListLink" value="/teacher/exam/"/>
 
 <!DOCTYPE html>
 <html lang="${language}">

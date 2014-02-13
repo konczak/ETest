@@ -3,7 +3,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
+<spring:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
 <spring:url var="closedQuestionsUrl" value="/teacher/testTemplate/{id}/closedQuestions">
     <spring:param name="id" value="${testTemplate.id}"/>
 </spring:url>
