@@ -1,6 +1,7 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
 <spring:url var="closedQuestionsUrl" value="/teacher/testTemplate/{id}/closedQuestions">
@@ -31,9 +32,7 @@
         <div class="page-header">
             <h3>
                 <spring:message code="closedQuestion.list.header"/>
-                <a href="${closedQuestionsUrl}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
+                <manage:edit url="${closedQuestionsUrl}"/>
             </h3>
         </div>
         <table class="table">
@@ -58,14 +57,12 @@
                     <tr>
                         <td>${closedQuestion.id}</td>
                         <td>
-                            <span class="glyphicon ${glyphicon}"></span>
+                            <i class="glyphicon ${glyphicon}"></i>
                         </td>
                         <td>${closedQuestion.question}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="#" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
+                                <manage:remove url="#"/>
                             </div>
                         </td>
                     </tr>

@@ -9,6 +9,6 @@
         <span class="icon-bar"></span>
     </button>
     <a class="navbar-brand" href="${rootUrl}">
-        <span class="glyphicon glyphicon-home"></span>
+        <i class="glyphicon glyphicon-home"></i>
     </a>
 </div>

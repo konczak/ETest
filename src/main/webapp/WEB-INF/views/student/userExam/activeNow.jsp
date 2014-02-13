@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-md-1">
                             <button type="button" class="btn btn-default btn-lg" data-bind="click: negateAnswer">
-                                <span class="glyphicon" data-bind="css: markedOrNot"></span>
+                                <i class="glyphicon" data-bind="css: markedOrNot"></i>
                             </button>                            
                         </div>
                         <div class="col-md-8 media" data-bind="">

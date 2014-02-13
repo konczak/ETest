@@ -16,16 +16,19 @@
     <ul class="nav nav-tabs nav-justified">
         <li id="user">
             <a href="${userListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="user.list.title"/>
             </a>
         </li>
         <li id="userGroup">
             <a href="${userGroupListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="userGroup.list.title"/>
             </a>
         </li>
         <li id="categoryOfQuestion">
             <a href="${categoryOfQuestionListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="categoryOfQuestion.list.title"/>
             </a>
         </li>

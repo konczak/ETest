@@ -14,6 +14,7 @@
     <ul class="nav nav-tabs nav-justified">
         <li id="userExam">
             <a href="${userExamListUrl}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="exam.list.title"/>
             </a>
         </li>

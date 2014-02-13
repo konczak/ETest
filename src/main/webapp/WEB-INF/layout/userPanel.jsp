@@ -12,19 +12,22 @@
     <c:when test="${loggedIn}">
         <li>
             <a href="${settingsUrl}" >
-                <span class="glyphicon glyphicon-wrench"></span>
+                <i class="glyphicon glyphicon-wrench"></i>
             </a>
         </li>
         <li>
+            <p class="navbar-text"><sec:authentication property="principal.username" /></p>
+        </li>
+        <li>
             <a href="${logoutUrl}" >
-                <span class="glyphicon glyphicon-log-out"></span>
+                <i class="glyphicon glyphicon-log-out"></i>
             </a>
         </li>
     </c:when>
     <c:otherwise>
         <li>
             <a href="${loginUrl}" >
-                <span class="glyphicon glyphicon-log-in"></span>
+                <i class="glyphicon glyphicon-log-in"></i>
             </a>
         </li>
     </c:otherwise>

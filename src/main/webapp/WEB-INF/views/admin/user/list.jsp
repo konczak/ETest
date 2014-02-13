@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
 <c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -48,13 +49,11 @@
                         <td>${user.firstname}</td>
                         <td>${user.email}</td>
                         <td>
-                            <span class="glyphicon ${glyphicon}"></span>
+                            <i class="glyphicon ${glyphicon}"></i>
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="${previewUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
+                                <manage:preview url="${previewUrl}"/>
                             </div>
                         </td>
                     </tr>

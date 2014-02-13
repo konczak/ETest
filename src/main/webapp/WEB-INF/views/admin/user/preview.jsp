@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
 <spring:url var="groupsUrl" value="/admin/user/{id}/groups">
@@ -34,7 +35,7 @@
                     <c:set var="glyphicon" value="glyphicon-ok-circle text-success"/>
                 </c:otherwise>
             </c:choose>
-            <dd><span class="glyphicon ${glyphicon}"></span></dd>
+            <dd><i class="glyphicon ${glyphicon}"></i></dd>
             <dt><spring:message code="user.registeredAt.label"/></dt>
             <dd><joda:format value="${user.registeredAt}" style="MM" /></dd>
         </dl>
@@ -42,9 +43,7 @@
         <div class="page-header">
             <h3>
                 <spring:message code="userGroup.list.header"/>
-                <a href="${groupsUrl}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
+                <manage:edit url="${groupsUrl}"/>
             </h3>
         </div>
         <c:forEach items="${user.userGroups}" var="userGroup">

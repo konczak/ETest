@@ -16,16 +16,19 @@
     <ul class="nav nav-tabs nav-justified">
         <li id="closedQuestion">
             <a href="${closedQuestionListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="closedQuestion.list.title"/>
             </a>
         </li>
         <li id="testTemplate">
             <a href="${testTemplateListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="testTemplate.list.title"/>
             </a>
         </li>
         <li id="exam">
             <a href="${examListLink}">
+                <i class="glyphicon glyphicon-list"></i>
                 <spring:message code="exam.list.title"/>
             </a>
         </li>

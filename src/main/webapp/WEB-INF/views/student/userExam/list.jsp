@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
 <spring:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -40,9 +41,7 @@
                         <td>${userExam.examinerFirstname} ${userExam.examinerLastname}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="${userExamSheetUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
+                                <manage:preview url="${userExamSheetUrl}"/>
                             </div>
                         </td>
                     </tr>

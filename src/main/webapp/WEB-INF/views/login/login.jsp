@@ -17,19 +17,19 @@
             <h2 class="form-signin-heading"><spring:message code="security_login_title"/></h2>
             <div class="input-group">
                 <span id="usernameAddon" class="input-group-addon">
-                    <span class="glyphicon glyphicon-envelope"></span>
+                    <i class="glyphicon glyphicon-envelope"></i>
                 </span>
                 <input type="text" name="j_username" placeholder="${usernamePlaceholder}" class="form-control">
             </div>
             <div class="input-group">
                 <span id="passwordAddon" class="input-group-addon">
-                    <span class="glyphicon glyphicon-lock"></span>
+                    <i class="glyphicon glyphicon-lock"></i>
                 </span>
                 <input type="password" name="j_password" placeholder="${passwordPlaceholder}" class="form-control">
             </div>
             <c:if test="${error}">
                 <div class="alert alert-danger">
-                    <span class="glyphicon glyphicon-warning-sign"></span>
+                    <i class="glyphicon glyphicon-warning-sign"></i>
                     <spring:message code="security_bad_credentials"/>
                 </div>
             </c:if>

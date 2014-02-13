@@ -1,7 +1,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
-<c:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
+<spring:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@
                 </dt>
                 <dd>
                     <a id="showClosedQuestionPicture" href="#" class="btn btn-default">
-                        <span class="glyphicon glyphicon-picture"></span>
+                        <i class="glyphicon glyphicon-picture"></i>
                     </a>
                 </dd>
             </c:if>
@@ -39,9 +40,7 @@
         <div class="page-header">
             <h3>
                 <spring:message code="closedAnswer.list.header"/>
-                <a href="${closedAnswerNewLink}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus-sign"></span>
-                </a>
+                <manage:add url="${closedAnswerNewLink}"/>
             </h3>
         </div>
         <table class="table">
@@ -69,7 +68,7 @@
                     <tr>
                         <td>${closedAnswer.id}</td>
                         <td>
-                            <span class="glyphicon ${glyphicon}"></span>
+                            <i class="glyphicon ${glyphicon}"></i>
                         </td>
                         <td>${closedAnswer.answer}</td>
                         <td>
@@ -79,7 +78,7 @@
                                         <spring:param name="id" value="${closedAnswer.imageId}"/>
                                     </spring:url>
                                     <a id="${closedAnswer.imageId}" href="#" class="btn btn-default">
-                                        <span class="glyphicon glyphicon-picture"></span>
+                                        <i class="glyphicon glyphicon-picture"></i>
                                     </a>
                                     <script>
                                         var img = '<img src="${imageUrl}">';
@@ -98,9 +97,7 @@
                                         });
                                     </script>
                                 </c:if>
-                                <a href="${deleteUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </a>
+                                <manage:remove url="${deleteUrl}"/>
                             </div>
                         </td>
                     </tr>

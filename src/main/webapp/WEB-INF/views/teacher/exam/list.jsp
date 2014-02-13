@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
 <c:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
@@ -18,9 +19,7 @@
         <div class="page-header">
             <h1>
                 <spring:message code="exam.list.header"/>
-                <a href="${newLink}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-plus-sign"></span>
-                </a>
+                <manage:add url="${newLink}"/>
             </h1>
         </div>
         <table id="exams" class="table table-striped table-hover">
@@ -63,9 +62,7 @@
                         </td>
                         <td>
                             <div class="btn-group">
-                                <a href="${previewUrl}" class="btn btn-default">
-                                    <span class="glyphicon glyphicon-eye-open"></span>
-                                </a>
+                                <manage:preview url="${previewUrl}"/>
                             </div>
                         </td>
                     </tr>

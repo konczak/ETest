@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <c:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
 <c:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -32,9 +33,7 @@
         <div class="page-header">
             <h3>
                 <spring:message code="user.list.header"/>
-                <a href="${membersUrl}" class="btn btn-default">
-                    <span class="glyphicon glyphicon-edit"></span>
-                </a>
+                <manage:edit url="${membersUrl}"/>
             </h3>
         </div>
         <table id="dataTables" class="table table-striped table-hover">
