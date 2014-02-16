@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.konczak.etest.dto.teacher.TestTemplateListRow;
+import pl.konczak.etest.dto.teacher.testTemplate.TestTemplateListRow;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;

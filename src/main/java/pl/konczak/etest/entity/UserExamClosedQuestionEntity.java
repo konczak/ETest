@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -119,6 +120,7 @@ public class UserExamClosedQuestionEntity
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "closedQuestion")
     @Cascade(CascadeType.ALL)
+    @OrderBy("userExamClosedAnswersId")
     public Set<UserExamClosedAnswerEntity> getClosedAnswers() {
         return closedAnswers;
     }

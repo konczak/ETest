@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import pl.konczak.etest.dto.teacher.TestTemplateListRow;
+import pl.konczak.etest.dto.teacher.testTemplate.TestTemplateListRow;
 import pl.konczak.etest.service.IDTORowListPrepareService;
 
 @Controller

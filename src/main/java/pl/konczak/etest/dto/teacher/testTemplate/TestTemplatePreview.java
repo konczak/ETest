@@ -1,4 +1,4 @@
-package pl.konczak.etest.dto.teacher;
+package pl.konczak.etest.dto.teacher.testTemplate;
 
 import java.util.ArrayList;
 import java.util.List;

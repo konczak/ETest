@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import pl.konczak.etest.bo.ITestTemplateBO;
-import pl.konczak.etest.dto.teacher.TestTemplateNew;
+import pl.konczak.etest.dto.teacher.testTemplate.TestTemplateNew;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.repository.IUserRepository;
 

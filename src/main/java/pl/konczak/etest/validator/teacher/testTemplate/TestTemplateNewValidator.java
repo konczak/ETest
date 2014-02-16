@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import pl.konczak.etest.dto.teacher.TestTemplateNew;
+import pl.konczak.etest.dto.teacher.testTemplate.TestTemplateNew;
 import pl.konczak.etest.repository.ITestTemplateRepository;
 
 @Component

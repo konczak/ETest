@@ -1,4 +1,4 @@
-package pl.konczak.etest.dto.teacher;
+package pl.konczak.etest.dto.teacher.testTemplate;
 
 public class TestTemplateListRow {
 

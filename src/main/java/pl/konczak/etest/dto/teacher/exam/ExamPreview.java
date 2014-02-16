@@ -27,15 +27,18 @@ public class ExamPreview {
         private Integer id;
         private String firstname;
         private String lastname;
+        private Integer userExamId;
         private Integer resultPoints;
         private Integer maxPoints;
 
         public ExaminedUserInternal(Integer id,
                 String firstname, String lastname,
+                Integer userExamId,
                 Integer resultPoints, Integer maxPoints) {
             this.id = id;
             this.firstname = firstname;
             this.lastname = lastname;
+            this.userExamId = userExamId;
             this.resultPoints = resultPoints;
             this.maxPoints = maxPoints;
         }
@@ -50,6 +53,10 @@ public class ExamPreview {
 
         public String getLastname() {
             return lastname;
+        }
+
+        public Integer getUserExamId() {
+            return userExamId;
         }
 
         public Integer getResultPoints() {
@@ -169,8 +176,8 @@ public class ExamPreview {
     }
 
     public void addExaminedUser(Integer userId, String firstname, String lastname,
-            Integer resultPoints, Integer maxPoints) {
+            Integer userExamId, Integer resultPoints, Integer maxPoints) {
         this.examinedUsers
-                .add(new ExaminedUserInternal(userId, firstname, lastname, resultPoints, maxPoints));
+                .add(new ExaminedUserInternal(userId, firstname, lastname, userExamId, resultPoints, maxPoints));
     }
 }

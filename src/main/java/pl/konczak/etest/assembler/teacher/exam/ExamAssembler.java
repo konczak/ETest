@@ -56,10 +56,12 @@ public class ExamAssembler {
                 UserExamEntity.UserExamResult userExamResult = userExamEntity.getResults();
                 examPreview.addExaminedUser(examined.getId(),
                         examinedPersonalDataEntity.getFirstname(), examinedPersonalDataEntity.getLastname(),
+                        userExamEntity.getId(),
                         userExamResult.getResultingPoints(), userExamResult.getMaximalPoints());
             } else {
                 examPreview.addExaminedUser(examined.getId(),
                         examinedPersonalDataEntity.getFirstname(), examinedPersonalDataEntity.getLastname(),
+                        userExamEntity.getId(),
                         0, 0);
             }
 

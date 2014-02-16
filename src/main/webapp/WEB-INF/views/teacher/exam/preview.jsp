@@ -1,7 +1,8 @@
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
 <spring:url var="examCheckUrl" value="/teacher/exam/{id}/check" >
@@ -121,18 +122,22 @@
                     <th><spring:message code="entity_id"/></th>
                     <th><spring:message code="user.lastname.label"/></th>
                     <th><spring:message code="user.firstname.label"/></th>
-                        <c:if test="${exam.checked}">
+                    <c:if test="${exam.checked}">
                         <th><spring:message code="userExam.resultPoints.label"/></th>
                         <th><spring:message code="userExam.maxPoints.label"/></th>
                         <th>%</th>
                         <th><spring:message code="userExam.passed.label"/></th>
-                        </c:if>
+                        <th><spring:message code="exam.manage.label"/></th>
+                    </c:if>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${exam.examinedUsers}" var="examinedUser">
+                    <spring:url var="previewUrl" value="/teacher/userExam/{id}">
+                        <spring:param name="id" value="${examinedUser.userExamId}"/>
+                    </spring:url>
                     <tr>
-                        <td>${examinedUser.id}</td>
+                        <td>${examinedUser.userExamId}</td>
                         <td>${examinedUser.lastname}</td>
                         <td>${examinedUser.firstname}</td>
                         <c:if test="${exam.checked}">
@@ -150,6 +155,9 @@
                                         <i class="glyphicon glyphicon-minus-sign text-danger"></i>
                                     </c:otherwise>
                                 </c:choose>
+                            </td>
+                            <td>
+                                <manage:preview url="${previewUrl}"/>
                             </td>
                         </c:if>
                     </tr>
