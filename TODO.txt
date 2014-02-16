@@ -2,3 +2,4 @@ on add new exam when user group has 0 members internal server error occurs
 on add new exam when closed question has no correct closed answers internal server error occurs
 split i18n properties on domain objects and views
 replace CategoryOfQuestion solution with real Category system where one Category has many sub-Categories and so on (actual solution is more like tags)
+in teacher UserExam preview add possibility to navigate between other UserExams and get back to Exam preview
