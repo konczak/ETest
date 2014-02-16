@@ -1,0 +1,3 @@
+on add new exam when user group has 0 members internal server error occures
+on add new exam when closed question has no correct closed answers internal server error occures
+split i18n properties on domain objects and views
