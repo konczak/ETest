@@ -122,13 +122,13 @@
                     <th><spring:message code="entity_id"/></th>
                     <th><spring:message code="user.lastname.label"/></th>
                     <th><spring:message code="user.firstname.label"/></th>
-                    <c:if test="${exam.checked}">
+                        <c:if test="${exam.checked}">
                         <th><spring:message code="userExam.resultPoints.label"/></th>
                         <th><spring:message code="userExam.maxPoints.label"/></th>
                         <th>%</th>
                         <th><spring:message code="userExam.passed.label"/></th>
                         <th><spring:message code="exam.manage.label"/></th>
-                    </c:if>
+                        </c:if>
                 </tr>
             </thead>
             <tbody>
@@ -161,69 +161,92 @@
                             </td>
                         </c:if>
                     </tr>
+                    <c:if test="${exam.checked}">
+                        <c:set var="percentResult" value="${examinedUser.resultPoints / examinedUser.maxPoints * 100.00}"/>
+                        <c:set var="progressBarColor" value="progress-bar-warning"/>
+                        <c:choose>
+                            <c:when test="${percentResult >= 80.0}">
+                                <c:set var="progressBarColor" value="progress-bar-success"/>
+                            </c:when>
+                            <c:when test="${percentResult <= 30.0}">
+                                <c:set var="progressBarColor" value="progress-bar-danger"/>
+                            </c:when>
+                        </c:choose>
+                        <tr>
+                            <td colspan="8">
+                                <div class="progress">
+                                    <div class="progress-bar ${progressBarColor}" role="progressbar" aria-valuenow="${percentResult}" aria-valuemin="0" aria-valuemax="100" style="width: ${percentResult}%;">
+                                        <fmt:formatNumber value="${percentResult}" minFractionDigits="0" maxFractionDigits="0"/> 
+                                        %
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
             </tbody>
         </table>
 
         <script src="${activeJsUrl}"></script>
         <script>
-            function runCheck() {
-                $('#processing-modal')
-                        .modal();
-                $.ajax({
-                    type: "POST",
-                    url: "${examCheckUrl}",
-                    success: function(response) {
-                        $('#processing-modal')
-                                .modal("hide");
-                        location.reload();
-                    },
-                    error: function(e) {
-                        alert('Error ' + e);
-                    }
-                });
-            }
+                            function runCheck() {
+                                $('#processing-modal')
+                                        .modal();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${examCheckUrl}",
+                                    success: function(response) {
+                                        $('#processing-modal')
+                                                .modal("hide");
+                                        location.reload();
+                                    },
+                                    error: function(e) {
+                                        alert('Error ' + e);
+                                    }
+                                });
+                            }
 
-            function runProlong(minutes) {
-                $.ajax({
-                    type: "POST",
-                    url: "${examProlongUrl}",
-                    data: {minutes: minutes},
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(e) {
-                        alert('Error ' + e);
-                    }
-                });
-            }
-            
-            function runTerminate() {
-                $.ajax({
-                    type: "POST",
-                    url: "${examTerminateUrl}",
-                    success: function(response) {
-                        location.reload();
-                    },
-                    error: function(e) {
-                        alert('Error ' + e);
-                    }
-                });
-            }
+                            function runProlong(minutes) {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${examProlongUrl}",
+                                    data: {minutes: minutes},
+                                    success: function(response) {
+                                        location.reload();
+                                    },
+                                    error: function(e) {
+                                        alert('Error ' + e);
+                                    }
+                                });
+                            }
 
-            $('#prolong .btn').on('click', function(e) {
-                e.preventDefault();
-                var $this = $(this);
-                var $collapse = $this.closest('.collapse-group').find('.collapse');
-                if ($($collapse).is(":visible")) {
-                    $this.find('i').removeClass("glyphicon-chevron-left");
-                    $this.find('i').addClass("glyphicon-chevron-right");
-                } else {
-                    $this.find('i').removeClass("glyphicon-chevron-right");
-                    $this.find('i').addClass("glyphicon-chevron-left");
-                }
-                $collapse.collapse('toggle');
-            });
+                            function runTerminate() {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "${examTerminateUrl}",
+                                    success: function(response) {
+                                        location.reload();
+                                    },
+                                    error: function(e) {
+                                        alert('Error ' + e);
+                                    }
+                                });
+                            }
+
+                            $('#prolong .btn').on('click', function(e) {
+                                e.preventDefault();
+                                var $this = $(this);
+                                var $collapse = $this.closest('.collapse-group').find('.collapse');
+                                if ($($collapse).is(":visible")) {
+                                    $this.find('i').removeClass("glyphicon-chevron-left");
+                                    $this.find('i').addClass("glyphicon-chevron-right");
+                                } else {
+                                    $this.find('i').removeClass("glyphicon-chevron-right");
+                                    $this.find('i').addClass("glyphicon-chevron-left");
+                                }
+                                $collapse.collapse('toggle');
+                            });
         </script>
     </body>
 </html>
