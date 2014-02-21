@@ -35,99 +35,31 @@ public class UserEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    @Email
-    private String email;
-    @NotBlank
-    private String password;
-    private boolean locked;
-    private LocalDateTime registeredAt;
-    private UserPersonalDataEntity userPersonalData;
-    private Set<RoleEntity> roles = new HashSet<RoleEntity>();
-    private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
-    private Set<UserGroupEntity> groups = new HashSet<UserGroupEntity>();
-    private Set<UserExamEntity> exams = new HashSet<UserExamEntity>();
-    private Set<ExamEntity> controlledExams = new HashSet<ExamEntity>();
-
-    public UserEntity() {
-    }
-
-    public UserEntity(String email, String password, Set<RoleEntity> roles) {
-        Validate.notEmpty(email);
-        Validate.notEmpty(password);
-        Validate.notNull(roles);
-        Validate.notEmpty(roles);
-        this.email = email;
-        this.password = password;
-        this.roles = roles;
-        this.registeredAt = LocalDateTime.now();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usersId",
             unique = true,
             nullable = false,
             updatable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    private Integer id;
+    @Email
     @Column(unique = true,
             nullable = false,
             length = 50)
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    private String email;
+    @NotBlank
     @Column(nullable = false)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
+    private String password;
     @Column(nullable = false)
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
+    private boolean locked;
     @Column(nullable = false,
             updatable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
-    public LocalDateTime getRegisteredAt() {
-        return registeredAt;
-    }
-
-    public void setRegisteredAt(LocalDateTime registeredAt) {
-        this.registeredAt = registeredAt;
-    }
-
+    private LocalDateTime registeredAt;
     @OneToOne(fetch = FetchType.LAZY,
               mappedBy = "user",
               cascade = CascadeType.ALL)
-    public UserPersonalDataEntity getUserPersonalData() {
-        return userPersonalData;
-    }
-
-    public void setUserPersonalData(UserPersonalDataEntity userPersonalData) {
-        this.userPersonalData = userPersonalData;
-    }
-
+    private UserPersonalDataEntity userPersonalData;
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
@@ -145,24 +77,10 @@ public class UserEntity
                     nullable = false,
                     updatable = false)
     })
-    public Set<RoleEntity> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<RoleEntity> roles) {
-        this.roles = roles;
-    }
-
+    private Set<RoleEntity> roles = new HashSet<RoleEntity>();
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "author")
-    public Set<ClosedQuestionEntity> getClosedQuestions() {
-        return closedQuestions;
-    }
-
-    public void setClosedQuestions(Set<ClosedQuestionEntity> closedQuestions) {
-        this.closedQuestions = closedQuestions;
-    }
-
+    private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "users_userGroups",
@@ -179,6 +97,92 @@ public class UserEntity
                     nullable = false,
                     updatable = false)
     })
+    private Set<UserGroupEntity> groups = new HashSet<UserGroupEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "examined")
+    private Set<UserExamEntity> exams = new HashSet<UserExamEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "examiner")
+    private Set<ExamEntity> controlledExams = new HashSet<ExamEntity>();
+
+    protected UserEntity() {
+    }
+
+    public UserEntity(String email, String password, Set<RoleEntity> roles) {
+        Validate.notEmpty(email);
+        Validate.notEmpty(password);
+        Validate.notNull(roles);
+        Validate.notEmpty(roles);
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.registeredAt = LocalDateTime.now();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
+    }
+
+    public LocalDateTime getRegisteredAt() {
+        return registeredAt;
+    }
+
+    public void setRegisteredAt(LocalDateTime registeredAt) {
+        this.registeredAt = registeredAt;
+    }
+
+    public UserPersonalDataEntity getUserPersonalData() {
+        return userPersonalData;
+    }
+
+    public void setUserPersonalData(UserPersonalDataEntity userPersonalData) {
+        this.userPersonalData = userPersonalData;
+    }
+
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<RoleEntity> roles) {
+        this.roles = roles;
+    }
+
+    public Set<ClosedQuestionEntity> getClosedQuestions() {
+        return closedQuestions;
+    }
+
+    public void setClosedQuestions(Set<ClosedQuestionEntity> closedQuestions) {
+        this.closedQuestions = closedQuestions;
+    }
+
     public Set<UserGroupEntity> getGroups() {
         return groups;
     }
@@ -195,8 +199,6 @@ public class UserEntity
         this.groups.remove(userGroup);
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "examined")
     public Set<UserExamEntity> getExams() {
         return exams;
     }
@@ -205,8 +207,6 @@ public class UserEntity
         this.exams = exams;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "examiner")
     public Set<ExamEntity> getControlledExams() {
         return controlledExams;
     }
