@@ -19,14 +19,30 @@ import pl.konczak.etest.core.Validate;
 @Table(name = "userPersonalData")
 public class UserPersonalDataEntity {
 
+    @GenericGenerator(name = "generator",
+                      strategy = "foreign",
+                      parameters =
+            @Parameter(name = "property",
+                       value = "user"))
+    @Id
+    @GeneratedValue(generator = "generator")
+    @Column(name = "usersId",
+            unique = true,
+            nullable = false)
     private Integer usersId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private UserEntity user;
     @NotBlank
+    @Column(nullable = false,
+            length = 50)
     private String firstname;
     @NotBlank
+    @Column(nullable = false,
+            length = 50)
     private String lastname;
 
-    public UserPersonalDataEntity() {
+    protected UserPersonalDataEntity() {
     }
 
     public UserPersonalDataEntity(UserEntity user, String firstname, String lastname) {
@@ -38,16 +54,6 @@ public class UserPersonalDataEntity {
         this.lastname = lastname;
     }
 
-    @GenericGenerator(name = "generator",
-                      strategy = "foreign",
-                      parameters =
-            @Parameter(name = "property",
-                       value = "user"))
-    @Id
-    @GeneratedValue(generator = "generator")
-    @Column(name = "usersId",
-            unique = true,
-            nullable = false)
     public Integer getUsersId() {
         return usersId;
     }
@@ -56,8 +62,6 @@ public class UserPersonalDataEntity {
         this.usersId = usersId;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     public UserEntity getUser() {
         return user;
     }
@@ -66,8 +70,6 @@ public class UserPersonalDataEntity {
         this.user = user;
     }
 
-    @Column(nullable = false,
-            length = 50)
     public String getFirstname() {
         return firstname;
     }
@@ -76,8 +78,6 @@ public class UserPersonalDataEntity {
         this.firstname = firstname;
     }
 
-    @Column(nullable = false,
-            length = 50)
     public String getLastname() {
         return lastname;
     }

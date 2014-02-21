@@ -4,4 +4,3 @@ replace CategoryOfQuestion solution with real Category system where one Category
 in teacher UserExam preview add possibility to navigate between other UserExams and get back to Exam preview
 change user registration process - admin should be able to register a lot of users at once (also add all of them to user group existing or new would be nice) + login process and view should be fixed + userPanel credentials required verification
 split some huge JSP pages to smaller ones using include (remember to use _ as prefix to mark that page is not standalone view)
-move JPA/Hibernate annotations from getter methods to fields

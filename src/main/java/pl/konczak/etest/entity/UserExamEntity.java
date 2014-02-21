@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import pl.konczak.etest.core.Validate;
@@ -26,10 +25,26 @@ public class UserExamEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userExamsId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "examsId",
+                nullable = false)
     private ExamEntity exam;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usersId",
+                nullable = false)
     private UserEntity examined;
     private boolean checked;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "userExam")
+    @Cascade(CascadeType.ALL)
+    @OrderBy("userExamClosedQuestionsId")
     private Set<UserExamClosedQuestionEntity> closedQuestions = new HashSet<UserExamClosedQuestionEntity>();
 
     public class UserExamResult {
@@ -51,7 +66,7 @@ public class UserExamEntity
         }
     }
 
-    public UserExamEntity() {
+    protected UserExamEntity() {
     }
 
     public UserExamEntity(ExamEntity exam, UserEntity examined) {
@@ -63,12 +78,6 @@ public class UserExamEntity
         this.checked = false;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userExamsId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -77,9 +86,6 @@ public class UserExamEntity
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "examsId",
-                nullable = false)
     public ExamEntity getExam() {
         return exam;
     }
@@ -88,9 +94,6 @@ public class UserExamEntity
         this.exam = exam;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usersId",
-                nullable = false)
     public UserEntity getExamined() {
         return examined;
     }
@@ -112,10 +115,6 @@ public class UserExamEntity
         this.checked = true;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "userExam")
-    @Cascade(CascadeType.ALL)
-    @OrderBy("userExamClosedQuestionsId")
     public Set<UserExamClosedQuestionEntity> getClosedQuestions() {
         return closedQuestions;
     }
@@ -146,7 +145,6 @@ public class UserExamEntity
         return userExamClosedQuestionEntity;
     }
 
-    @Transient
     public UserExamResult getResults() {
         Validate.isTrue(checked, String.format("UserExam <%s> is not checked yet and cannot get results", id));
         int resultPoints = 0;

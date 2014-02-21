@@ -10,7 +10,9 @@ import pl.konczak.etest.entity.TestTemplateEntity;
 public class TestTemplateClosedQuestionId
         implements Serializable {
 
+    @ManyToOne
     private TestTemplateEntity testTemplate;
+    @ManyToOne
     private ClosedQuestionEntity closedQuestion;
 
     public TestTemplateClosedQuestionId() {
@@ -22,7 +24,6 @@ public class TestTemplateClosedQuestionId
         this.closedQuestion = closedQuestion;
     }
 
-    @ManyToOne
     public TestTemplateEntity getTestTemplate() {
         return testTemplate;
     }
@@ -31,7 +32,6 @@ public class TestTemplateClosedQuestionId
         this.testTemplate = testTemplate;
     }
 
-    @ManyToOne
     public ClosedQuestionEntity getClosedQuestion() {
         return closedQuestion;
     }

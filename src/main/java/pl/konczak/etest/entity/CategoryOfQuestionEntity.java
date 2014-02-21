@@ -24,43 +24,18 @@ public class CategoryOfQuestionEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    @NotBlank
-    private String title;
-    private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
-
-    public CategoryOfQuestionEntity() {
-    }
-
-    public CategoryOfQuestionEntity(String title) {
-        this.title = title;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "categoryOfQuestionsId",
             unique = true,
             nullable = false,
             updatable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    private Integer id;
+    @NotBlank
     @Column(unique = true,
             nullable = false,
             length = 25)
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    private String title;
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "closedQuestions_categoryOfQuestions",
@@ -73,6 +48,31 @@ public class CategoryOfQuestionEntity
         @JoinColumn(name = "closedQuestionsId",
                     nullable = false,
                     updatable = false)})
+    private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
+
+    protected CategoryOfQuestionEntity() {
+    }
+
+    public CategoryOfQuestionEntity(String title) {
+        this.title = title;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Set<ClosedQuestionEntity> getClosedQuestions() {
         return closedQuestions;
     }

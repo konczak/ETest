@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import pl.konczak.etest.core.Validate;
 
@@ -25,14 +24,32 @@ public class TestTemplateEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "testTemplatesId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
+    @Column(unique = true,
+            nullable = false,
+            length = 50)
     private String subject;
+    @OneToOne(fetch = FetchType.LAZY,
+              cascade = CascadeType.ALL)
     private UserEntity author;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "pk.testTemplate",
+               cascade = CascadeType.ALL,
+               orphanRemoval = true)
+    @OrderBy("pk.closedQuestion.id")
     private Set<TestTemplateClosedQuestionEntity> closedQuestions =
             new HashSet<TestTemplateClosedQuestionEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "testTemplate")
     private Set<ExamEntity> exams = new HashSet<ExamEntity>();
 
-    public TestTemplateEntity() {
+    protected TestTemplateEntity() {
     }
 
     public TestTemplateEntity(String subject, UserEntity author) {
@@ -40,12 +57,6 @@ public class TestTemplateEntity
         this.author = author;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "testTemplatesId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -54,9 +65,6 @@ public class TestTemplateEntity
         this.id = id;
     }
 
-    @Column(unique = true,
-            nullable = false,
-            length = 50)
     public String getSubject() {
         return subject;
     }
@@ -65,8 +73,6 @@ public class TestTemplateEntity
         this.subject = subject;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
-              cascade = CascadeType.ALL)
     public UserEntity getAuthor() {
         return author;
     }
@@ -75,11 +81,6 @@ public class TestTemplateEntity
         this.author = author;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "pk.testTemplate",
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
-    @OrderBy("pk.closedQuestion.id")
     public Set<TestTemplateClosedQuestionEntity> getClosedQuestions() {
         return closedQuestions;
     }
@@ -132,8 +133,6 @@ public class TestTemplateEntity
         testTemplateClosedQuestionEntity.markAsNotMandatory();
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "testTemplate")
     public Set<ExamEntity> getExams() {
         return exams;
     }
@@ -142,7 +141,6 @@ public class TestTemplateEntity
         this.exams = exams;
     }
 
-    @Transient
     public Set<ClosedQuestionEntity> getMandatoryClosedQuestions() {
         Set<ClosedQuestionEntity> mandatoryClosedQuestions = new HashSet<ClosedQuestionEntity>();
 
@@ -155,7 +153,6 @@ public class TestTemplateEntity
         return mandatoryClosedQuestions;
     }
 
-    @Transient
     public Set<ClosedQuestionEntity> getNotMandatoryClosedQuestions() {
         Set<ClosedQuestionEntity> notMandatoryClosedQuestions = new HashSet<ClosedQuestionEntity>();
 

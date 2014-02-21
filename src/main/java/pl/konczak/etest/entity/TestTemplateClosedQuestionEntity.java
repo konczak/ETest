@@ -7,7 +7,6 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import pl.konczak.etest.entity.id.TestTemplateClosedQuestionId;
 
 @Entity
@@ -22,10 +21,11 @@ import pl.konczak.etest.entity.id.TestTemplateClosedQuestionId;
 public class TestTemplateClosedQuestionEntity
         implements Serializable {
 
+    @EmbeddedId
     private TestTemplateClosedQuestionId pk = new TestTemplateClosedQuestionId();
     private boolean mandatory;
 
-    public TestTemplateClosedQuestionEntity() {
+    protected TestTemplateClosedQuestionEntity() {
     }
 
     public TestTemplateClosedQuestionEntity(TestTemplateEntity testTemplate,
@@ -34,7 +34,6 @@ public class TestTemplateClosedQuestionEntity
         mandatory = false;
     }
 
-    @EmbeddedId
     public TestTemplateClosedQuestionId getPk() {
         return pk;
     }
@@ -59,12 +58,10 @@ public class TestTemplateClosedQuestionEntity
         this.mandatory = false;
     }
 
-    @Transient
     public TestTemplateEntity getTestTemplateEntity() {
         return getPk().getTestTemplate();
     }
 
-    @Transient
     public ClosedQuestionEntity getClosedQuestionEntity() {
         return getPk().getClosedQuestion();
     }

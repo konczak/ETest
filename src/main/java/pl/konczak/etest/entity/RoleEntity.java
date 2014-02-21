@@ -27,42 +27,17 @@ public class RoleEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    @NotBlank
-    private String name;
-    private Set<UserEntity> userRoles = new HashSet<UserEntity>();
-
-    public RoleEntity() {
-    }
-
-    public RoleEntity(String name) {
-        this.name = name;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rolesId",
             unique = true,
             nullable = false,
             updatable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    private Integer id;
+    @NotBlank
     @Column(unique = true,
             nullable = false)
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    private String name;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
                uniqueConstraints = {
@@ -76,6 +51,31 @@ public class RoleEntity
         @JoinColumn(name = "usersId",
                     nullable = false,
                     updatable = false)})
+    private Set<UserEntity> userRoles = new HashSet<UserEntity>();
+
+    protected RoleEntity() {
+    }
+
+    public RoleEntity(String name) {
+        this.name = name;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Set<UserEntity> getUserRoles() {
         return userRoles;
     }

@@ -27,15 +27,35 @@ public class ClosedAnswerEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "closedAnswersId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
     @NotBlank
+    @Column(unique = false,
+            nullable = false,
+            length = 1000)
     private String answer;
+    @Column(nullable = false)
     private boolean correct;
+    @OneToOne(fetch = FetchType.LAZY,
+              cascade = CascadeType.ALL)
+    @JoinColumn(name = "imagesId",
+                unique = true,
+                nullable = true)
     private ImageEntity image;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "closedQuestionsId",
+                nullable = false)
     private ClosedQuestionEntity closedQuestion;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedAnswer")
     private Set<UserExamClosedAnswerEntity> usages = new HashSet<UserExamClosedAnswerEntity>();
 
-    public ClosedAnswerEntity() {
+    protected ClosedAnswerEntity() {
     }
 
     public ClosedAnswerEntity(ClosedQuestionEntity closedQuestion, String answer, boolean correct) {
@@ -46,12 +66,6 @@ public class ClosedAnswerEntity
         this.closedQuestion = closedQuestion;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "closedAnswersId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -60,9 +74,6 @@ public class ClosedAnswerEntity
         this.id = id;
     }
 
-    @Column(unique = false,
-            nullable = false,
-            length = 1000)
     public String getAnswer() {
         return answer;
     }
@@ -71,7 +82,6 @@ public class ClosedAnswerEntity
         this.answer = answer;
     }
 
-    @Column(nullable = false)
     public boolean isCorrect() {
         return correct;
     }
@@ -80,11 +90,6 @@ public class ClosedAnswerEntity
         this.correct = correct;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
-              cascade = CascadeType.ALL)
-    @JoinColumn(name = "imagesId",
-                unique = true,
-                nullable = true)
     public ImageEntity getImage() {
         return image;
     }
@@ -93,9 +98,6 @@ public class ClosedAnswerEntity
         this.image = image;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "closedQuestionsId",
-                nullable = false)
     public ClosedQuestionEntity getClosedQuestion() {
         return closedQuestion;
     }
@@ -104,8 +106,6 @@ public class ClosedAnswerEntity
         this.closedQuestion = closedQuestion;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "closedAnswer")
     public Set<UserExamClosedAnswerEntity> getUsages() {
         return usages;
     }

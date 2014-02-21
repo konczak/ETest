@@ -25,16 +25,32 @@ public class UserExamClosedQuestionEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userExamClosedQuestionsId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
     private Integer points;
     private Integer pointsMax;
     private Integer orderNumber;
     private boolean subbmited;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userExamsId",
+                nullable = false)
     private UserExamEntity userExam;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "closedQuestionsId",
+                nullable = false)
     private ClosedQuestionEntity closedQuestion;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedQuestion")
+    @Cascade(CascadeType.ALL)
+    @OrderBy("userExamClosedAnswersId")
     private Set<UserExamClosedAnswerEntity> closedAnswers = new HashSet<UserExamClosedAnswerEntity>();
 
-    public UserExamClosedQuestionEntity() {
+    protected UserExamClosedQuestionEntity() {
     }
 
     public UserExamClosedQuestionEntity(UserExamEntity userExam, ClosedQuestionEntity closedQuestion, Integer orderNumber) {
@@ -49,12 +65,6 @@ public class UserExamClosedQuestionEntity
         this.subbmited = false;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userExamClosedQuestionsId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -106,9 +116,14 @@ public class UserExamClosedQuestionEntity
         this.subbmited = true;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "closedQuestionsId",
-                nullable = false)
+    public UserExamEntity getUserExam() {
+        return userExam;
+    }
+
+    public void setUserExam(UserExamEntity userExam) {
+        this.userExam = userExam;
+    }
+
     public ClosedQuestionEntity getClosedQuestion() {
         return closedQuestion;
     }
@@ -117,10 +132,6 @@ public class UserExamClosedQuestionEntity
         this.closedQuestion = closedQuestion;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "closedQuestion")
-    @Cascade(CascadeType.ALL)
-    @OrderBy("userExamClosedAnswersId")
     public Set<UserExamClosedAnswerEntity> getClosedAnswers() {
         return closedAnswers;
     }
@@ -142,16 +153,5 @@ public class UserExamClosedQuestionEntity
         }
         throw new RuntimeException(String.format(
                 "Unable to markClosedAnswer because id <%s> does not belong to this question", answerId));
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userExamsId",
-                nullable = false)
-    public UserExamEntity getUserExam() {
-        return userExam;
-    }
-
-    public void setUserExam(UserExamEntity userExam) {
-        this.userExam = userExam;
     }
 }

@@ -21,12 +21,25 @@ public class UserExamClosedAnswerEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userExamClosedAnswersId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
+    @Column(nullable = false,
+            updatable = true)
     private boolean markedByUser;
+    @OneToOne(fetch = FetchType.LAZY,
+              cascade = CascadeType.ALL)
     private ClosedAnswerEntity closedAnswer;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userExamClosedQuestionsId",
+                nullable = false)
     private UserExamClosedQuestionEntity closedQuestion;
 
-    public UserExamClosedAnswerEntity() {
+    protected UserExamClosedAnswerEntity() {
     }
 
     public UserExamClosedAnswerEntity(ClosedAnswerEntity closedAnswer, UserExamClosedQuestionEntity closedQuestion) {
@@ -37,12 +50,6 @@ public class UserExamClosedAnswerEntity
         this.markedByUser = false;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userExamClosedAnswersId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -51,8 +58,6 @@ public class UserExamClosedAnswerEntity
         this.id = id;
     }
 
-    @Column(nullable = false,
-            updatable = true)
     public boolean isMarkedByUser() {
         return markedByUser;
     }
@@ -61,8 +66,6 @@ public class UserExamClosedAnswerEntity
         this.markedByUser = markedByUser;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
-              cascade = CascadeType.ALL)
     public ClosedAnswerEntity getClosedAnswer() {
         return closedAnswer;
     }
@@ -71,9 +74,6 @@ public class UserExamClosedAnswerEntity
         this.closedAnswer = closedAnswer;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userExamClosedQuestionsId",
-                nullable = false)
     public UserExamClosedQuestionEntity getClosedQuestion() {
         return closedQuestion;
     }

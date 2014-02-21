@@ -31,18 +31,46 @@ public class ExamEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "examsId",
+            unique = true,
+            nullable = false,
+            updatable = false)
     private Integer id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "testTemplatesId",
+                nullable = false)
     private TestTemplateEntity testTemplate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userGroupsId",
+                nullable = false)
     private UserGroupEntity userGroup;
+    @Column(length = 25)
     private String titleSuffix;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usersId",
+                nullable = false)
     private UserEntity examiner;
+    @Column(nullable = false,
+            updatable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime createdAt;
+    @Column(nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime activeFrom;
+    @Column(nullable = false)
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     private LocalDateTime activeTo;
+    @Column(nullable = false)
     private boolean checked;
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "exam")
+    @Cascade(CascadeType.ALL)
+    @OrderBy("id")
     private Set<UserExamEntity> generatedExams = new HashSet<UserExamEntity>();
 
-    public ExamEntity() {
+    protected ExamEntity() {
     }
 
     public ExamEntity(TestTemplateEntity testTemplate, UserGroupEntity userGroup, String titleSuffix,
@@ -61,12 +89,6 @@ public class ExamEntity
         this.activeTo = activeTo;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "examsId",
-            unique = true,
-            nullable = false,
-            updatable = false)
     public Integer getId() {
         return id;
     }
@@ -75,9 +97,6 @@ public class ExamEntity
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "testTemplatesId",
-                nullable = false)
     public TestTemplateEntity getTestTemplate() {
         return testTemplate;
     }
@@ -86,9 +105,6 @@ public class ExamEntity
         this.testTemplate = testTemplate;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userGroupsId",
-                nullable = false)
     public UserGroupEntity getUserGroup() {
         return userGroup;
     }
@@ -97,7 +113,6 @@ public class ExamEntity
         this.userGroup = userGroup;
     }
 
-    @Column(length = 25)
     public String getTitleSuffix() {
         return titleSuffix;
     }
@@ -106,9 +121,6 @@ public class ExamEntity
         this.titleSuffix = titleSuffix;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usersId",
-                nullable = false)
     public UserEntity getExaminer() {
         return examiner;
     }
@@ -117,9 +129,6 @@ public class ExamEntity
         this.examiner = examiner;
     }
 
-    @Column(nullable = false,
-            updatable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -128,8 +137,6 @@ public class ExamEntity
         this.createdAt = createdAt;
     }
 
-    @Column(nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     public LocalDateTime getActiveFrom() {
         return activeFrom;
     }
@@ -138,8 +145,6 @@ public class ExamEntity
         this.activeFrom = activeFrom;
     }
 
-    @Column(nullable = false)
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
     public LocalDateTime getActiveTo() {
         return activeTo;
     }
@@ -184,10 +189,6 @@ public class ExamEntity
         this.checked = true;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "exam")
-    @Cascade(CascadeType.ALL)
-    @OrderBy("id")
     public Set<UserExamEntity> getGeneratedExams() {
         return generatedExams;
     }

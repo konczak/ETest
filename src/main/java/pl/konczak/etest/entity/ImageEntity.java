@@ -14,24 +14,31 @@ import javax.persistence.Table;
 @Table(name = "images")
 public class ImageEntity {
 
-    private Integer id;
-    private byte[] image;
-    private ClosedQuestionEntity closedQuestion;
-    private ClosedAnswerEntity closedAnswer;
-
-    public ImageEntity() {
-    }
-
-    public ImageEntity(byte[] image) {
-        this.image = image;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "imagesId",
             unique = true,
             nullable = false,
             updatable = false)
+    private Integer id;
+    @Column(nullable = false,
+            updatable = false)
+    @Lob
+    private byte[] image;
+    @OneToOne(fetch = FetchType.LAZY,
+              mappedBy = "image")
+    private ClosedQuestionEntity closedQuestion;
+    @OneToOne(fetch = FetchType.LAZY,
+              mappedBy = "image")
+    private ClosedAnswerEntity closedAnswer;
+
+    protected ImageEntity() {
+    }
+
+    public ImageEntity(byte[] image) {
+        this.image = image;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -40,9 +47,6 @@ public class ImageEntity {
         this.id = id;
     }
 
-    @Column(nullable = false,
-            updatable = false)
-    @Lob
     public byte[] getImage() {
         return image;
     }
@@ -51,8 +55,6 @@ public class ImageEntity {
         this.image = image;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
-              mappedBy = "image")
     public ClosedQuestionEntity getClosedQuestion() {
         return closedQuestion;
     }
@@ -61,8 +63,6 @@ public class ImageEntity {
         this.closedQuestion = closedQuestion;
     }
 
-    @OneToOne(fetch = FetchType.LAZY,
-              mappedBy = "image")
     public ClosedAnswerEntity getClosedAnswer() {
         return closedAnswer;
     }

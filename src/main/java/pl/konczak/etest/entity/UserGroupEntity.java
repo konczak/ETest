@@ -26,43 +26,17 @@ public class UserGroupEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    @NotBlank
-    private String title;
-    private Set<UserEntity> members = new HashSet<UserEntity>();
-    private Set<ExamEntity> exams = new HashSet<ExamEntity>();
-
-    public UserGroupEntity() {
-    }
-
-    public UserGroupEntity(String title) {
-        this.title = title;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userGroupsId",
             unique = true,
             nullable = false,
             updatable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    private Integer id;
+    @NotBlank
     @Column(unique = true,
             nullable = false)
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+    private String title;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_userGroups",
                uniqueConstraints = {
@@ -78,6 +52,34 @@ public class UserGroupEntity
                     nullable = false,
                     updatable = false)
     })
+    private Set<UserEntity> members = new HashSet<UserEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "userGroup")
+    private Set<ExamEntity> exams = new HashSet<ExamEntity>();
+
+    protected UserGroupEntity() {
+    }
+
+    public UserGroupEntity(String title) {
+        this.title = title;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Set<UserEntity> getMembers() {
         return members;
     }
@@ -94,8 +96,6 @@ public class UserGroupEntity
         this.members.remove(user);
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "userGroup")
     public Set<ExamEntity> getExams() {
         return exams;
     }

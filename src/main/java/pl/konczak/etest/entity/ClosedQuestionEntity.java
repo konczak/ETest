@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -30,73 +29,28 @@ public class ClosedQuestionEntity
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private Integer id;
-    @NotBlank
-    private String question;
-    @NotNull
-    private UserEntity author;
-    private ImageEntity image;
-    private Set<CategoryOfQuestionEntity> categories = new HashSet<CategoryOfQuestionEntity>();
-    private Set<ClosedAnswerEntity> closedAnswers = new HashSet<ClosedAnswerEntity>();
-    private Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions = new HashSet<TestTemplateClosedQuestionEntity>();
-    private Set<UserExamClosedQuestionEntity> usages = new HashSet<UserExamClosedQuestionEntity>();
-
-    public ClosedQuestionEntity() {
-    }
-
-    public ClosedQuestionEntity(String question, UserEntity author) {
-        this.question = question;
-        this.author = author;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "closedQuestionsId",
             unique = true,
             nullable = false,
             updatable = false)
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    private Integer id;
+    @NotBlank
     @Column(nullable = false,
             length = 1000)
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
+    private String question;
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_usersId",
                 nullable = false)
-    public UserEntity getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(UserEntity author) {
-        this.author = author;
-    }
-
+    private UserEntity author;
     @OneToOne(fetch = FetchType.LAZY,
               cascade = CascadeType.ALL)
     @JoinColumn(name = "imagesId",
                 unique = true,
                 nullable = true)
-    public ImageEntity getImage() {
-        return image;
-    }
-
-    public void setImage(ImageEntity image) {
-        this.image = image;
-    }
-
+    private ImageEntity image;
     @ManyToMany(cascade = CascadeType.ALL,
                 fetch = FetchType.LAZY)
     @JoinTable(name = "closedQuestions_categoryOfQuestions",
@@ -109,6 +63,59 @@ public class ClosedQuestionEntity
                     nullable = false,
                     updatable = false)})
     @OrderBy("title")
+    private Set<CategoryOfQuestionEntity> categories = new HashSet<CategoryOfQuestionEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedQuestion")
+    @OrderBy("id")
+    private Set<ClosedAnswerEntity> closedAnswers = new HashSet<ClosedAnswerEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "pk.closedQuestion",
+               cascade = CascadeType.ALL)
+    private Set<TestTemplateClosedQuestionEntity> testTemplateClosedQuestions = new HashSet<TestTemplateClosedQuestionEntity>();
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "closedQuestion")
+    private Set<UserExamClosedQuestionEntity> usages = new HashSet<UserExamClosedQuestionEntity>();
+
+    protected ClosedQuestionEntity() {
+    }
+
+    public ClosedQuestionEntity(String question, UserEntity author) {
+        this.question = question;
+        this.author = author;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public UserEntity getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserEntity author) {
+        this.author = author;
+    }
+
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
+    }
+
     public Set<CategoryOfQuestionEntity> getCategories() {
         return categories;
     }
@@ -122,9 +129,6 @@ public class ClosedQuestionEntity
         this.categories.add(categoryOfQuestionEntity);
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "closedQuestion")
-    @OrderBy("id")
     public Set<ClosedAnswerEntity> getClosedAnswers() {
         return closedAnswers;
     }
@@ -138,9 +142,6 @@ public class ClosedQuestionEntity
         this.closedAnswers.add(closedAnswer);
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "pk.closedQuestion",
-               cascade = CascadeType.ALL)
     public Set<TestTemplateClosedQuestionEntity> getTestTemplateClosedQuestions() {
         return testTemplateClosedQuestions;
     }
@@ -150,8 +151,6 @@ public class ClosedQuestionEntity
         this.testTemplateClosedQuestions = testTemplateClosedQuestions;
     }
 
-    @OneToMany(fetch = FetchType.LAZY,
-               mappedBy = "closedQuestion")
     public Set<UserExamClosedQuestionEntity> getUsages() {
         return usages;
     }
@@ -160,7 +159,6 @@ public class ClosedQuestionEntity
         this.usages = usages;
     }
 
-    @Transient
     public Set<ClosedAnswerEntity> getCorrectClosedAnswers() {
         Set<ClosedAnswerEntity> correctClosedAnswers = new HashSet<ClosedAnswerEntity>();
         for (ClosedAnswerEntity closedAnswer : closedAnswers) {
@@ -171,7 +169,6 @@ public class ClosedQuestionEntity
         return correctClosedAnswers;
     }
 
-    @Transient
     public Set<ClosedAnswerEntity> getIncorrectClosedAnswers() {
         Set<ClosedAnswerEntity> incorrectClosedAnswers = new HashSet<ClosedAnswerEntity>();
         for (ClosedAnswerEntity closedAnswer : closedAnswers) {
