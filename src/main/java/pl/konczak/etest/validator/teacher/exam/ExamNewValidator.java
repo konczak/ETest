@@ -2,13 +2,18 @@ package pl.konczak.etest.validator.teacher.exam;
 
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import pl.konczak.etest.dto.teacher.exam.ExamNew;
+import pl.konczak.etest.entity.UserGroupEntity;
+import pl.konczak.etest.repository.IUserGroupRepository;
 
+@Transactional(readOnly = true)
 @Component
 public class ExamNewValidator
         extends LocalValidatorFactoryBean
@@ -16,6 +21,8 @@ public class ExamNewValidator
 
     private static final String DATE_PATTERN = "YYYY-MM-dd HH:mm";
     private static final String DURATION_SEPARATOR = " - ";
+    @Autowired
+    private IUserGroupRepository userGroupRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -49,6 +56,11 @@ public class ExamNewValidator
 
         if (testTemplateNew.getUserGroupId() == 0) {
             errors.rejectValue("userGroupId", "exam.userGroupId.notSelected");
+        } else {
+            UserGroupEntity userGroupEntity = userGroupRepository.getById(testTemplateNew.getUserGroupId());
+            if (userGroupEntity.getMembers().size() == 0) {
+                errors.rejectValue("userGroupId", "exam.userGroupId.noMembers");
+            }
         }
 
         System.out.println("testTemplateNew.getDuration() <" + testTemplateNew.getDuration() + ">");
