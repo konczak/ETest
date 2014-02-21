@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.konczak.etest.bo.ICategoryOfQuestionBO;
 import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.CategoryOfQuestionEntity;
+import pl.konczak.etest.error.SystemException;
+import pl.konczak.etest.error.ValidationCode;
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
 
 @Service
@@ -23,11 +25,7 @@ public class CategoryOfQuestionBO
     @Override
     public CategoryOfQuestionEntity add(String title) {
         Validate.notEmpty(title);
-
-        if (categoryOfQuestionRepository.findByTitle(title) != null) {
-            throw new IllegalArgumentException(
-                    String.format("CategoryOfQuestion with title <%s> already exists", title));
-        }
+        validateTitleIsFree(title);
 
         CategoryOfQuestionEntity categoryOfQuestionEntity = new CategoryOfQuestionEntity(title);
         categoryOfQuestionRepository.save(categoryOfQuestionEntity);
@@ -42,11 +40,7 @@ public class CategoryOfQuestionBO
     public CategoryOfQuestionEntity changeTitle(Integer categoryOfQuestionId, String title) {
         Validate.notNull(categoryOfQuestionId);
         Validate.notEmpty(title);
-
-        if (categoryOfQuestionRepository.findByTitle(title) != null) {
-            throw new IllegalArgumentException(
-                    String.format("CategoryOfQuestion with title <%s> already exists", title));
-        }
+        validateTitleIsFree(categoryOfQuestionId, title);
 
         CategoryOfQuestionEntity categoryOfQuestionEntity =
                 categoryOfQuestionRepository.getById(categoryOfQuestionId);
@@ -72,5 +66,26 @@ public class CategoryOfQuestionBO
         categoryOfQuestionRepository.delete(categoryOfQuestionEntity);
 
         LOGGER.info("Removed CategoryOfQuestion <{}>", categoryOfQuestionEntity.getId());
+    }
+
+    private void validateTitleIsFree(String title) {
+        CategoryOfQuestionEntity categoryOfQuestionEntity = categoryOfQuestionRepository.findByTitle(title);
+        if (categoryOfQuestionEntity != null) {
+            throw new SystemException(ValidationCode.ALREADY_TAKEN)
+                    .add("class", "CategoryOfQuestion")
+                    .add("field", "title")
+                    .add("value", title);
+        }
+    }
+
+    private void validateTitleIsFree(Integer categoryOfQuestionId, String title) {
+        CategoryOfQuestionEntity categoryOfQuestionEntity = categoryOfQuestionRepository.findByTitle(title);
+        if (categoryOfQuestionEntity != null
+                && !categoryOfQuestionEntity.getId().equals(categoryOfQuestionId)) {
+            throw new SystemException(ValidationCode.ALREADY_TAKEN)
+                    .add("class", "CategoryOfQuestion")
+                    .add("field", "title")
+                    .add("value", title);
+        }
     }
 }

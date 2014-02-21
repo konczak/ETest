@@ -1,6 +1,5 @@
 package pl.konczak.etest.bo.impl;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.error.ClosedQuestionCode;
+import pl.konczak.etest.error.SystemException;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.ITestTemplateRepository;
 import pl.konczak.etest.repository.IUserRepository;
@@ -52,8 +53,9 @@ public class TestTemplateBO
         TestTemplateEntity testTemplateEntity = testTemplateRepository.getById(id);
         ClosedQuestionEntity closedQuestionEntity = closedQuestionRepository.getById(closedQuestionId);
 
-        Validate.isFalse(closedQuestionEntity.getCorrectClosedAnswers().isEmpty(), String.format(
-                "ClosedQuestion <%s> does not have any correct answer and cannot be used in test", id));
+        validateClosedQuestionHasAnyAnswer(closedQuestionEntity);
+        validateClosedQuestionHasAnyAtLeastOneCorrectAnswer(closedQuestionEntity);
+
         testTemplateEntity.addClosedQuestion(closedQuestionEntity);
 
         testTemplateRepository.save(testTemplateEntity);
@@ -114,5 +116,19 @@ public class TestTemplateBO
         testTemplateRepository.delete(testTemplateEntity);
 
         LOGGER.info("Removed TestTemplate <{}>", testTemplateEntity.getId());
+    }
+
+    private void validateClosedQuestionHasAnyAnswer(ClosedQuestionEntity closedQuestionEntity) {
+        if (closedQuestionEntity.getClosedAnswers().isEmpty()) {
+            throw new SystemException(ClosedQuestionCode.DOES_NOT_HAVE_ANSWERS)
+                    .add("id", closedQuestionEntity.getId());
+        }
+    }
+
+    private void validateClosedQuestionHasAnyAtLeastOneCorrectAnswer(ClosedQuestionEntity closedQuestionEntity) {
+        if (closedQuestionEntity.getCorrectClosedAnswers().isEmpty()) {
+            throw new SystemException(ClosedQuestionCode.DOES_NOT_HAVE_ANY_CORRECT_ANSWERS)
+                    .add("id", closedQuestionEntity.getId());
+        }
     }
 }

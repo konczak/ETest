@@ -14,6 +14,7 @@
         <intercept-url pattern="/" access="permitAll"/>
         <intercept-url pattern="/about" access="permitAll" />
         <intercept-url pattern="/contact" access="permitAll" />
+        <intercept-url pattern="/systemException" access="permitAll" />
         <intercept-url pattern="/uncaughtException" access="permitAll" />
         <intercept-url pattern="/resourceNotFound" access="permitAll" />
         <intercept-url pattern="/dataAccessFailure" access="permitAll" />

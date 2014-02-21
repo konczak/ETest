@@ -1,17 +1,21 @@
 package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
+
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import pl.konczak.etest.bo.IUserExamBO;
 import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.ExamEntity;
 import pl.konczak.etest.entity.UserExamClosedAnswerEntity;
 import pl.konczak.etest.entity.UserExamClosedQuestionEntity;
+import pl.konczak.etest.error.SystemException;
+import pl.konczak.etest.error.UserExamCode;
 import pl.konczak.etest.repository.IUserExamClosedQuestionRepository;
 import pl.konczak.etest.vo.UserExamClosedAnswerVO;
 import pl.konczak.etest.vo.UserExamClosedQuestionWithAnswersVO;
@@ -36,9 +40,9 @@ public class UserExamBO
         ExamEntity examEntity =
                 userExamClosedQuestionEntity.getUserExam().getExam();
 
-        Validate.isTrue(examEntity.getActiveTo().isAfter(now),
-                "Subbmiting UserExamClosedQuestion after end of exam is forbidden");
-        Validate.isFalse(userExamClosedQuestionEntity.isSubbmited(), "UserExamClosedQuestion is already subbmited");
+        validateExamIsActive(examEntity, now);
+        validateClosedQuestionIsNotSubbmittedAlready(userExamClosedQuestionEntity);
+
         Set<UserExamClosedAnswerEntity> closedAnswers = userExamClosedQuestionEntity.getClosedAnswers();
         Set<UserExamClosedAnswerVO> closedAnswerVOs = userExamClosedQuestionWithAnswersVO.getClosedAnswers();
         Validate.isTrue(closedAnswers.size() == closedAnswerVOs.size());
@@ -53,5 +57,20 @@ public class UserExamBO
         userExamClosedQuestionRepository.save(userExamClosedQuestionEntity);
 
         LOGGER.info("Solved UserExamClosedQuestion <{}>", userExamClosedQuestionWithAnswersVO);
+    }
+
+    private void validateExamIsActive(ExamEntity examEntity, LocalDateTime now) {
+        if (!examEntity.getActiveTo().isAfter(now)) {
+            throw new SystemException(UserExamCode.EXAM_ALREADY_FINISHED)
+                    .add("id", examEntity.getId());
+        }
+    }
+
+    private void validateClosedQuestionIsNotSubbmittedAlready(
+            UserExamClosedQuestionEntity userExamClosedQuestionEntity) {
+        if (userExamClosedQuestionEntity.isSubbmited()) {
+            throw new SystemException(UserExamCode.QUESTION_ALREADY_ANSWERED)
+                    .add("id", userExamClosedQuestionEntity.getId());
+        }
     }
 }

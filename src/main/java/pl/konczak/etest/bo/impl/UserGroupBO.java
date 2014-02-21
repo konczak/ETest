@@ -1,6 +1,7 @@
 package pl.konczak.etest.bo.impl;
 
 import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import pl.konczak.etest.bo.IUserGroupBO;
 import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
+import pl.konczak.etest.error.SystemException;
+import pl.konczak.etest.error.ValidationCode;
 import pl.konczak.etest.repository.IUserGroupRepository;
 import pl.konczak.etest.repository.IUserRepository;
 
@@ -28,10 +31,8 @@ public class UserGroupBO
     @Override
     public UserGroupEntity add(String title) {
         Validate.notEmpty(title);
-        if (userGroupRepository.findByTitle(title) != null) {
-            throw new IllegalArgumentException(
-                    String.format("UserGroup with title <%s> already exists", title));
-        }
+        validateTitleIsFree(title);
+
         UserGroupEntity userGroupEntity = new UserGroupEntity(title);
 
         userGroupRepository.save(userGroupEntity);
@@ -87,11 +88,7 @@ public class UserGroupBO
     public UserGroupEntity changeTitle(Integer id, String title) {
         Validate.notNull(id);
         Validate.notEmpty(title);
-
-        if (userGroupRepository.findByTitle(title) != null) {
-            throw new IllegalArgumentException(
-                    String.format("UserGroup with title <%s> already exists", title));
-        }
+        validateTitleIsFree(id, title);
 
         UserGroupEntity userGroupEntity = userGroupRepository.getById(id);
         String oldTitle = userGroupEntity.getTitle();
@@ -115,5 +112,25 @@ public class UserGroupBO
 
         userGroupRepository.delete(userGroupEntity);
         LOGGER.info("Removed UserGroup <{}>", userGroupEntity.getId());
+    }
+
+    private void validateTitleIsFree(String title) {
+        if (userGroupRepository.findByTitle(title) != null) {
+            throw new SystemException(ValidationCode.ALREADY_TAKEN)
+                    .add("class", "UserGroup")
+                    .add("field", "title")
+                    .add("value", title);
+        }
+    }
+
+    private void validateTitleIsFree(Integer id, String title) {
+        UserGroupEntity userGroupEntity = userGroupRepository.findByTitle(title);
+        if (userGroupEntity != null
+                && !userGroupEntity.getId().equals(id)) {
+            throw new SystemException(ValidationCode.ALREADY_TAKEN)
+                    .add("class", "UserGroup")
+                    .add("field", "title")
+                    .add("value", "title");
+        }
     }
 }
