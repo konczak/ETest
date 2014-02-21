@@ -3,5 +3,5 @@
 <%@attribute name="url" required="true" %>
 
 <a href="${url}" class="btn btn-labeled btn-info">
-    <span class="btn-label"><i class="glyphicon glyphicon-eye-open"></i></span><spring:message code="manage.preview"/>
+    <span class="btn-label"><i class="glyphicon glyphicon-info-sign"></i></span><spring:message code="manage.preview"/>
 </a>
