@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
+<%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
@@ -34,12 +35,8 @@
             <myForm:checkbox object="closedAnswer" fieldName="correct"/>
             <myForm:file object="closedAnswer" fieldName="multipartFile" acceptedFiles="image/*"/>
 
-            <button type="submit" class="btn btn-primary" name="add" value="add">
-                <spring:message code="button_submit"/>
-            </button>
-            <button type="submit" class="btn btn-default" name="cancel" value="cancel">
-                <spring:message code="button_cancel"/>
-            </button>
+            <button:submit/>
+            <button:cancel/>
         </form:form>
         <script src="${activeJsUrl}"></script>
     </body>

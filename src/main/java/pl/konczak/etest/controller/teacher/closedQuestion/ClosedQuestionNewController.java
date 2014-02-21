@@ -58,7 +58,7 @@ public class ClosedQuestionNewController {
     }
 
     @RequestMapping(method = RequestMethod.POST,
-                    params = "save")
+                    params = "add")
     public String processSubmit(@Valid @ModelAttribute(OBJECT) ClosedQuestionNew closedQuestionNew,
             BindingResult result, SessionStatus status)
             throws IOException {

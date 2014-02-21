@@ -3,6 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 <%@taglib prefix="util" tagdir="/WEB-INF/tags/util"%>
+<%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
 
 <spring:url var="datarangepcikerCssUrl" value="/resources/css/daterangepicker-bs3.css" />
 <spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
@@ -89,12 +90,8 @@
                 </div>
             </div>                
 
-            <button type="submit" class="btn btn-primary" name="add" value="add">
-                <spring:message code="button_submit"/>
-            </button>
-            <button type="submit" class="btn btn-default" name="cancel" value="cancel">
-                <spring:message code="button_cancel"/>
-            </button>
+            <button:submit/>
+            <button:cancel/>
         </form:form>
 
         <script src="${momentJsUrl}"></script>

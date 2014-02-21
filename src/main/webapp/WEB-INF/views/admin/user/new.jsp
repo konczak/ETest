@@ -1,6 +1,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
+<%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
 
 <!DOCTYPE html>
 <html>
@@ -19,12 +20,8 @@
             <myForm:password object="user" fieldName="passwordConfirm" required="true"/>
             <myForm:input object="user" fieldName="firstname" required="true"/>
             <myForm:input object="user" fieldName="lastname" required="true"/>
-            <button type="submit" class="btn btn-primary" name="register" value="register">
-                <spring:message code="button_submit"/>
-            </button>
-            <button type="submit" class="btn btn-default" name="cancel" value="cancel">
-                <spring:message code="button_cancel"/>
-            </button>
+            <button:submit name="register" value="register"/>
+            <button:cancel/>
         </form:form>
     </body>
 </html>
