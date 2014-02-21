@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
 <spring:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -49,10 +50,14 @@
                     <th><spring:message code="closedQuestion.question.label"/></th>
                     <th><spring:message code="testTemplate.closedQuestionAlreadyIn.label"/></th>
                     <th><spring:message code="testTemplate.closedQuestionMandatory.label"/></th>
+                    <th><spring:message code="testTemplate.manage.label"/></th>
                 </tr>
             </thead>
             <tbody>
                 <c:forEach items="${testTemplate.closedQuestions}" var="entry" varStatus="status">
+                    <spring:url var="closedQuestionPreviewUrl" value="/teacher/closedQuestion/{id}">
+                        <spring:param name="id" value="${entry.key}"/>
+                    </spring:url>
                     <c:choose>
                         <c:when test="${entry.value.alreadyIn}">
                             <c:set var="closedQuestionAlreadyInCssClass" value="glyphicon-check text-success"/>
@@ -86,6 +91,9 @@
                                         $("span#mandatory_" + ${entry.key}).parent().hide();
                                     </script>
                                 </c:if>
+                        </td>
+                        <td>
+                            <manage:preview url="${closedQuestionPreviewUrl}"/>
                         </td>
                     </tr>
                 </c:forEach>
