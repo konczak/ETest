@@ -1,4 +1,7 @@
 
+    alter table categories 
+        drop constraint FK4D47461C4A1DEE25;
+
     alter table closedAnswers 
         drop constraint FKB703D69845D3B50;
 
@@ -10,6 +13,12 @@
 
     alter table closedQuestions 
         drop constraint FK212A5941B0250AB2;
+
+    alter table closedQuestions_categories 
+        drop constraint FKA5549FDA845D3B50;
+
+    alter table closedQuestions_categories 
+        drop constraint FKA5549FDA5FB3D772;
 
     alter table closedQuestions_categoryOfQuestions 
         drop constraint FK11E8315A83C4B090;
@@ -65,11 +74,15 @@
     alter table users_userGroups 
         drop constraint FKC80EA016887EE4B2;
 
+    drop table if exists categories cascade;
+
     drop table if exists categoryOfQuestions cascade;
 
     drop table if exists closedAnswers cascade;
 
     drop table if exists closedQuestions cascade;
+
+    drop table if exists closedQuestions_categories cascade;
 
     drop table if exists closedQuestions_categoryOfQuestions cascade;
 
@@ -99,6 +112,13 @@
 
     drop table if exists users_userGroups cascade;
 
+    create table categories (
+        categoriesId  serial not null unique,
+        name varchar(25) not null unique,
+        parentId int4,
+        primary key (categoriesId)
+    );
+
     create table categoryOfQuestions (
         categoryOfQuestionsId  serial not null unique,
         title varchar(25) not null unique,
@@ -120,6 +140,12 @@
         author_usersId int4 not null,
         imagesId int4 unique,
         primary key (closedQuestionsId)
+    );
+
+    create table closedQuestions_categories (
+        categorieId int4 not null,
+        closedQuestionsId int4 not null,
+        primary key (categorieId, closedQuestionsId)
     );
 
     create table closedQuestions_categoryOfQuestions (
@@ -230,6 +256,11 @@
         primary key (usersId, userGroupsId)
     );
 
+    alter table categories 
+        add constraint FK4D47461C4A1DEE25 
+        foreign key (parentId) 
+        references categories;
+
     alter table closedAnswers 
         add constraint FKB703D69845D3B50 
         foreign key (closedQuestionsId) 
@@ -249,6 +280,16 @@
         add constraint FK212A5941B0250AB2 
         foreign key (imagesId) 
         references images;
+
+    alter table closedQuestions_categories 
+        add constraint FKA5549FDA845D3B50 
+        foreign key (closedQuestionsId) 
+        references closedQuestions;
+
+    alter table closedQuestions_categories 
+        add constraint FKA5549FDA5FB3D772 
+        foreign key (categorieId) 
+        references categories;
 
     alter table closedQuestions_categoryOfQuestions 
         add constraint FK11E8315A83C4B090 

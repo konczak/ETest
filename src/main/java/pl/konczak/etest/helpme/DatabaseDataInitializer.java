@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import pl.konczak.etest.bo.ICategoryBO;
 
 import pl.konczak.etest.bo.ICategoryOfQuestionBO;
 import pl.konczak.etest.bo.IClosedAnswerBO;
@@ -17,6 +18,7 @@ import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.RoleEntity;
 
 import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
+import pl.konczak.etest.repository.ICategoryRepository;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IRoleRepository;
 import pl.konczak.etest.repository.ITestTemplateRepository;
@@ -32,6 +34,8 @@ public class DatabaseDataInitializer {
     private IUserRepository userRepository;
     @Autowired
     private IUserBO userBO;
+    @Autowired
+    private ICategoryRepository categoryRepository;
     @Autowired
     private ICategoryOfQuestionRepository categoryOfQuestionRepository;
     @Autowired
@@ -50,6 +54,8 @@ public class DatabaseDataInitializer {
     private ITestTemplateRepository testTemplateRepository;
     @Autowired
     private ITestTemplateBO testTemplateBO;
+    @Autowired
+    private ICategoryBO categoryBO;
 
     @Transactional
     @PostConstruct
@@ -62,6 +68,9 @@ public class DatabaseDataInitializer {
         }
         if (userRepository.findByEmail("konczak.piotrek@gmail.com") == null) {
             prepareUsers();
+        }
+        if (categoryRepository.findAll().isEmpty()) {
+            prepareCategories();
         }
         if (categoryOfQuestionRepository.findAll().isEmpty()) {
             prepareCategoriesOfQuestion();
@@ -122,7 +131,28 @@ public class DatabaseDataInitializer {
         userGroupBO.addUserAsMember(5, 9);
         userGroupBO.addUserAsMember(6, 9);
         userGroupBO.addUserAsMember(7, 9);
-        
+
+    }
+
+    private void prepareCategories() {
+        categoryBO.add("Fizyka");
+        categoryBO.add("Optyka", 1);
+        categoryBO.add("Siły", 1);
+        categoryBO.add("Magnetyzm", 3);
+        categoryBO.add("Paramagnetyzm", 4);
+        categoryBO.add("Ferromagnetyzm", 4);
+        categoryBO.add("Grawitacja", 3);
+        categoryBO.add("Przyciąganie", 3);
+        categoryBO.add("Opór", 1);
+        categoryBO.add("Pęd", 1);
+        categoryBO.add("Moc", 1);
+        categoryBO.add("Prąd", 1);
+        categoryBO.add("Ciśnienie", 1);
+        categoryBO.add("Matematyka");
+        categoryBO.add("Ulamki", 14);
+        categoryBO.add("Całki", 14);
+        categoryBO.add("Technika");
+        categoryBO.add("Informatyka");
     }
 
     private void prepareCategoriesOfQuestion() {
@@ -177,7 +207,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "ok 9.81 cm/s<sup>2</sup>", false);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Ile wynosi stala Plancka:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedAnswerBO.add(entity.getId(), "ok 6,626 069 57(29)*10<sup>–34</sup> Js", true);
@@ -186,7 +216,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "ok 6,626 069 57(29)*10<sup>–34</sup> Js", false);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Prąd elektryczny to:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -196,7 +226,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "uporządkowany (skierowany) ruch ładunków elektrycznych", true);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Pierwsze prawo Kirchhoffa:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -206,7 +236,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "porazonego pradem nalezy polewac zimna woda", false);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Drugie prawo Kirchhoffa:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -216,7 +246,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
         closedAnswerBO.add(entity.getId(), "Suma spadkow napiecia w obwodzie zamknietym jest rowna zeru", true);
-        
+
         entity = closedQuestionBO.add("Prawo Ohma mowi ze:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -226,7 +256,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "U = R*I", true);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Kondensator to:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -236,7 +266,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "bateria", true);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Pojemnosc kondensatora wyraza sie wzorem:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -245,7 +275,7 @@ public class DatabaseDataInitializer {
         closedAnswerBO.add(entity.getId(), "C=Q/U", true);
         closedAnswerBO.add(entity.getId(), "Zadna nie jest poprawna", false);
         closedAnswerBO.add(entity.getId(), "Wszystkie odpowiedzi sa poprawne", false);
-        
+
         entity = closedQuestionBO.add("Pojemnosc kondensatora wyraza sie w jednostkach:", 2);
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), fizyka.getId());
         closedQuestionBO.addCategoryOfQuestion(entity.getId(), 9);
@@ -264,19 +294,19 @@ public class DatabaseDataInitializer {
         testTemplateBO.addClosedQuestion(1, 10);
         testTemplateBO.addClosedQuestion(1, 11);
         testTemplateBO.addClosedQuestion(1, 12);
-        
+
         testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 6, true);
         testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 7, true);
         testTemplateBO.changeClosedQuestionStatusOfMandatory(1, 8, true);
-        
-        
+
+
         testTemplateBO.add("Fizyka Mechanika 1", 2);
         testTemplateBO.addClosedQuestion(2, 1);
         testTemplateBO.addClosedQuestion(2, 2);
         testTemplateBO.addClosedQuestion(2, 3);
         testTemplateBO.addClosedQuestion(2, 4);
         testTemplateBO.addClosedQuestion(2, 5);
-        
+
         testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 1, true);
         testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 4, true);
         testTemplateBO.changeClosedQuestionStatusOfMandatory(2, 5, true);

@@ -1,6 +1,8 @@
+GRANT ALL ON TABLE categories TO GROUP "ETestRole";
 GRANT ALL ON TABLE categoryofquestions TO GROUP "ETestRole";
 GRANT ALL ON TABLE closedanswers TO GROUP "ETestRole";
 GRANT ALL ON TABLE closedquestions TO GROUP "ETestRole";
+GRANT ALL ON TABLE closedquestions_categories TO GROUP "ETestRole";
 GRANT ALL ON TABLE closedquestions_categoryofquestions TO GROUP "ETestRole";
 GRANT ALL ON TABLE exams TO GROUP "ETestRole";
 GRANT ALL ON TABLE images TO GROUP "ETestRole";
@@ -16,6 +18,7 @@ GRANT ALL ON TABLE users TO GROUP "ETestRole";
 GRANT ALL ON TABLE users_roles TO GROUP "ETestRole";
 GRANT ALL ON TABLE users_usergroups TO GROUP "ETestRole";
 
+GRANT ALL ON SEQUENCE categories_categoriesid_seq TO GROUP "ETestRole";
 GRANT ALL ON SEQUENCE categoryofquestions_categoryofquestionsid_seq TO GROUP "ETestRole";
 GRANT ALL ON SEQUENCE closedanswers_closedanswersid_seq TO GROUP "ETestRole";
 GRANT ALL ON SEQUENCE closedquestions_closedquestionsid_seq TO GROUP "ETestRole";
@@ -28,3 +31,4 @@ GRANT ALL ON SEQUENCE userexamclosedquestions_userexamclosedquestionsid_seq TO G
 GRANT ALL ON SEQUENCE userexams_userexamsid_seq TO GROUP "ETestRole";
 GRANT ALL ON SEQUENCE usergroups_usergroupsid_seq TO GROUP "ETestRole";
 GRANT ALL ON SEQUENCE users_usersid_seq TO GROUP "ETestRole";
+

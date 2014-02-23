@@ -58,6 +58,7 @@
         <property name="basenames">
             <list>
                 <value>i18n/webmessages</value>
+                <value>i18n/admin/category/webmessages_category</value>
                 <value>i18n/user/webmessages_user</value>
                 <value>i18n/user/group/webmessages_userGroup</value>
                 <value>i18n/question/category/webmessages_categoryOfQuestion</value>
