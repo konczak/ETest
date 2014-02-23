@@ -8,7 +8,7 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartFile;
 
-import pl.konczak.etest.dto.question.closedAnswer.ClosedAnswerNew;
+import pl.konczak.etest.dto.teacher.closedAnswer.ClosedAnswerNew;
 
 @Component
 public class ClosedAnswerNewValidator

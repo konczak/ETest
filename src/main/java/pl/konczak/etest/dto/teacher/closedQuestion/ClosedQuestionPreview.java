@@ -1,4 +1,4 @@
-package pl.konczak.etest.dto.question.closedQuestion;
+package pl.konczak.etest.dto.teacher.closedQuestion;
 
 import java.util.ArrayList;
 import java.util.List;

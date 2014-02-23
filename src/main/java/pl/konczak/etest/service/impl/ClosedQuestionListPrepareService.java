@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionListRow;
+import pl.konczak.etest.dto.teacher.closedQuestion.ClosedQuestionListRow;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserPersonalDataEntity;

@@ -1,4 +1,4 @@
-package pl.konczak.etest.dto.question.closedAnswer;
+package pl.konczak.etest.dto.teacher.closedAnswer;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;

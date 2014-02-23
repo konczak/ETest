@@ -23,7 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import pl.konczak.etest.bo.IClosedQuestionBO;
-import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionNew;
+import pl.konczak.etest.dto.teacher.closedQuestion.ClosedQuestionNew;
 import pl.konczak.etest.entity.CategoryEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.UserEntity;

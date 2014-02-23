@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionPreview;
+import pl.konczak.etest.dto.teacher.closedQuestion.ClosedQuestionPreview;
 import pl.konczak.etest.entity.CategoryEntity;
 import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;

@@ -1,4 +1,4 @@
-package pl.konczak.etest.dto.question.closedQuestion;
+package pl.konczak.etest.dto.teacher.closedQuestion;
 
 public class ClosedQuestionListRow {
 
