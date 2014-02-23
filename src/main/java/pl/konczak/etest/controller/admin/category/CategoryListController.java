@@ -12,14 +12,14 @@ import pl.konczak.etest.assembler.admin.category.CategoryAssembler;
 @RequestMapping("admin/category/")
 public class CategoryListController {
 
-    private static final String VIEW_LIST = "admin/category/list";
+    private static final String VIEW_LIST = "admin/category/tree";
     @Autowired
     @Qualifier("categoryAssembler")
     private CategoryAssembler categoryAssembler;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String list(ModelMap model) {
-        model.addAttribute("categories", categoryAssembler.toList());
+    public String tree(ModelMap model) {
+        model.addAttribute("categories", categoryAssembler.toTree());
 
         return VIEW_LIST;
     }

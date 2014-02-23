@@ -1,6 +1,6 @@
 on add new exam when closed question has no correct closed answers internal server error occurs but finally user does not know anything about it
 split i18n properties on domain objects and views
-replace CategoryOfQuestion solution with real Category system where one Category has many sub-Categories and so on (actual solution is more like tags)
 in teacher UserExam preview add possibility to navigate between other UserExams and get back to Exam preview
 change user registration process - admin should be able to register a lot of users at once (also add all of them to user group existing or new would be nice) + login process and view should be fixed + userPanel credentials required verification
 split some huge JSP pages to smaller ones using include (remember to use _ as prefix to mark that page is not standalone view)
+add possibility for admin to manage Categories - add new, edit name, move in the hierarchy tree

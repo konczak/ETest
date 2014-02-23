@@ -16,7 +16,7 @@ public class CategoryAssembler {
     private ICategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public List<CategoryDTO> toList() {
+    public List<CategoryDTO> toTree() {
         List<CategoryDTO> categoriesDTO = new ArrayList<CategoryDTO>();
 
         List<CategoryEntity> categoryEntities = categoryRepository.findAllWithoutParent();

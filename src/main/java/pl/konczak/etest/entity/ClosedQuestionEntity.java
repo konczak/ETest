@@ -51,19 +51,10 @@ public class ClosedQuestionEntity
                 unique = true,
                 nullable = true)
     private ImageEntity image;
-    @ManyToMany(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
-    @JoinTable(name = "closedQuestions_categoryOfQuestions",
-               joinColumns = {
-        @JoinColumn(name = "closedQuestionsId",
-                    nullable = false,
-                    updatable = false)},
-               inverseJoinColumns = {
-        @JoinColumn(name = "categoryOfQuestionsId",
-                    nullable = false,
-                    updatable = false)})
-    @OrderBy("title")
-    private Set<CategoryOfQuestionEntity> categories = new HashSet<CategoryOfQuestionEntity>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoriesId",
+                nullable = false)
+    private CategoryEntity category;
     @OneToMany(fetch = FetchType.LAZY,
                mappedBy = "closedQuestion")
     @OrderBy("id")
@@ -79,9 +70,10 @@ public class ClosedQuestionEntity
     protected ClosedQuestionEntity() {
     }
 
-    public ClosedQuestionEntity(String question, UserEntity author) {
+    public ClosedQuestionEntity(String question, UserEntity author, CategoryEntity category) {
         this.question = question;
         this.author = author;
+        this.category = category;
     }
 
     public Integer getId() {
@@ -116,17 +108,8 @@ public class ClosedQuestionEntity
         this.image = image;
     }
 
-    public Set<CategoryOfQuestionEntity> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(
-            Set<CategoryOfQuestionEntity> categories) {
-        this.categories = categories;
-    }
-
-    public void addCategoryOfQuestion(CategoryOfQuestionEntity categoryOfQuestionEntity) {
-        this.categories.add(categoryOfQuestionEntity);
+    public CategoryEntity getCategory() {
+        return category;
     }
 
     public Set<ClosedAnswerEntity> getClosedAnswers() {

@@ -1,6 +1,9 @@
 package pl.konczak.etest.controller.teacher.closedQuestion;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -20,8 +24,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import pl.konczak.etest.bo.IClosedQuestionBO;
 import pl.konczak.etest.dto.question.closedQuestion.ClosedQuestionNew;
+import pl.konczak.etest.entity.CategoryEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.repository.ICategoryRepository;
 import pl.konczak.etest.repository.IUserRepository;
 import pl.konczak.etest.validator.teacher.closedQuestion.ClosedQuestionNewValidator;
 
@@ -40,6 +46,8 @@ public class ClosedQuestionNewController {
     private IUserRepository userRepository;
     @Autowired
     private IClosedQuestionBO closedQuestionBO;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
     @InitBinder(OBJECT)
     protected void initBind(WebDataBinder webDataBinder) {
@@ -57,6 +65,20 @@ public class ClosedQuestionNewController {
         return VIEW_NEW;
     }
 
+    @Transactional(readOnly = true)
+    @ModelAttribute("categoryList")
+    public Map<Integer, String> populateCategoryList() {
+        List<CategoryEntity> categoryEntites = categoryRepository.findAll();
+        Map<Integer, String> categories = new LinkedHashMap<Integer, String>();
+
+        for (CategoryEntity categoryEntity : categoryEntites) {
+            categories.put(categoryEntity.getId(), categoryEntity.getName());
+        }
+
+        return categories;
+    }
+
+    @Transactional
     @RequestMapping(method = RequestMethod.POST,
                     params = "add")
     public String processSubmit(@Valid @ModelAttribute(OBJECT) ClosedQuestionNew closedQuestionNew,
@@ -69,7 +91,7 @@ public class ClosedQuestionNewController {
             action = VIEW_NEW;
         } else {
             ClosedQuestionEntity closedQuestionEntity =
-                    closedQuestionBO.add(closedQuestionNew.getQuestion(), getIdOfAuthenticatedUser());
+                    closedQuestionBO.add(closedQuestionNew.getQuestion(), getIdOfAuthenticatedUser(), closedQuestionNew.getCategoryId());
             MultipartFile multipartFile = closedQuestionNew.getMultipartFile();
             if (!multipartFile.isEmpty()) {
                 closedQuestionBO.addPicture(closedQuestionEntity.getId(),

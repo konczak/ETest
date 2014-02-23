@@ -5,7 +5,6 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import pl.konczak.etest.entity.CategoryEntity;
 
-import pl.konczak.etest.entity.CategoryOfQuestionEntity;
 import pl.konczak.etest.entity.ClosedAnswerEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.ExamEntity;
@@ -27,7 +26,6 @@ public class HibernateDDLGenerator {
         new HibernateDDLGenerator().execute(Dialect.POSTGRESQL,
                 TestTemplateClosedQuestionId.class,
                 CategoryEntity.class,
-                CategoryOfQuestionEntity.class,
                 ClosedAnswerEntity.class,
                 ClosedQuestionEntity.class,
                 ExamEntity.class,

@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.konczak.etest.bo.IClosedQuestionBO;
-import pl.konczak.etest.entity.CategoryOfQuestionEntity;
+import pl.konczak.etest.core.Validate;
+import pl.konczak.etest.entity.CategoryEntity;
 import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.ImageEntity;
 import pl.konczak.etest.entity.UserEntity;
-import pl.konczak.etest.repository.ICategoryOfQuestionRepository;
+import pl.konczak.etest.repository.ICategoryRepository;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
 import pl.konczak.etest.repository.IImageRepository;
 import pl.konczak.etest.repository.IUserRepository;
@@ -24,21 +25,28 @@ public class ClosedQuestionBO
     @Autowired
     private IUserRepository userRepository;
     @Autowired
-    private ICategoryOfQuestionRepository categoryOfQuestionRepository;
-    @Autowired
     private IClosedQuestionRepository closedQuestionRepository;
     @Autowired
     private IImageRepository imageRepository;
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
     @Transactional
     @Override
-    public ClosedQuestionEntity add(String question, Integer authorId) {
+    public ClosedQuestionEntity add(String question, Integer authorId, Integer categoryId) {
+        Validate.notEmpty(question);
+        Validate.notNull(authorId);
+        Validate.notNull(categoryId);
         UserEntity author = userRepository.getById(authorId);
-        ClosedQuestionEntity closedQuestionEntity = new ClosedQuestionEntity(question, author);
+        CategoryEntity category = categoryRepository.getById(categoryId);
+        ClosedQuestionEntity closedQuestionEntity = new ClosedQuestionEntity(question, author, category);
 
         closedQuestionRepository.save(closedQuestionEntity);
 
-        LOGGER.info("Add ClosedQuestion <{}>", closedQuestionEntity.getId());
+        LOGGER.info("Add ClosedQuestion <{}> <{}>, Author <{}> <{}>, into Category <{}> <{}>",
+                closedQuestionEntity.getId(), closedQuestionEntity.getQuestion(),
+                author.getId(), author.getEmail(),
+                category.getId(), category.getName());
         return closedQuestionEntity;
     }
 
@@ -69,23 +77,5 @@ public class ClosedQuestionBO
         closedQuestionRepository.delete(closedQuestionEntity);
 
         LOGGER.info("Removed ClosedQuestion <{}>", closedQuestionEntity.getId());
-    }
-
-    @Transactional
-    @Override
-    public ClosedQuestionEntity addCategoryOfQuestion(Integer closedQuestionId,
-            Integer categoryOfQuestionId) {
-        CategoryOfQuestionEntity categoryOfQuestionEntity = categoryOfQuestionRepository
-                .getById(categoryOfQuestionId);
-        ClosedQuestionEntity closedQuestionEntity = closedQuestionRepository.getById(closedQuestionId);
-
-        closedQuestionEntity.addCategoryOfQuestion(categoryOfQuestionEntity);
-
-        closedQuestionRepository.save(closedQuestionEntity);
-
-        LOGGER.info("Add ClosedQuestion <{}> to CategoryOfQuestion <{}>",
-                closedQuestionEntity.getId(), categoryOfQuestionEntity.getId());
-
-        return closedQuestionEntity;
     }
 }

@@ -30,6 +30,10 @@ public class ClosedQuestionNewValidator
         }
 
         ClosedQuestionNew closedQuestionNew = (ClosedQuestionNew) target;
+        
+        if (closedQuestionNew.getCategoryId() == 0) {
+            errors.rejectValue("categoryId", "closedQuestion.categoryId.notSelected");
+        }
         MultipartFile multipartFile = closedQuestionNew.getMultipartFile();
 
         if (multipartFile != null) {

@@ -37,18 +37,9 @@ public class CategoryEntity
             nullable = false,
             length = 25)
     private String name;
-    @ManyToMany(cascade = CascadeType.ALL,
-                fetch = FetchType.LAZY)
-    @JoinTable(name = "closedQuestions_categories",
-               joinColumns = {
-        @JoinColumn(name = "categorieId",
-                    nullable = false,
-                    updatable = false)
-    },
-               inverseJoinColumns = {
-        @JoinColumn(name = "closedQuestionsId",
-                    nullable = false,
-                    updatable = false)})
+    @OneToMany(fetch = FetchType.LAZY,
+               mappedBy = "category")
+    @OrderBy("id")
     private Set<ClosedQuestionEntity> closedQuestions = new HashSet<ClosedQuestionEntity>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId",

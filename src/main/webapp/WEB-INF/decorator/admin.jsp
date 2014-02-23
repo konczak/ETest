@@ -2,7 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
 <c:set var="language" value="${pageContext.response.locale.language}"/>
-<spring:url var="categoryOfQuestionListLink" value="/admin/categoryOfQuestion/"/>
+<spring:url var="categoryListLink" value="/admin/category/"/>
 <spring:url var="userListLink" value="/admin/user/"/>
 <spring:url var="userGroupListLink" value="/admin/userGroup/"/>
 
@@ -26,10 +26,10 @@
                 <spring:message code="userGroup.list.title"/>
             </a>
         </li>
-        <li id="categoryOfQuestion">
-            <a href="${categoryOfQuestionListLink}">
+        <li id="category">
+            <a href="${categoryListLink}">
                 <i class="glyphicon glyphicon-list"></i>
-                <spring:message code="categoryOfQuestion.list.title"/>
+                <spring:message code="category.list.title"/>
             </a>
         </li>
     </ul>

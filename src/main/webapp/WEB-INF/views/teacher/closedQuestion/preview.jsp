@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="link" tagdir="/WEB-INF/tags/link/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
@@ -32,6 +33,15 @@
                     </a>
                 </dd>
             </c:if>
+            <dt><spring:message code="category.preview.title"/></dt>
+            <dd>
+                ${closedQuestion.categoryName}
+            </dd>
+            <dt><spring:message code="closedQuestion.author.label"/></dt>
+            <dd>
+                ${closedQuestion.authorFirstname}
+                ${closedQuestion.authorLastname}
+            </dd>
         </dl>
 
         <spring:url var="closedAnswerNewLink" value="/teacher/closedAnswer/new/{closedQuestionId}">
@@ -104,15 +114,6 @@
                 </c:forEach>
             </tbody>
         </table>
-
-        <div class="page-header">
-            <h3>
-                <spring:message code="categoryOfQuestion.list.header"/>
-            </h3>
-        </div>
-        <c:forEach items="${closedQuestion.categoriesOfQuestion}" var="categoryOfQuestion">
-            <span class="label label-info">${categoryOfQuestion.title}</span>
-        </c:forEach>
 
         <script src="${activeJsUrl}"></script>
         <c:if test="${not empty closedQuestion.imageId}">

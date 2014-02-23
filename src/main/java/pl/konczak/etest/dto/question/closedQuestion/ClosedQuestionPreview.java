@@ -2,35 +2,24 @@ package pl.konczak.etest.dto.question.closedQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.konczak.etest.entity.CategoryEntity;
+import pl.konczak.etest.entity.ClosedQuestionEntity;
+import pl.konczak.etest.entity.ImageEntity;
+import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserPersonalDataEntity;
 
 public class ClosedQuestionPreview {
 
     private Integer id;
     private String question;
     private Integer imageId;
-    private List<CategoryOfQuestionInternal> categoriesOfQuestion =
-            new ArrayList<CategoryOfQuestionInternal>();
+    private Integer authorId;
+    private String authorFirstname;
+    private String authorLastname;
+    private Integer categoryId;
+    private String categoryName;
     private List<ClosedAnswerInternal> closedAnswers =
             new ArrayList<ClosedAnswerInternal>();
-
-    public static class CategoryOfQuestionInternal {
-
-        private Integer id;
-        private String title;
-
-        public CategoryOfQuestionInternal(Integer id, String title) {
-            this.id = id;
-            this.title = title;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-    }
 
     public static class ClosedAnswerInternal {
 
@@ -63,36 +52,48 @@ public class ClosedQuestionPreview {
         }
     }
 
-    public Integer getId() {
-        return id;
+    public ClosedQuestionPreview(ClosedQuestionEntity closedQuestionEntity, ImageEntity imageEntity,
+            UserEntity author, UserPersonalDataEntity authorPersonalDataEntity, CategoryEntity categoryEntity) {
+        this.id = closedQuestionEntity.getId();
+        this.question = closedQuestionEntity.getQuestion();
+        this.imageId = imageEntity == null ? null : imageEntity.getId();
+        this.categoryId = categoryEntity.getId();
+        this.categoryName = categoryEntity.getName();
+        this.authorId = author.getId();
+        this.authorFirstname = authorPersonalDataEntity.getFirstname();
+        this.authorLastname = authorPersonalDataEntity.getLastname();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
     public String getQuestion() {
         return question;
     }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
     public Integer getImageId() {
         return imageId;
     }
 
-    public void setImageId(Integer imageid) {
-        this.imageId = imageid;
+    public Integer getAuthorId() {
+        return authorId;
     }
 
-    public List<CategoryOfQuestionInternal> getCategoriesOfQuestion() {
-        return categoriesOfQuestion;
+    public String getAuthorFirstname() {
+        return authorFirstname;
     }
 
-    public void addCategoryOfQuestion(Integer categoryOfQuestionId, String title) {
-        categoriesOfQuestion.add(new CategoryOfQuestionInternal(categoryOfQuestionId, title));
+    public String getAuthorLastname() {
+        return authorLastname;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
     }
 
     public List<ClosedAnswerInternal> getClosedAnswers() {

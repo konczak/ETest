@@ -12,19 +12,10 @@
         drop constraint FK212A5941DD6FC9DC;
 
     alter table closedQuestions 
+        drop constraint FK212A59411CA09717;
+
+    alter table closedQuestions 
         drop constraint FK212A5941B0250AB2;
-
-    alter table closedQuestions_categories 
-        drop constraint FKA5549FDA845D3B50;
-
-    alter table closedQuestions_categories 
-        drop constraint FKA5549FDA5FB3D772;
-
-    alter table closedQuestions_categoryOfQuestions 
-        drop constraint FK11E8315A83C4B090;
-
-    alter table closedQuestions_categoryOfQuestions 
-        drop constraint FK11E8315A845D3B50;
 
     alter table exams 
         drop constraint FK5C74C34CE3BBC90;
@@ -76,15 +67,9 @@
 
     drop table if exists categories cascade;
 
-    drop table if exists categoryOfQuestions cascade;
-
     drop table if exists closedAnswers cascade;
 
     drop table if exists closedQuestions cascade;
-
-    drop table if exists closedQuestions_categories cascade;
-
-    drop table if exists closedQuestions_categoryOfQuestions cascade;
 
     drop table if exists exams cascade;
 
@@ -119,12 +104,6 @@
         primary key (categoriesId)
     );
 
-    create table categoryOfQuestions (
-        categoryOfQuestionsId  serial not null unique,
-        title varchar(25) not null unique,
-        primary key (categoryOfQuestionsId)
-    );
-
     create table closedAnswers (
         closedAnswersId  serial not null unique,
         answer varchar(1000) not null,
@@ -138,20 +117,9 @@
         closedQuestionsId  serial not null unique,
         question varchar(1000) not null,
         author_usersId int4 not null,
+        categoriesId int4 not null,
         imagesId int4 unique,
         primary key (closedQuestionsId)
-    );
-
-    create table closedQuestions_categories (
-        categorieId int4 not null,
-        closedQuestionsId int4 not null,
-        primary key (categorieId, closedQuestionsId)
-    );
-
-    create table closedQuestions_categoryOfQuestions (
-        closedQuestionsId int4 not null,
-        categoryOfQuestionsId int4 not null,
-        primary key (categoryOfQuestionsId, closedQuestionsId)
     );
 
     create table exams (
@@ -277,29 +245,14 @@
         references users;
 
     alter table closedQuestions 
+        add constraint FK212A59411CA09717 
+        foreign key (categoriesId) 
+        references categories;
+
+    alter table closedQuestions 
         add constraint FK212A5941B0250AB2 
         foreign key (imagesId) 
         references images;
-
-    alter table closedQuestions_categories 
-        add constraint FKA5549FDA845D3B50 
-        foreign key (closedQuestionsId) 
-        references closedQuestions;
-
-    alter table closedQuestions_categories 
-        add constraint FKA5549FDA5FB3D772 
-        foreign key (categorieId) 
-        references categories;
-
-    alter table closedQuestions_categoryOfQuestions 
-        add constraint FK11E8315A83C4B090 
-        foreign key (categoryOfQuestionsId) 
-        references categoryOfQuestions;
-
-    alter table closedQuestions_categoryOfQuestions 
-        add constraint FK11E8315A845D3B50 
-        foreign key (closedQuestionsId) 
-        references closedQuestions;
 
     alter table exams 
         add constraint FK5C74C34CE3BBC90 

@@ -61,7 +61,6 @@
                 <value>i18n/admin/category/webmessages_category</value>
                 <value>i18n/user/webmessages_user</value>
                 <value>i18n/user/group/webmessages_userGroup</value>
-                <value>i18n/question/category/webmessages_categoryOfQuestion</value>
                 <value>i18n/question/closedAnswer/webmessages_closedAnswer</value>
                 <value>i18n/question/closedQuestion/webmessages_closedQuestion</value>
                 <value>i18n/teacher/testTemplate/webmessages_testTemplate</value>
