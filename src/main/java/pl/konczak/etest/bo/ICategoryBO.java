@@ -11,4 +11,8 @@ public interface ICategoryBO {
     CategoryEntity changeName(Integer categoryId, String name);
 
     void remove(Integer categoryId);
+
+    CategoryEntity moveToTopLevelOfHierarchy(Integer categoryId);
+
+    CategoryEntity changeParent(Integer categoryId, Integer parentCategoryId);
 }

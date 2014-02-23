@@ -81,7 +81,8 @@ public class CategoryBO
 
         categoryRepository.delete(categoryEntity);
 
-        LOGGER.info("Removed Category <{}>", categoryEntity.getId());
+        LOGGER.info("Removed Category <{}> <{}>", 
+                categoryEntity.getId(), categoryEntity.getName());
     }
 
     private void validateNameIsFree(String name) {
@@ -102,5 +103,40 @@ public class CategoryBO
                     .add("field", "name")
                     .add("value", name);
         }
+    }
+
+    @Transactional
+    @Override
+    public CategoryEntity moveToTopLevelOfHierarchy(Integer categoryId) {
+        Validate.notNull(categoryId);
+        CategoryEntity categoryEntity = categoryRepository.getById(categoryId);
+
+        categoryEntity.removeParent();
+
+        categoryRepository.save(categoryEntity);
+
+        LOGGER.info("Move Category <{}> <{}> to top level of hierarchy",
+                categoryEntity.getId(), categoryEntity.getName());
+
+        return categoryEntity;
+    }
+
+    @Transactional
+    @Override
+    public CategoryEntity changeParent(Integer categoryId, Integer parentCategoryId) {
+        Validate.notNull(categoryId);
+        Validate.notNull(parentCategoryId);
+        CategoryEntity categoryEntity = categoryRepository.getById(categoryId);
+        CategoryEntity parentCategoryEntity = categoryRepository.getById(parentCategoryId);
+
+        categoryEntity.changeParent(parentCategoryEntity);
+
+        categoryRepository.save(categoryEntity);
+
+        LOGGER.info("Change Category <{}> <{}> parent to <{}> <{}>",
+                categoryEntity.getId(), categoryEntity.getName(),
+                parentCategoryEntity.getId(), parentCategoryEntity.getName());
+
+        return categoryEntity;
     }
 }
