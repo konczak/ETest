@@ -12,6 +12,7 @@ import pl.konczak.etest.entity.ClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateClosedQuestionEntity;
 import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
+import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.error.ClosedQuestionCode;
 import pl.konczak.etest.error.SystemException;
 import pl.konczak.etest.repository.IClosedQuestionRepository;
@@ -36,12 +37,15 @@ public class TestTemplateBO
         Validate.notEmpty(subject);
         Validate.notNull(authorId);
         UserEntity author = userRepository.getById(authorId);
+        UserPersonalDataEntity autorPersonalDataEntity = author.getUserPersonalData();
         TestTemplateEntity testTemplateEntity =
                 new TestTemplateEntity(subject, author);
 
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info("Add TestTemplate <{}>", testTemplateEntity.getId());
+        LOGGER.info("Add TestTemplate <{}> <{}>, Author <{}> <{} {}>",
+                testTemplateEntity.getId(), testTemplateEntity.getSubject(),
+                author.getId(), autorPersonalDataEntity.getFirstname(), autorPersonalDataEntity.getLastname());
         return testTemplateEntity;
     }
 
@@ -60,8 +64,9 @@ public class TestTemplateBO
 
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info("Add ClosedQuestion <{}> to TestTemplate <{}>",
-                closedQuestionEntity.getId(), testTemplateEntity.getId());
+        LOGGER.info("Add ClosedQuestion <{}> <{}> to TestTemplate <{}> <{}>",
+                closedQuestionEntity.getId(), closedQuestionEntity.getQuestion(),
+                testTemplateEntity.getId(), testTemplateEntity.getSubject());
 
         return testTemplateEntity;
     }
@@ -79,8 +84,10 @@ public class TestTemplateBO
         testTemplateEntity.getClosedQuestions().remove(testTemplateClosedQuestionEntity);
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info("Removed ClosedQuestion <{}> from TestTemplate <{}>",
-                closedQuestionId, testTemplateEntity.getId());
+        LOGGER.info("Removed ClosedQuestion <{}> <{}> from TestTemplate <{}> <{}>",
+                testTemplateClosedQuestionEntity.getClosedQuestionEntity().getId(),
+                testTemplateClosedQuestionEntity.getClosedQuestionEntity().getQuestion(),
+                testTemplateEntity.getId(), testTemplateEntity.getSubject());
 
         return testTemplateEntity;
     }
@@ -100,9 +107,11 @@ public class TestTemplateBO
         }
         testTemplateRepository.save(testTemplateEntity);
 
-        LOGGER.info(
-                "Change mandatory status for ClosedQuestion <{}> in TestTemplate <{}> to <{}>",
-                closedQuestionId, testTemplateEntity.getId(), mandatory);
+        LOGGER.info("Change mandatory status for ClosedQuestion <{}> <{}> in TestTemplate <{}> <{}> to <{}>",
+                testTemplateEntity.getClosedQuestion(closedQuestionId).getClosedQuestionEntity().getId(),
+                testTemplateEntity.getClosedQuestion(closedQuestionId).getClosedQuestionEntity().getQuestion(),
+                testTemplateEntity.getId(), testTemplateEntity.getSubject(),
+                mandatory);
 
         return testTemplateEntity;
     }
@@ -115,7 +124,8 @@ public class TestTemplateBO
 
         testTemplateRepository.delete(testTemplateEntity);
 
-        LOGGER.info("Removed TestTemplate <{}>", testTemplateEntity.getId());
+        LOGGER.info("Removed TestTemplate <{}> <{}>",
+                testTemplateEntity.getId(), testTemplateEntity.getSubject());
     }
 
     private void validateClosedQuestionHasAnyAnswer(ClosedQuestionEntity closedQuestionEntity) {

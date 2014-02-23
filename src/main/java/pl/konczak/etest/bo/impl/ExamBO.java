@@ -18,6 +18,7 @@ import pl.konczak.etest.entity.TestTemplateEntity;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserExamEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
+import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.repository.IExamRepository;
 import pl.konczak.etest.repository.ITestTemplateRepository;
 import pl.konczak.etest.repository.IUserGroupRepository;
@@ -57,17 +58,22 @@ public class ExamBO
 
         TestTemplateEntity testTemplateEntity = testTemplateRepository.getById(testTemplateId);
         UserGroupEntity userGroupEntity = userGroupRepository.getById(userGroupId);
-        UserEntity userEntity = userRepository.getById(examinerId);
+        UserEntity examinerEntity = userRepository.getById(examinerId);
+        UserPersonalDataEntity examinerPersonalDataEntity = examinerEntity.getUserPersonalData();
 
         ExamEntity examEntity = new ExamEntity(testTemplateEntity, userGroupEntity, titleSufix,
-                userEntity, activeFrom, activeTo);
+                examinerEntity, activeFrom, activeTo);
 
         examGenerateStrategy.generateUserExams(examEntity, maxClosedQuestionsPerExam,
                 maxClosedAnswersPerClosedQuestion);
 
         examRepository.save(examEntity);
 
-        LOGGER.info("Add Exam <{}>", examEntity.getId());
+        LOGGER.info("Add Exam <{}> from TestTemplate <{}> <{}>, UserGroup <{}> <{}>, Examiner <{}> <{} {}>",
+                examEntity.getId(),
+                testTemplateEntity.getId(), testTemplateEntity.getSubject(),
+                userGroupEntity.getId(), userGroupEntity.getTitle(),
+                examinerEntity.getId(), examinerPersonalDataEntity.getFirstname(), examinerPersonalDataEntity.getLastname());
 
         return examEntity;
     }

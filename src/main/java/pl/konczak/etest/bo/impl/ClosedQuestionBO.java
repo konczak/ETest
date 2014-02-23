@@ -63,8 +63,9 @@ public class ClosedQuestionBO
 
         closedQuestionRepository.save(closedQuestionEntity);
 
-        LOGGER.info("Add picture <{}> to ClosedQuestion <{}>",
-                imageEntity.getId(), closedQuestionEntity.getId());
+        LOGGER.info("Add picture <{}> to ClosedQuestion <{}> <{}>",
+                imageEntity.getId(),
+                closedQuestionEntity.getId(), closedQuestionEntity.getQuestion());
 
         return closedQuestionEntity;
     }
@@ -76,6 +77,7 @@ public class ClosedQuestionBO
 
         closedQuestionRepository.delete(closedQuestionEntity);
 
-        LOGGER.info("Removed ClosedQuestion <{}>", closedQuestionEntity.getId());
+        LOGGER.info("Removed ClosedQuestion <{}> <{}>",
+                closedQuestionEntity.getId(), closedQuestionEntity.getQuestion());
     }
 }

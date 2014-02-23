@@ -12,6 +12,7 @@ import pl.konczak.etest.bo.IUserGroupBO;
 import pl.konczak.etest.core.Validate;
 import pl.konczak.etest.entity.UserEntity;
 import pl.konczak.etest.entity.UserGroupEntity;
+import pl.konczak.etest.entity.UserPersonalDataEntity;
 import pl.konczak.etest.error.SystemException;
 import pl.konczak.etest.error.ValidationCode;
 import pl.konczak.etest.repository.IUserGroupRepository;
@@ -37,7 +38,8 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info("Add UserGroup <{}>", userGroupEntity.getId());
+        LOGGER.info("Add UserGroup <{}> <{}>",
+                userGroupEntity.getId(), userGroupEntity.getTitle());
         return userGroupEntity;
     }
 
@@ -48,14 +50,16 @@ public class UserGroupBO
         Validate.notNull(userGroupId);
 
         UserEntity userEntity = userRepository.getById(userId);
+        UserPersonalDataEntity userPersonalDataEntity = userEntity.getUserPersonalData();
         UserGroupEntity userGroupEntity = userGroupRepository.getById(userGroupId);
 
         userGroupEntity.addUserToMembers(userEntity);
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info("Add User <{}> to UserGroup <{}>",
-                userEntity.getId(), userGroupEntity.getId());
+        LOGGER.info("Add User <{}> <{} {}> to UserGroup <{}> <{}>",
+                userEntity.getId(), userPersonalDataEntity.getFirstname(), userPersonalDataEntity.getLastname(),
+                userGroupEntity.getId(), userGroupEntity.getTitle());
         return userGroupEntity;
     }
 
@@ -66,6 +70,7 @@ public class UserGroupBO
         Validate.notNull(userGroupId);
 
         UserEntity userEntity = userRepository.getById(userId);
+        UserPersonalDataEntity userPersonalDataEntity = userEntity.getUserPersonalData();
         UserGroupEntity userGroupEntity = userGroupRepository.getById(userGroupId);
 
         Set<UserEntity> members = userGroupEntity.getMembers();
@@ -78,8 +83,9 @@ public class UserGroupBO
 
         userGroupRepository.save(userGroupEntity);
 
-        LOGGER.info("Remove User <{}> from UserGroup <{}>",
-                userEntity.getId(), userGroupEntity.getId());
+        LOGGER.info("Remove User <{}> <{} {}> from UserGroup <{}> <{}>",
+                userEntity.getId(), userPersonalDataEntity.getFirstname(), userPersonalDataEntity.getLastname(),
+                userGroupEntity.getId(), userGroupEntity.getTitle());
         return userGroupEntity;
     }
 
@@ -111,7 +117,8 @@ public class UserGroupBO
         UserGroupEntity userGroupEntity = userGroupRepository.getById(id);
 
         userGroupRepository.delete(userGroupEntity);
-        LOGGER.info("Removed UserGroup <{}>", userGroupEntity.getId());
+        LOGGER.info("Removed UserGroup <{}> <{}>", 
+                userGroupEntity.getId(), userGroupEntity.getTitle());
     }
 
     private void validateTitleIsFree(String title) {

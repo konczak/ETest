@@ -70,6 +70,7 @@ public class UserBO
         Validate.notNull(userGroupId);
 
         UserEntity userEntity = userRepository.getById(userId);
+        UserPersonalDataEntity userPersonalDataEntity = userEntity.getUserPersonalData();
         UserGroupEntity userGroupEntity =
                 userGroupRepository.getById(userGroupId);
 
@@ -77,8 +78,9 @@ public class UserBO
 
         userRepository.save(userEntity);
 
-        LOGGER.info("Add User <{}> to UserGroup <{}>",
-                userEntity.getId(), userGroupEntity.getId());
+        LOGGER.info("Add User <{}> <{} {}> to UserGroup <{}> <{}>",
+                userEntity.getId(), userPersonalDataEntity.getFirstname(), userPersonalDataEntity.getLastname(),
+                userGroupEntity.getId(), userGroupEntity.getTitle());
         return userEntity;
     }
 
@@ -89,6 +91,7 @@ public class UserBO
         Validate.notNull(userGroupId);
 
         UserEntity userEntity = userRepository.getById(userId);
+        UserPersonalDataEntity userPersonalDataEntity = userEntity.getUserPersonalData();
         UserGroupEntity userGroupEntity = userGroupRepository.getById(userGroupId);
 
         Set<UserGroupEntity> groups = userEntity.getGroups();
@@ -101,8 +104,9 @@ public class UserBO
 
         userRepository.save(userEntity);
 
-        LOGGER.info("Remove User <{}> from UserGroup <{}>",
-                userEntity.getId(), userGroupEntity.getId());
+        LOGGER.info("Remove User <{}> <{} {}> from UserGroup <{}> <{}>",
+                userEntity.getId(), userPersonalDataEntity.getFirstname(), userPersonalDataEntity.getLastname(),
+                userGroupEntity.getId(), userGroupEntity.getTitle());
         return userEntity;
     }
 

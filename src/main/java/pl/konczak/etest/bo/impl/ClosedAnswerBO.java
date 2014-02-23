@@ -36,8 +36,9 @@ public class ClosedAnswerBO
         closedQuestionEntity.addClosedAnswer(closedAnswerEntity);
         closedAnswerRepository.save(closedAnswerEntity);
 
-        LOGGER.info("Add ClosedAnswer <{}> to ClosedQuestion <{}>",
-                closedAnswerEntity.getId(), closedQuestionEntity.getId());
+        LOGGER.info("Add ClosedAnswer <{}> <{}> to ClosedQuestion <{}> <{}>",
+                closedAnswerEntity.getId(),  closedAnswerEntity.getAnswer(),
+                closedQuestionEntity.getId(), closedQuestionEntity.getQuestion());
         return closedAnswerEntity;
     }
 
@@ -54,8 +55,9 @@ public class ClosedAnswerBO
 
         closedAnswerRepository.save(closedAnswerEntity);
 
-        LOGGER.info("Add picture <{}> to ClosedAnswer <{}>",
-                imageEntity.getId(), closedAnswerEntity.getId());
+        LOGGER.info("Add picture <{}> to ClosedAnswer <{}> <{}>",
+                imageEntity.getId(), 
+                closedAnswerEntity.getId(), closedAnswerEntity.getAnswer());
 
         return closedAnswerEntity;
     }
@@ -67,6 +69,7 @@ public class ClosedAnswerBO
 
         closedAnswerRepository.delete(closedAnswerEntity);
 
-        LOGGER.info("Removed ClosedAnswer <{}>", closedAnswerEntity.getId());
+        LOGGER.info("Removed ClosedAnswer <{}> <{}>", 
+                closedAnswerEntity.getId(), closedAnswerEntity.getAnswer());
     }
 }
