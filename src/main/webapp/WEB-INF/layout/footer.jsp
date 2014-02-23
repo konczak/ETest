@@ -14,23 +14,27 @@
         <ul class="list-inline">
             <li>
                 <a href="${aboutUsUrl}">
+                    <i class="glyphicon glyphicon-info-sign"></i>
                     <spring:message code="global.aboutUs.title"/>
                 </a>
             </li>
             <li>-</li>
             <li>
                 <a href="${contactUrl}">
+                    <i class="glyphicon glyphicon-send"></i>
                     <spring:message code="global.contact.title"/>
                 </a>
             </li>
         </ul>
         <p>
-            Copyright &copy; 2013 
+            Copyright <i class="glyphicon glyphicon-copyright-mark"></i> 2013 
             <a href="mailto:${authorEmail}">
+                <i class="glyphicon glyphicon-envelope"></i>
                 <spring:message code="global.author"/>
             </a>
             &AMP;
             <a href="mailto:${ownerEmail}">
+                <i class="glyphicon glyphicon-envelope"></i>
                 <spring:message code="global.owner"/>
             </a>
         </p>
