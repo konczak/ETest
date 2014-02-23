@@ -14,15 +14,20 @@
         <div class="page-header">
             <h1>
                 <spring:message code="category.list.header"/>
+                <manage:add url=""/>
             </h1>
         </div>
-        <ul class="list-unstyled">
-            <c:forEach items="${categories}" var="category">
-                <li>
-                    <tree:category category="${category}"/>
-                </li>
-            </c:forEach>
-        </ul>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-2">
+                <ul class="list-unstyled">
+                    <c:forEach items="${categories}" var="category">
+                        <li>
+                            <tree:category category="${category}"/>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+        </div>
         <script src="${activeJsUrl}"></script>
     </body>
 </html>
