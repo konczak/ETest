@@ -11,7 +11,7 @@
 </div>
 <ul>
     <c:forEach items="${category.childrens}" var="child">
-        <li>
+        <li data-categoryId="${child.id}" data-categoryName="${child.name}">
             <tree:category category="${child}"/>
         </li>
     </c:forEach>

@@ -17,13 +17,16 @@
             <div class="col-lg-4 col-lg-offset-2">
                 <ul class="list-unstyled">
                     <c:forEach items="${categories}" var="category">
-                        <li>
+                        <li data-categoryId="${category.id}" data-categoryName="${category.name}">
                             <tree:category category="${category}"/>
                         </li>
                     </c:forEach>
                 </ul>
             </div>
         </div>
+        <jsp:include page="_newModal.jsp"/>
+        <jsp:include page="_editModal.jsp"/>
+
         <script src="${activeJsUrl}"></script>
     </body>
 </html>
