@@ -3,6 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 <%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
@@ -12,9 +13,7 @@
         <title><spring:message code="closedAnswer.new.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="closedQuestion.preview.header"/></h1>
-        </div>
+        <page:header text="closedQuestion.preview.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

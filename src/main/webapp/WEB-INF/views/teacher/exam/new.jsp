@@ -4,6 +4,7 @@
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 <%@taglib prefix="util" tagdir="/WEB-INF/tags/util"%>
 <%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="datarangepcikerCssUrl" value="/resources/css/daterangepicker-bs3.css" />
 <spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
@@ -17,9 +18,7 @@
         <link type="text/css" href="${datarangepcikerCssUrl}" rel="stylesheet">
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="exam.new.header"/></h1>
-        </div>
+        <page:header text="exam.new.header"/>
 
         <form:form method="POST" commandName="exam" role="form">
             <form:errors path="*" cssClass="info-danger" element="div" />

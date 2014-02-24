@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
 <spring:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -17,9 +18,7 @@
         <link type="text/css" href="${dataTablesCssUrl}" rel="stylesheet">
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="userGroup.preview.header"/></h1>
-        </div>
+        <page:header text="userGroup.preview.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

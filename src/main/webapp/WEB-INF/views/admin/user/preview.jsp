@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/user.js" />
 <spring:url var="groupsUrl" value="/admin/user/{id}/groups">
@@ -13,9 +14,7 @@
         <title><spring:message code="user.preview.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="user.preview.header"/></h1>
-        </div>
+        <page:header text="user.preview.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

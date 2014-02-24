@@ -3,6 +3,7 @@
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
 <spring:url var="examCheckUrl" value="/teacher/exam/{id}/check" >
@@ -22,9 +23,7 @@
         <title><spring:message code="exam.preview.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="exam.preview.header"/></h1>
-        </div>
+        <page:header text="exam.preview.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

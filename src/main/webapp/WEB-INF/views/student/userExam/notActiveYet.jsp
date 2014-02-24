@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userExam.js" />
 <spring:url var="momentJsUrl" value="/resources/js/moment-with-langs-2.4.0/moment-with-langs.js" />
@@ -11,9 +12,7 @@
         <title><spring:message code="userExam.sheet.title" arguments="${userExam.testTemplateSubject}, ${userExam.titleSuffix}"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="userExam.sheet.header" arguments="${userExam.testTemplateSubject}, ${userExam.titleSuffix}"/></h1>
-        </div>
+        <page:header text="userExam.list.header" textArguments="${userExam.testTemplateSubject}, ${userExam.titleSuffix}"/>
 
         <div class="row">
             <div class="col-md-3 col-md-offset-2 alert alert-info text-center">

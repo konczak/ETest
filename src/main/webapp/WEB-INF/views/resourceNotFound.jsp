@@ -1,11 +1,12 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 <html>
     <head>
         <title><spring:message code="error_resourcenotfound_title"/></title>
     </head>
     <body>
-        <h2><spring:message code="error_resourcenotfound_title"/></h2>
+        <page:header text="error_resourcenotfound_title"/>
         <p>
             <spring:message code="error_resourcenotfound_problemdescription" />
         </p>

@@ -2,6 +2,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
 <%@taglib prefix="button" tagdir="/WEB-INF/tags/button"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <!DOCTYPE html>
 <html>
@@ -9,9 +10,7 @@
         <title><spring:message code="user.new.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="user.new.header"/></h1>
-        </div>
+        <page:header text="user.new.header"/>
         <form:form method="POST" commandName="user" role="form">
             <form:errors path="*" cssClass="info-danger" element="div" />
 

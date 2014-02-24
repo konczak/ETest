@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/exam.js" />
 
@@ -11,11 +12,7 @@
         <title><spring:message code="userExam.preview.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1>
-                <spring:message code="userExam.preview.header"/> - ${userExam.userFirstname} ${userExam.userLastname}
-            </h1>
-        </div>
+        <page:header text="userExam.preview.header" textArguments="${userExam.userFirstname}, ${userExam.userLastname}"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

@@ -1,6 +1,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/testTemplate.js" />
 <spring:url var="dataTablesCssUrl" value="/resources/css/dataTables.css" />
@@ -23,9 +24,7 @@
         <link type="text/css" href="${dataTablesCssUrl}" rel="stylesheet">
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="testTemplate.closedQuestions.header"/></h1>
-        </div>
+        <page:header text="testTemplate.closedQuestions.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>

@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="myForm" tagdir="/WEB-INF/tags/form"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/userGroup.js" />
 
@@ -11,9 +12,7 @@
         <title><spring:message code="userGroup.edit.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="userGroup.edit.header"/></h1>
-        </div>
+        <page:header text="userGroup.edit.header"/>
         <form:form method="POST" commandName="userGroup" role="form">
             <form:errors path="*" cssClass="info-danger" element="div" />
 

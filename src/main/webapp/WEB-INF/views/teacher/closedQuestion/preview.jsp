@@ -2,6 +2,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="manage" tagdir="/WEB-INF/tags/manage/"%>
 <%@taglib prefix="link" tagdir="/WEB-INF/tags/link/"%>
+<%@taglib prefix="page" tagdir="/WEB-INF/tags/page/"%>
 
 <spring:url var="activeJsUrl" value="/resources/js/activeLink/closedQuestion.js" />
 
@@ -11,9 +12,7 @@
         <title><spring:message code="closedQuestion.preview.title"/></title>
     </head>
     <body>
-        <div class="page-header">
-            <h1><spring:message code="closedQuestion.preview.header"/></h1>
-        </div>
+        <page:header text="closedQuestion.preview.header"/>
 
         <dl class="dl-horizontal">
             <dt><spring:message code="entity_id"/></dt>
