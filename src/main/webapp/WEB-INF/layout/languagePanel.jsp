@@ -11,17 +11,17 @@
         <b class="caret"></b>
     </a>
     <ul class="dropdown-menu">
-        <li class="disabled"><util:language language="zh"/></li>
-        <li class="disabled"><util:language language="de"/></li>
-        <li class="disabled"><util:language language="es"/></li>
-        <li class="disabled"><util:language language="fr"/></li>
+        <li class="disabled"><util:language language="zh" disabled="true"/></li>
+        <li class="disabled"><util:language language="de" disabled="true"/></li>
+        <li class="disabled"><util:language language="es" disabled="true"/></li>
+        <li class="disabled"><util:language language="fr" disabled="true"/></li>
         <li><util:language language="en"/></li>
-        <li class="disabled"><util:language language="it"/></li>
-        <li class="disabled"><util:language language="ja"/></li>
-        <li class="disabled"><util:language language="ko"/></li>
+        <li class="disabled"><util:language language="it" disabled="true"/></li>
+        <li class="disabled"><util:language language="ja" disabled="true"/></li>
+        <li class="disabled"><util:language language="ko" disabled="true"/></li>
         <li><util:language language="pl"/></li>
-        <li class="disabled"><util:language language="ru"/></li>
-        <li class="disabled"><util:language language="sv"/></li>
-        <li class="disabled"><util:language language="tr"/></li>
+        <li class="disabled"><util:language language="ru" disabled="true"/></li>
+        <li class="disabled"><util:language language="sv" disabled="true"/></li>
+        <li class="disabled"><util:language language="tr" disabled="true"/></li>
     </ul>
 </li>
