@@ -25,4 +25,9 @@ public class CategoryNew {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "CategoryNew{" + "parentId=" + parentId + ", name=" + name + '}';
+    }
 }

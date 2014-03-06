@@ -17,4 +17,9 @@ public class FieldErrorDTO {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return String.format("field <%s> message <%s>", field, message);
+    }
 }

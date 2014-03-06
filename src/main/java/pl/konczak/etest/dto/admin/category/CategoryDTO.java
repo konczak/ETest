@@ -9,13 +9,16 @@ public class CategoryDTO {
 
     private Integer id;
     private String name;
+    private Integer parentId;
     private int countOfClosedQuestions;
-    private List<CategoryDTO> childrens = new ArrayList<CategoryDTO>();
+    private List<CategoryDTO> categories = new ArrayList<CategoryDTO>();
 
-    public CategoryDTO(CategoryEntity categoryEntity) {
+    public CategoryDTO(CategoryEntity categoryEntity, CategoryEntity parent, int countOfClosedQuestions) {
         Validate.notNull(categoryEntity);
         this.id = categoryEntity.getId();
         this.name = categoryEntity.getName();
+        this.parentId = parent == null ? null : parent.getId();
+        this.countOfClosedQuestions = countOfClosedQuestions;
     }
 
     public Integer getId() {
@@ -26,15 +29,15 @@ public class CategoryDTO {
         return name;
     }
 
+    public Integer getParentId() {
+        return parentId;
+    }
+
     public int getCountOfClosedQuestions() {
         return countOfClosedQuestions;
     }
 
-    public void setCountOfClosedQuestions(int countOfClosedQuestions) {
-        this.countOfClosedQuestions = countOfClosedQuestions;
-    }
-
-    public List<CategoryDTO> getChildrens() {
-        return childrens;
+    public List<CategoryDTO> getCategories() {
+        return categories;
     }
 }

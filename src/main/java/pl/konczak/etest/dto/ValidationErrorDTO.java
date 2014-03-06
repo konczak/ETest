@@ -18,4 +18,9 @@ public class ValidationErrorDTO {
         FieldErrorDTO fieldErrorDTO = new FieldErrorDTO(path, message);
         this.fieldErrors.add(fieldErrorDTO);
     }
+
+    @Override
+    public String toString() {
+        return String.format("fieldErrors <%s>", fieldErrors);
+    }
 }

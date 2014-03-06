@@ -6,3 +6,4 @@ split some huge JSP pages to smaller ones using include (remember to use _ as pr
 add possibility for admin to manage Categories - add new, edit name, move in the hierarchy tree
 bug when user opens his exam "could not initialize proxy - No session" error occurs
 bug in teacher part when exam is not active yet button end is visible but does not work
+Mateusz in TeleP-lappapp-web tried to change language to Korean which is not supported and the application fall down - requires verification

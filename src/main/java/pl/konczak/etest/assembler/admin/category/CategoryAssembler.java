@@ -28,11 +28,12 @@ public class CategoryAssembler {
     }
 
     private void prepareCategoryAndSubcategories(List<CategoryDTO> categoriesDTO, CategoryEntity categoryEntity) {
-        CategoryDTO categoryDTO = new CategoryDTO(categoryEntity);
-        categoryDTO.setCountOfClosedQuestions(categoryEntity.getCountOfClosedQuestionsWithThoseFromChildrens());
+        CategoryDTO categoryDTO = new CategoryDTO(categoryEntity,
+                categoryEntity.getParent(),
+                categoryEntity.getCountOfClosedQuestionsWithThoseFromChildrens());
 
         for (CategoryEntity children : categoryEntity.getChildrens()) {
-            prepareCategoryAndSubcategories(categoryDTO.getChildrens(), children);
+            prepareCategoryAndSubcategories(categoryDTO.getCategories(), children);
         }
 
         categoriesDTO.add(categoryDTO);
