@@ -1,4 +1,5 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="util" tagdir="/WEB-INF/tags/util"%>
 
 <spring:message var="authorEmail" code="global.author.email"/>
 <spring:message var="ownerEmail" code="global.owner.email"/>
@@ -7,7 +8,10 @@
 
 <footer>
     <div class="container text-left">
-
+        <ul class="list-inline pull-right">
+            <li><util:language language="pl"/></li>
+            <li><util:language language="en"/></li>
+        </ul>
         <p>
             <spring:message code="application_name"/>&nbsp;<spring:message code="app_version"/>
         </p>
